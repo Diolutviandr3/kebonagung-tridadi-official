@@ -129,7 +129,7 @@ export const LokasiInfoSection: React.FC = () => {
             initial={{ opacity: 0, scale: 0.98 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="lg:col-span-7 rounded-3xl overflow-hidden border-2 border-purple shadow-purple-md bg-cream-50 flex flex-col"
+            className="lg:col-span-7 rounded-3xl overflow-hidden border-2 border-purple shadow-purple-md bg-cream-50 flex flex-col w-full"
           >
             <div className="p-4 bg-cream-100 border-b-2 border-purple/20 flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -137,7 +137,7 @@ export const LokasiInfoSection: React.FC = () => {
                 <span className="font-bold text-sm text-purple">Peta Lokasi Padukuhan Kebonagung</span>
               </div>
               <a
-                href="https://maps.google.com/?q=Kebonagung+Tridadi+Sleman"
+                href="https://maps.google.com/?q=Kebonagung%2C+Tridadi%2C+Sleman%2C+Kabupaten+Sleman%2C+Daerah+Istimewa+Yogyakarta"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-xs font-bold text-purple hover:underline"
@@ -147,12 +147,13 @@ export const LokasiInfoSection: React.FC = () => {
               </a>
             </div>
 
-            {/* Responsive iFrame with border in purple */}
-            <div className="relative w-full h-[360px] sm:h-[420px] bg-cream-muted">
+            {/* Responsive iFrame with 100% full width and purple accent border */}
+            <div className="relative w-full flex-grow min-h-[360px] sm:min-h-[420px] md:min-h-[460px] bg-cream-muted">
               <iframe
-                title="Peta Lokasi Padukuhan Kebonagung, Tridadi, Sleman"
-                src="https://maps.google.com/maps?q=Kebonagung,+Tridadi,+Sleman,+Yogyakarta&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                className="w-full h-full border-0"
+                title="Peta Lokasi Padukuhan Kebonagung, Tridadi, Sleman, Kabupaten Sleman, Daerah Istimewa Yogyakarta"
+                src="https://maps.google.com/maps?q=Kebonagung%2C+Tridadi%2C+Sleman%2C+Kabupaten+Sleman%2C+Daerah+Istimewa+Yogyakarta&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                className="w-full h-full min-h-[360px] sm:min-h-[420px] md:min-h-[460px] border-0"
+                style={{ width: '100%' }}
                 loading="lazy"
                 allowFullScreen
                 referrerPolicy="no-referrer-when-downgrade"
@@ -232,7 +233,7 @@ export const LokasiInfoSection: React.FC = () => {
 
             <div className="pt-4 border-t-2 border-purple/15">
               <a
-                href="https://maps.google.com/?q=Kebonagung+Tridadi+Sleman"
+                href="https://maps.google.com/?q=Kebonagung%2C+Tridadi%2C+Sleman%2C+Kabupaten+Sleman%2C+Daerah+Istimewa+Yogyakarta"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl font-bold bg-purple text-cream hover:bg-purple-800 transition-all shadow-purple-sm text-sm"
