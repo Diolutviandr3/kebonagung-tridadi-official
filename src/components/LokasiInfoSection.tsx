@@ -12,6 +12,31 @@ import {
 } from 'lucide-react';
 
 // Custom Crisp SVG Icons for Social Media with exact Purple (#453368) styling
+const TikTokIcon: React.FC<{ className?: string }> = ({ className = 'w-6 h-6' }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+  >
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.47 6.27 6.27 0 0 0 1.86-4.47V8.62a8.28 8.28 0 0 0 4.91 1.6V6.77a4.88 4.88 0 0 1-1-.08z" />
+  </svg>
+);
+
+const YouTubeIcon: React.FC<{ className?: string }> = ({ className = 'w-6 h-6' }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+    <polygon points="10 15 15 12 10 9 10 15" fill="currentColor" stroke="none" />
+  </svg>
+);
+
 const InstagramIcon: React.FC<{ className?: string }> = ({ className = 'w-6 h-6' }) => (
   <svg
     className={className}
@@ -25,20 +50,6 @@ const InstagramIcon: React.FC<{ className?: string }> = ({ className = 'w-6 h-6'
     <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
     <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-  </svg>
-);
-
-const FacebookIcon: React.FC<{ className?: string }> = ({ className = 'w-6 h-6' }) => (
-  <svg
-    className={className}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
   </svg>
 );
 
@@ -59,27 +70,35 @@ const WhatsAppIcon: React.FC<{ className?: string }> = ({ className = 'w-6 h-6' 
 export const LokasiInfoSection: React.FC = () => {
   const socialLinks = [
     {
-      name: 'Instagram',
-      handle: '@kebonagung.tridadi',
-      href: 'https://instagram.com',
+      name: 'TikTok Karang Taruna',
+      handle: '@ktkebonagung',
+      href: 'https://www.tiktok.com/@ktkebonagung?_r=1&_t=ZS-999Sf0NWSnM',
+      icon: <TikTokIcon className="w-6 h-6 text-purple group-hover:text-cream transition-colors" />,
+      desc: 'Video kreatif, dokumentasi kegiatan pemuda dusun, dan agenda Karang Taruna Kebonagung',
+      badge: 'Pemuda Dusun',
+    },
+    {
+      name: 'YouTube Masjid Al-Ma\'un',
+      handle: '@rismmaalmaauun',
+      href: 'https://youtube.com/@rismmaalmaauun?si=VeKOG18wIFDmNFMH',
+      icon: <YouTubeIcon className="w-6 h-6 text-purple group-hover:text-cream transition-colors" />,
+      desc: 'Siaran kajian, dokumentasi kegiatan keagamaan, dan syiar dakwah RISMA Masjid Al-Ma\'un',
+      badge: 'Kajian & Dakwah',
+    },
+    {
+      name: 'Instagram Masjid Al-Ma\'un',
+      handle: '@rismma.almaauun',
+      href: 'https://www.instagram.com/rismma.almaauun?igsi=ejVzeWV1am1rZ2Uz',
       icon: <InstagramIcon className="w-6 h-6 text-purple group-hover:text-cream transition-colors" />,
-      desc: 'Update galeri kegiatan, info warga, & liputan program MeRAMU UAD 2026',
-      badge: 'Galeri Foto',
+      desc: 'Informasi agenda kajian, poster dakwah, dan kegiatan remaja Islam Masjid Al-Ma\'un',
+      badge: 'Remaja Masjid',
     },
     {
-      name: 'Facebook',
-      handle: 'Padukuhan Kebonagung Tridadi',
-      href: 'https://facebook.com',
-      icon: <FacebookIcon className="w-6 h-6 text-purple group-hover:text-cream transition-colors" />,
-      desc: 'Komunitas warga & publikasi pengumuman kemasyarakatan padukuhan',
-      badge: 'Komunitas',
-    },
-    {
-      name: 'WhatsApp',
+      name: 'WhatsApp Layanan Warga',
       handle: '+62 812-3456-7890',
       href: 'https://wa.me/6281234567890?text=Halo%20Pengurus%20Padukuhan%20Kebonagung,%20saya%20ingin%20bertanya%20mengenai...',
       icon: <WhatsAppIcon className="w-6 h-6 text-purple group-hover:text-cream transition-colors" />,
-      desc: 'Layanan komunikasi cepat dengan Dukuh & Tim Humas Padukuhan',
+      desc: 'Layanan komunikasi cepat dengan Kepala Dukuh dan Tim Humas Padukuhan',
       badge: 'Layanan Cepat',
     },
   ];
@@ -258,7 +277,7 @@ export const LokasiInfoSection: React.FC = () => {
           </div>
 
           {/* Social media cards with border purple (#453368) and icon purple (#453368) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {socialLinks.map((social, idx) => (
               <motion.a
                 key={social.name}
