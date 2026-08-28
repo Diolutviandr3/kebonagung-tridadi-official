@@ -156,10 +156,10 @@ export const Footer: React.FC<FooterProps> = ({
                   </svg>
                 </a>
                 <a
-                  href="https://www.instagram.com/rismma.almaauun?igsi=ejVzeWV1am1rZ2Uz"
+                  href="https://www.instagram.com/kebonagung.tridadi?igsi=MWo2aGVvc2ZpcDU4NA=="
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Instagram RISMA Masjid Al-Ma'un"
+                  aria-label="Instagram Padukuhan Kebonagung"
                   className="w-8 h-8 rounded-lg bg-cream border-2 border-purple text-purple hover:bg-purple hover:text-cream flex items-center justify-center transition-all shadow-xs"
                 >
                   <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
