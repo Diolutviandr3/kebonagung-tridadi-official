@@ -172,7 +172,7 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
     },
     {
       num: '04',
-      title: 'Pendampingan Desain Kemasan & Identitas Merek (Branding)',
+      title: 'PRIME : Pendampingan Desain Kemasan & Identitas Merek (Branding)',
       subtitle: 'Meningkatkan Daya Saing Pasar Produk Warga',
       desc: 'Pelatihan pembuatan identitas visual produk, label kemasan informatif sesuai regulasi (komposisi, tanggal kedaluwarsa, nilai gizi), serta pemilihan bahan kemasan tahan udara.',
       deliverables: [
@@ -183,13 +183,13 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
     },
     {
       num: '05',
-      title: 'Edukasi Gizi Masyarakat & Pendampingan Posyandu',
-      subtitle: 'Pemberdayaan Kesehatan Keluarga & Generasi Emas',
-      desc: 'Sinergi bersama kader Posyandu Cempaka dalam mengedukasi ibu hamil dan balita mengenai pemenuhan gizi seimbang lokal guna mendukung pencegahan stunting.',
+      title: 'Sosialisasi Legalitas Produk Usaha',
+      subtitle: 'Pemberdayaan UMKM & Peningkatan Daya Saing Potensi Lokal',
+      desc: 'Sinergi bersama pelaku UMKM desa dalam memberikan pemahaman dan pendampingan pengurusan izin dasar (NIB) serta sertifikasi produk (P-IRT/Halal) guna meningkatkan nilai jual komoditas lokal seperti olahan talas agar siap bersaing di pasar yang lebih luas.',
       deliverables: [
-        'Resep Pemberian Makanan Tambahan (PMT) bernutrisi tinggi dan terjangkau',
-        'Leaflet edukasi pedoman isi piringku untuk keluarga',
-        'Partisipasi aktif dalam kegiatan penimbangan balita dan lansia',
+        'Panduan praktis pendaftaran Nomor Induk Berusaha (NIB)',
+        'Leaflet alur pengurusan sertifikasi P-IRT dan Halal untuk produk olahan pangan',
+        'Pendampingan langsung pendaftaran legalitas bagi perwakilan pelaku usaha mikro',
       ],
       icon: <Heart className="w-6 h-6 text-purple" />,
     },
