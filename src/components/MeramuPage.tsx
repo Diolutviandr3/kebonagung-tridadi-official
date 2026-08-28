@@ -246,7 +246,7 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-base sm:text-lg md:text-xl text-purple/85 leading-relaxed"
+            className="text-base sm:text-lg md:text-xl text-purple/85 leading-relaxed text-justify"
           >
             Mewujudkan Padukuhan Kebonagung, Tridadi yang berdaya saing mandiri melalui integrasi <strong>Teknologi Pangan Tepat Guna</strong>, <strong>Pemberdayaan UMKM</strong>, dan <strong>Digitalisasi Sistem Informasi Desa</strong>.
           </motion.p>
@@ -268,11 +268,11 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
                 Mengenal Tim MeRAMU HMTP UAD
               </h2>
 
-              <p className="text-sm sm:text-base text-purple/85 leading-relaxed">
+              <p className="text-sm sm:text-base text-purple/85 leading-relaxed text-justify">
                 <strong>Tim MeRAMU</strong> (<em>Media Ruang Aksi Mahasiswa untuk Umat</em>) merupakan inisiatif mahasiswa dari <strong>Himpunan Mahasiswa Teknik Pangan (HMTP) Universitas Ahmad Dahlan</strong>. Program pengabdian ini dibentuk sebagai bentuk perwujudan Catur Dharma Perguruan Tinggi dalam mendedikasikan keilmuan teknologi pangan dan rekayasa proses secara nyata di tengah masyarakat.
               </p>
 
-              <p className="text-sm sm:text-base text-purple/85 leading-relaxed">
+              <p className="text-sm sm:text-base text-purple/85 leading-relaxed text-justify">
                 Tujuan utama kegiatan di Padukuhan Kebonagung, Kalurahan Tridadi, Kapanewon Sleman adalah memperkuat kemandirian ekonomi keluarga melalui hilirisasi komoditas pertanian lokal, standardisasi keamanan pangan bagi pelaku UMKM dusun, serta membangun fondasi keterbukaan informasi digital desa yang berkelanjutan.
               </p>
 
@@ -375,7 +375,7 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
                     </h3>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-purple/80 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-purple/80 leading-relaxed text-justify">
                     {prog.desc}
                   </p>
 
@@ -471,7 +471,7 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
                     <h3 className="font-bold text-base text-purple group-hover:text-purple-800 transition-colors leading-snug">
                       {photo.title}
                     </h3>
-                    <p className="text-xs text-purple/80 leading-relaxed line-clamp-3">
+                    <p className="text-xs text-purple/80 leading-relaxed line-clamp-3 text-justify">
                       {photo.caption}
                     </p>
                   </div>
@@ -555,7 +555,7 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
                 <h3 className="font-extrabold text-xl text-purple">
                   {selectedPhoto.title}
                 </h3>
-                <p className="text-sm text-purple/85 leading-relaxed">
+                <p className="text-sm text-purple/85 leading-relaxed text-justify">
                   {selectedPhoto.caption}
                 </p>
                 

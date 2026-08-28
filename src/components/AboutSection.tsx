@@ -83,11 +83,11 @@ export const AboutSection: React.FC = () => {
               Membangun Padukuhan yang Maju, Sejahtera, dan Berkelanjutan
             </h2>
 
-            <p className="text-base text-purple/85 leading-relaxed">
+            <p className="text-base text-purple/85 leading-relaxed text-justify">
               Padukuhan Kebonagung terletak di wilayah strategis Kalurahan Tridadi, Kapanewon Sleman, Daerah Istimewa Yogyakarta. Dengan lanskap pedesaan yang tenang dan posisi yang dekat dengan pusat pemerintahan kabupaten Sleman, Kebonagung memadukan kenyamanan hunian tradisional dengan kemudahan aksesibilitas modern.
             </p>
 
-            <p className="text-base text-purple/85 leading-relaxed">
+            <p className="text-base text-purple/85 leading-relaxed text-justify">
               Melalui program sinergi dan inisiatif digital bersama <strong>Tim MeRAMU HMTP Universitas Ahmad Dahlan 2026</strong>, Padukuhan Kebonagung terus bertransformasi mengoptimalkan seluruh potensi sosial, ekonomi, dan budaya masyarakat.
             </p>
 

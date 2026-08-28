@@ -50,7 +50,7 @@ export const Hero: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: 'easeOut' }}
-              className="text-base sm:text-lg md:text-xl text-purple/85 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-normal"
+              className="text-base sm:text-lg md:text-xl text-purple/85 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-normal text-justify"
             >
               Padukuhan yang asri, rukun, dan berdaya saing di Kalurahan Tridadi, Kapanewon Sleman. 
               Menjunjung tinggi nilai gotong royong, kearifan lokal, serta memajukan potensi pertanian dan UMKM masyarakat menuju era digital yang berkelanjutan.
@@ -138,7 +138,7 @@ export const Hero: React.FC = () => {
                     </div>
                     <div>
                       <h3 className="font-bold text-sm text-purple">Lingkungan Hijau & Pertanian</h3>
-                      <p className="text-xs text-purple/75 leading-relaxed mt-0.5">
+                      <p className="text-xs text-purple/75 leading-relaxed mt-0.5 text-justify">
                         Kawasan pemukiman yang tertata dengan hamparan pertanian produktif dan ruang terbuka hijau yang terpelihara.
                       </p>
                     </div>
@@ -150,7 +150,7 @@ export const Hero: React.FC = () => {
                     </div>
                     <div>
                       <h3 className="font-bold text-sm text-purple">Kerukunan & Kegiatan Warga</h3>
-                      <p className="text-xs text-purple/75 leading-relaxed mt-0.5">
+                      <p className="text-xs text-purple/75 leading-relaxed mt-0.5 text-justify">
                         Tradisi sambatan, posyandu rutin, kelompok pemuda, dan paguyuban seni yang aktif melestarikan kearifan lokal.
                       </p>
                     </div>
@@ -162,7 +162,7 @@ export const Hero: React.FC = () => {
                     </div>
                     <div>
                       <h3 className="font-bold text-sm text-purple">Inisiatif Tim MeRAMU HMTP UAD</h3>
-                      <p className="text-xs text-purple/75 leading-relaxed mt-0.5">
+                      <p className="text-xs text-purple/75 leading-relaxed mt-0.5 text-justify">
                         Kolaborasi digitalisasi dan pengabdian masyarakat untuk memajukan perekonomian warga Kebonagung.
                       </p>
                     </div>

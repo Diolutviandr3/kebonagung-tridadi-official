@@ -116,7 +116,7 @@ export const UmkmSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-base sm:text-lg text-purple/85 leading-relaxed"
+              className="text-base sm:text-lg text-purple/85 leading-relaxed text-justify"
             >
               Dukung produk lokal karya warga Padukuhan Kebonagung. Setiap pembelian berkontribusi langsung pada kemandirian ekonomi keluarga dan kemajuan padukuhan.
             </motion.p>
@@ -196,7 +196,7 @@ export const UmkmSection: React.FC = () => {
                     </h3>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-purple/80 leading-relaxed line-clamp-3">
+                  <p className="text-xs sm:text-sm text-purple/80 leading-relaxed line-clamp-3 text-justify">
                     {product.description}
                   </p>
                 </div>

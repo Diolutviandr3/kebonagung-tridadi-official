@@ -111,7 +111,7 @@ export const Features: React.FC = () => {
                   {feature.title}
                 </h3>
 
-                <p className="text-sm text-purple/80 leading-relaxed">
+                <p className="text-sm text-purple/80 leading-relaxed text-justify">
                   {feature.description}
                 </p>
               </div>

@@ -470,7 +470,7 @@ export const KegiatanSection: React.FC = () => {
                     </h3>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-purple/80 leading-relaxed line-clamp-3">
+                  <p className="text-xs sm:text-sm text-purple/80 leading-relaxed line-clamp-3 text-justify">
                     {activity.description}
                   </p>
 
@@ -620,7 +620,7 @@ export const KegiatanSection: React.FC = () => {
                             <h4 className="font-extrabold text-sm sm:text-base text-purple leading-snug">
                               {selectedActivity.gallery[activePhotoIdx].title}
                             </h4>
-                            <p className="text-xs sm:text-sm text-purple/85 leading-relaxed">
+                            <p className="text-xs sm:text-sm text-purple/85 leading-relaxed text-justify">
                               {selectedActivity.gallery[activePhotoIdx].caption}
                             </p>
                           </div>
@@ -698,7 +698,7 @@ export const KegiatanSection: React.FC = () => {
                             <h4 className="font-bold text-sm text-purple leading-snug">
                               {photo.title}
                             </h4>
-                            <p className="text-xs text-purple/80 leading-relaxed">
+                            <p className="text-xs text-purple/80 leading-relaxed text-justify">
                               {photo.caption}
                             </p>
                           </div>
@@ -714,7 +714,7 @@ export const KegiatanSection: React.FC = () => {
                       <span>Rincian Pelaksanaan Agenda</span>
                     </div>
 
-                    <p className="text-xs sm:text-sm text-purple/85 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-purple/85 leading-relaxed text-justify">
                       {selectedActivity.description}
                     </p>
 
