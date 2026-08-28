@@ -44,11 +44,17 @@ export const App: React.FC = () => {
       setTimeout(() => {
         const el = document.getElementById(sectionId);
         if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
+          const navHeight = 75;
+          const elementPosition = el.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+          window.scrollTo({
+            top: offsetPosition >= 0 ? offsetPosition : 0,
+            behavior: 'smooth',
+          });
         } else {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-      }, 50);
+      }, 70);
     } else {
       window.location.hash = '';
       window.scrollTo({ top: 0, behavior: 'smooth' });

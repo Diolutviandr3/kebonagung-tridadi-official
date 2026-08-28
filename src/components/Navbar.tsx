@@ -61,21 +61,40 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, [currentView]);
 
   const handleNavClick = (href: string) => {
+    // 1. Immediately close mobile menu drawer so screen is not blocked
     setMobileMenuOpen(false);
+    
+    const sectionId = href.startsWith('#') ? href.substring(1) : href;
+
     if (currentView === 'meramu') {
-      onNavigateToLanding(href.substring(1));
-    } else {
-      const el = document.getElementById(href.substring(1));
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
+      onNavigateToLanding(sectionId);
+      return;
     }
+
+    // 2. Set active section immediately for responsive UI feedback
+    setActiveSection(sectionId);
+    window.location.hash = sectionId;
+
+    // 3. Scroll to target section with proper fixed navbar offset
+    setTimeout(() => {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        const navHeight = 75;
+        const elementPosition = el.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+        
+        window.scrollTo({
+          top: offsetPosition >= 0 ? offsetPosition : 0,
+          behavior: 'smooth',
+        });
+      }
+    }, 60);
   };
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
+        isScrolled || mobileMenuOpen
           ? 'bg-cream/95 backdrop-blur-md shadow-purple-sm py-3 border-b-2 border-purple/15'
           : 'bg-transparent py-5'
       }`}
@@ -85,8 +104,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           
           {/* Logo & Identity */}
           <button
-            onClick={() => onNavigateToLanding('beranda')}
-            className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-purple/30 rounded-lg p-1 text-left"
+            type="button"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              onNavigateToLanding('beranda');
+            }}
+            className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-purple/30 rounded-lg p-1 text-left cursor-pointer"
           >
             <motion.div
               whileHover={{ rotate: 5, scale: 1.05 }}
@@ -113,8 +136,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                 return (
                   <button
                     key={item.label}
+                    type="button"
                     onClick={() => handleNavClick(item.href)}
-                    className={`relative px-4 py-2 text-xs lg:text-sm font-bold rounded-full transition-all duration-200 ${
+                    className={`relative px-4 py-2 text-xs lg:text-sm font-bold rounded-full transition-all duration-200 cursor-pointer ${
                       isActive
                         ? 'text-cream'
                         : 'text-purple/80 hover:text-purple hover:bg-purple/10'
@@ -135,8 +159,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           ) : (
             <div className="hidden lg:flex items-center gap-2">
               <button
+                type="button"
                 onClick={() => onNavigateToLanding('beranda')}
-                className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold bg-cream-50 border-2 border-purple text-purple hover:bg-purple/10 transition-all shadow-sm"
+                className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold bg-cream-50 border-2 border-purple text-purple hover:bg-purple/10 transition-all shadow-sm cursor-pointer"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Kembali ke Beranda Padukuhan</span>
@@ -147,6 +172,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Special Button for Tim MeRAMU HMTP UAD 2026 (Desktop) */}
           <div className="hidden md:flex items-center gap-3">
             <button
+              type="button"
               onClick={() => {
                 if (currentView === 'meramu') {
                   onNavigateToLanding('beranda');
@@ -154,7 +180,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onNavigateToMeramu();
                 }
               }}
-              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-extrabold transition-all duration-200 shadow-purple-sm hover:shadow-purple-md group border-2 ${
+              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-extrabold transition-all duration-200 shadow-purple-sm hover:shadow-purple-md group border-2 cursor-pointer ${
                 currentView === 'meramu'
                   ? 'bg-cream text-purple border-purple hover:bg-purple/10'
                   : 'bg-purple text-cream border-purple hover:bg-purple-800 active:scale-95'
@@ -170,6 +196,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Mobile Menu Toggle Button */}
           <div className="flex lg:hidden items-center gap-2">
             <button
+              type="button"
               onClick={() => {
                 if (currentView === 'meramu') {
                   onNavigateToLanding('beranda');
@@ -177,7 +204,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onNavigateToMeramu();
                 }
               }}
-              className="md:hidden p-2 rounded-xl bg-purple text-cream text-xs font-bold flex items-center gap-1 border-2 border-purple"
+              className="md:hidden p-2 rounded-xl bg-purple text-cream text-xs font-bold flex items-center gap-1 border-2 border-purple cursor-pointer active:scale-95 transition-transform"
               aria-label="Tim MeRAMU"
             >
               <GraduationCap className="w-4 h-4" />
@@ -185,9 +212,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
 
             <button
+              type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2.5 rounded-xl text-purple bg-cream border-2 border-purple hover:bg-purple/10 transition-colors focus:outline-none focus:ring-2 focus:ring-purple/30"
-              aria-label="Buka Menu"
+              className="p-2.5 rounded-xl text-purple bg-cream border-2 border-purple hover:bg-purple/10 transition-colors focus:outline-none focus:ring-2 focus:ring-purple/30 cursor-pointer active:scale-95"
+              aria-label={mobileMenuOpen ? 'Tutup Menu' : 'Buka Menu'}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -202,8 +230,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
-            className="lg:hidden bg-cream border-b-2 border-purple/20 shadow-purple-md overflow-hidden"
+            transition={{ duration: 0.22, ease: 'easeInOut' }}
+            className="lg:hidden bg-cream border-b-2 border-purple/20 shadow-purple-md overflow-hidden relative z-50"
           >
             <div className="max-w-7xl mx-auto px-4 py-6 space-y-3">
               {navItems.map((item) => {
@@ -211,11 +239,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                 return (
                   <button
                     key={item.label}
+                    type="button"
                     onClick={() => handleNavClick(item.href)}
-                    className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-base font-bold transition-all text-left ${
+                    className={`w-full flex items-center justify-between px-4 py-3.5 rounded-xl text-base font-bold transition-all text-left cursor-pointer active:scale-[0.98] ${
                       isActive
-                        ? 'bg-purple text-cream'
-                        : 'text-purple hover:bg-purple/10'
+                        ? 'bg-purple text-cream shadow-sm'
+                        : 'text-purple hover:bg-purple/10 active:bg-purple/15'
                     }`}
                   >
                     <span>{item.label}</span>
@@ -226,11 +255,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
               <div className="pt-4 border-t-2 border-purple/15 space-y-2">
                 <button
+                  type="button"
                   onClick={() => {
                     setMobileMenuOpen(false);
                     onNavigateToMeramu();
                   }}
-                  className="flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl font-bold bg-purple text-cream hover:bg-purple-800 shadow-md transition-all text-center text-sm"
+                  className="flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl font-bold bg-purple text-cream hover:bg-purple-800 active:scale-[0.98] shadow-md transition-all text-center text-sm cursor-pointer"
                 >
                   <GraduationCap className="w-4 h-4" />
                   <span>Halaman Khusus Tim MeRAMU UAD 2026</span>
