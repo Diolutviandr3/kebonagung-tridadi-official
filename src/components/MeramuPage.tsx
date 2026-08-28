@@ -273,7 +273,7 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
               </p>
 
               <p className="text-sm sm:text-base text-purple/85 leading-relaxed text-justify">
-                Tujuan utama kegiatan di Padukuhan Kebonagung, Kalurahan Tridadi, Kapanewon Sleman adalah memperkuat kemandirian ekonomi keluarga melalui hilirisasi komoditas pertanian lokal, standardisasi keamanan pangan bagi pelaku UMKM dusun, serta membangun fondasi keterbukaan informasi digital desa yang berkelanjutan.
+                Tujuan utama kegiatan di Padukuhan Kebonagung, Kalurahan Tridadi, Kapanewon Sleman adalah memperkuat kemandirian ekonomi keluarga melalui hilirisasi komoditas pertanian lokal yaitu talas pratama, standardisasi keamanan pangan bagi pelaku UMKM dusun, serta membangun fondasi keterbukaan informasi digital desa yang berkelanjutan.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
@@ -341,7 +341,7 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
               Program Kegiatan di Padukuhan Kebonagung
             </h2>
             <p className="text-base text-purple/85">
-              Rangkaian program terstruktur yang dilaksanakan oleh Tim MeRAMU HMTP UAD berkolaborasi dengan perangkat dukuh, PKK, kelompok tani, dan pemuda warga Kebonagung.
+              Rangkaian program terstruktur yang dilaksanakan oleh Tim MeRAMU HMTP UAD berkolaborasi dengan perangkat Kalurahan Tridadi, Dukuh, Kelompok Wanita Tani, Karang Taruna, dan warga Kebonagung.
             </p>
           </div>
 
