@@ -86,9 +86,9 @@ export const LokasiInfoSection: React.FC = () => {
       badge: 'Kajian & Dakwah',
     },
     {
-      name: 'Instagram Masjid Al-Ma\'un',
-      handle: '@rismma.almaauun',
-      href: 'https://www.instagram.com/rismma.almaauun?igsi=ejVzeWV1am1rZ2Uz',
+      name: 'Instagram Padukuhan Kebonagung',
+      handle: '@kebonagung.tridadi',
+      href: 'https://www.instagram.com/kebonagung.tridadi?igsi=MWo2aGVvc2ZpcDU4NA==',
       icon: <InstagramIcon className="w-6 h-6 text-purple group-hover:text-cream transition-colors" />,
       desc: 'Informasi agenda kajian, poster dakwah, dan kegiatan remaja Islam Masjid Al-Ma\'un',
       badge: 'Remaja Masjid',
