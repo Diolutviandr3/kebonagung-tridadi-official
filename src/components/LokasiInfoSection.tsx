@@ -95,11 +95,11 @@ export const LokasiInfoSection: React.FC = () => {
     },
     {
       name: 'WhatsApp Layanan Warga',
-      handle: '+62 812-3456-7890',
-      href: 'https://wa.me/6281234567890?text=Halo%20Pengurus%20Padukuhan%20Kebonagung,%20saya%20ingin%20bertanya%20mengenai...',
+      handle: '+62 882-1618-6389',
+      href: 'https://wa.me/6288216186389?text=Halo%20Karang%20Taruna%20/%20Pengurus%20Kebonagung,%20saya%20ingin%20bertanya%20mengenai...',
       icon: <WhatsAppIcon className="w-6 h-6 text-purple group-hover:text-cream transition-colors" />,
-      desc: 'Layanan komunikasi cepat dengan Kepala Dukuh dan Tim Humas Padukuhan',
-      badge: 'Layanan Cepat',
+      desc: 'Layanan komunikasi cepat warga dan pemuda Karang Taruna Padukuhan Kebonagung',
+      badge: 'Karang Taruna',
     },
   ];
 
@@ -229,9 +229,9 @@ export const LokasiInfoSection: React.FC = () => {
                     <Phone className="w-4 h-4 text-purple" />
                   </div>
                   <div>
-                    <span className="block font-bold text-xs uppercase text-purple/70">Kontak Sekretariat</span>
+                    <span className="block font-bold text-xs uppercase text-purple/70">Kontak Layanan Warga</span>
                     <p className="text-xs sm:text-sm font-semibold text-purple">
-                      +62 812-3456-7890 (Kepala Dukuh / Humas)
+                      +62 882-1618-6389 (Karang Taruna / Humas)
                     </p>
                   </div>
                 </div>

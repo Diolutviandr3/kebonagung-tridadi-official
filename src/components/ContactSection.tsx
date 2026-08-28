@@ -65,9 +65,9 @@ export const ContactSection: React.FC = () => {
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-sm text-purple">Kontak Humas Padukuhan</h4>
+                    <h4 className="font-bold text-sm text-purple">Kontak Layanan Warga</h4>
                     <p className="text-xs text-purple/80 leading-relaxed mt-0.5">
-                      +62 812-3456-7890 (Sekretariat Dukuh)
+                      +62 882-1618-6389 (Karang Taruna / Humas)
                     </p>
                   </div>
                 </div>
@@ -131,7 +131,7 @@ export const ContactSection: React.FC = () => {
                       <input
                         type="tel"
                         required
-                        placeholder="081234567890"
+                        placeholder="088216186389"
                         className="w-full px-4 py-3 rounded-xl bg-cream border border-purple/20 text-purple placeholder-purple/40 text-sm focus:outline-none focus:ring-2 focus:ring-purple focus:border-transparent transition-all"
                       />
                     </div>

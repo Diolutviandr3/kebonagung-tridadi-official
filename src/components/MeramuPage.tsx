@@ -144,18 +144,17 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
       deliverables: [
         'Website Padukuhan Kebonagung yang responsif & ramah perangkat mobile',
         'Etalase digital promosi produk-produk olahan pangan UMKM warga',
-        'Buku panduan dan pelatihan pengelolaan website bagi pemuda dusun',
       ],
       icon: <Cpu className="w-6 h-6 text-purple" />,
     },
     {
       num: '02',
-      title: 'Diversifikasi & Inovasi Teknologi Pengolahan Pangan Lokal',
+      title: 'TALASTIKA dan VESTA : Diversifikasi & Inovasi Teknologi Pengolahan Pangan Lokal',
       subtitle: 'Meningkatkan Nilai Tambah Komoditas Hasil Panen',
-      desc: 'Penerapan ilmu teknologi pangan dalam mengolah singkong dan bahan pangan lokal menjadi tepung mocaf berkualitas serta aneka olahan kudapan sehat berdaya simpan lebih lama.',
+      desc: 'Penerapan ilmu teknologi pangan dalam mengolah umbi talas menjadi tepung talas berkualitas serta aneka olahan kudapan sehat berdaya simpan lebih lama.',
       deliverables: [
         'Formulasi resep olahan pangan bernilai ekonomi tinggi',
-        'Praktik pembuatan tepung mocaf bebas gluten untuk kelompok wanita tani',
+        'Praktik pembuatan tepung talas bebas gluten untuk Kelompok Wanita Tani (KWT)',
         'Uji organoleptik (rasa, aroma, tekstur) produk bersama masyarakat',
       ],
       icon: <Sparkles className="w-6 h-6 text-purple" />,
@@ -166,7 +165,6 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
       subtitle: 'Penerapan Good Manufacturing Practices (GMP)',
       desc: 'Pendampingan pelaku usaha mikro dalam menerapkan prinsip sanitasi pengolahan makanan, higienitas pekerja, serta pencegahan kontaminasi fisik, kimia, dan biologis.',
       deliverables: [
-        'Modul panduan sanitasi pengolahan pangan skala rumah tangga',
         'Checklist audit kebersihan dapur produksi UMKM binaan',
         'Sosialisasi sertifikasi pangan aman dan izin edar produk',
       ],
@@ -180,7 +178,6 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
       deliverables: [
         'Desain label kemasan modern untuk 6+ produk UMKM Padukuhan Kebonagung',
         'Penggunaan teknik sealing kemasan yang menjaga kerenyahan makanan',
-        'Bantuan mini-studio foto produk untuk pemasaran digital',
       ],
       icon: <Layers className="w-6 h-6 text-purple" />,
     },
@@ -272,7 +269,7 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
               </h2>
 
               <p className="text-sm sm:text-base text-purple/85 leading-relaxed">
-                <strong>Tim MeRAMU</strong> (<em>Mengabdi, Merangkul, dan Memberdayakan Bersama Masyarakat</em>) merupakan inisiatif mahasiswa dari <strong>Himpunan Mahasiswa Teknik Pangan (HMTP) Universitas Ahmad Dahlan</strong>. Program pengabdian ini dibentuk sebagai bentuk perwujudan Catur Dharma Perguruan Tinggi dalam mendedikasikan keilmuan teknologi pangan dan rekayasa proses secara nyata di tengah masyarakat.
+                <strong>Tim MeRAMU</strong> (<em>Media Ruang Aksi Mahasiswa untuk Umat</em>) merupakan inisiatif mahasiswa dari <strong>Himpunan Mahasiswa Teknik Pangan (HMTP) Universitas Ahmad Dahlan</strong>. Program pengabdian ini dibentuk sebagai bentuk perwujudan Catur Dharma Perguruan Tinggi dalam mendedikasikan keilmuan teknologi pangan dan rekayasa proses secara nyata di tengah masyarakat.
               </p>
 
               <p className="text-sm sm:text-base text-purple/85 leading-relaxed">
@@ -311,7 +308,7 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
                 <div className="space-y-3 text-xs sm:text-sm">
                   <div className="p-3 rounded-xl bg-purple-800/80 border border-cream/10">
                     <span className="font-bold block text-cream">1. Rekayasa & Keamanan Pangan</span>
-                    <span className="text-cream/80 text-xs">Penerapan GMP, diversifikasi olahan singkong, dan mutu gizi.</span>
+                    <span className="text-cream/80 text-xs">Penerapan GMP, diversifikasi olahan umbi, dan mutu gizi.</span>
                   </div>
 
                   <div className="p-3 rounded-xl bg-purple-800/80 border border-cream/10">

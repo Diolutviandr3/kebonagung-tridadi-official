@@ -118,7 +118,7 @@ export const Footer: React.FC<FooterProps> = ({
               </div>
               <div className="flex items-center gap-2.5 font-medium">
                 <Phone className="w-4 h-4 text-purple shrink-0" />
-                <span className="text-xs">+62 812-3456-7890</span>
+                <span className="text-xs">+62 882-1618-6389</span>
               </div>
               <div className="flex items-center gap-2.5 font-medium">
                 <Mail className="w-4 h-4 text-purple shrink-0" />
@@ -169,7 +169,7 @@ export const Footer: React.FC<FooterProps> = ({
                   </svg>
                 </a>
                 <a
-                  href="https://wa.me/6281234567890?text=Halo%20Pengurus%20Padukuhan%20Kebonagung,%20saya%20ingin%20bertanya%20mengenai..."
+                  href="https://wa.me/6288216186389?text=Halo%20Karang%20Taruna%20/%20Pengurus%20Padukuhan%20Kebonagung,%20saya%20ingin%20bertanya%20mengenai..."
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="WhatsApp Layanan Warga Kebonagung"
