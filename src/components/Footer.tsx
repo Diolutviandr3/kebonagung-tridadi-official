@@ -1,15 +1,29 @@
 import React from 'react';
 import { Landmark, Heart, MapPin, Mail, Phone, ChevronRight, GraduationCap } from 'lucide-react';
 
+export type PageType = 'beranda' | 'umkm' | 'kegiatan' | 'lokasi' | 'profil' | 'meramu';
+
 interface FooterProps {
+  onNavigate?: (page: PageType) => void;
   onNavigateToMeramu?: () => void;
   onNavigateToLanding?: (sectionId?: string) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
+  onNavigate,
   onNavigateToMeramu,
   onNavigateToLanding,
 }) => {
+  const handleNav = (page: PageType) => {
+    if (onNavigate) {
+      onNavigate(page);
+    } else if (page === 'meramu' && onNavigateToMeramu) {
+      onNavigateToMeramu();
+    } else if (onNavigateToLanding) {
+      onNavigateToLanding(page);
+    }
+  };
+
   return (
     <footer className="bg-cream-100/95 border-t-2 border-purple/20 text-purple pt-16 pb-12 relative overflow-hidden">
       
@@ -34,15 +48,16 @@ export const Footer: React.FC<FooterProps> = ({
               </div>
             </div>
 
-            <p className="text-sm text-purple/85 leading-relaxed max-w-md">
+            <p className="text-sm text-purple/85 leading-relaxed max-w-md text-justify">
               Padukuhan yang berbudaya, harmonis, dan berorientasi pada kemajuan bersama melalui pemanfaatan potensi lokal serta keterbukaan informasi digital.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-2 text-xs font-semibold text-purple/75">
               <span>Program Pengabdian:</span>
               <button
-                onClick={onNavigateToMeramu}
-                className="px-3.5 py-1.5 rounded-full bg-purple text-cream hover:bg-purple-800 font-bold shadow-sm inline-flex items-center gap-1.5 transition-all active:scale-95"
+                type="button"
+                onClick={() => handleNav('meramu')}
+                className="px-3.5 py-1.5 rounded-full bg-purple text-cream hover:bg-purple-800 font-bold shadow-sm inline-flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
               >
                 <GraduationCap className="w-3.5 h-3.5 text-cream" />
                 <span>Tim MeRAMU HMTP UAD 2026</span>
@@ -58,8 +73,9 @@ export const Footer: React.FC<FooterProps> = ({
             <ul className="space-y-2.5 text-sm">
               <li>
                 <button
-                  onClick={() => onNavigateToLanding ? onNavigateToLanding('beranda') : undefined}
-                  className="inline-flex items-center gap-1.5 text-purple/80 hover:text-purple hover:translate-x-1 transition-all font-semibold"
+                  type="button"
+                  onClick={() => handleNav('beranda')}
+                  className="inline-flex items-center gap-1.5 text-purple/80 hover:text-purple hover:translate-x-1 transition-all font-semibold cursor-pointer"
                 >
                   <ChevronRight className="w-3.5 h-3.5 text-purple" />
                   <span>Beranda</span>
@@ -67,8 +83,9 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <button
-                  onClick={() => onNavigateToLanding ? onNavigateToLanding('umkm') : undefined}
-                  className="inline-flex items-center gap-1.5 text-purple/80 hover:text-purple hover:translate-x-1 transition-all font-semibold"
+                  type="button"
+                  onClick={() => handleNav('umkm')}
+                  className="inline-flex items-center gap-1.5 text-purple/80 hover:text-purple hover:translate-x-1 transition-all font-semibold cursor-pointer"
                 >
                   <ChevronRight className="w-3.5 h-3.5 text-purple" />
                   <span>Produk UMKM Masyarakat</span>
@@ -76,8 +93,9 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <button
-                  onClick={() => onNavigateToLanding ? onNavigateToLanding('kegiatan') : undefined}
-                  className="inline-flex items-center gap-1.5 text-purple/80 hover:text-purple hover:translate-x-1 transition-all font-semibold"
+                  type="button"
+                  onClick={() => handleNav('kegiatan')}
+                  className="inline-flex items-center gap-1.5 text-purple/80 hover:text-purple hover:translate-x-1 transition-all font-semibold cursor-pointer"
                 >
                   <ChevronRight className="w-3.5 h-3.5 text-purple" />
                   <span>Kegiatan Padukuhan</span>
@@ -85,8 +103,9 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <button
-                  onClick={() => onNavigateToLanding ? onNavigateToLanding('lokasi') : undefined}
-                  className="inline-flex items-center gap-1.5 text-purple/80 hover:text-purple hover:translate-x-1 transition-all font-semibold"
+                  type="button"
+                  onClick={() => handleNav('lokasi')}
+                  className="inline-flex items-center gap-1.5 text-purple/80 hover:text-purple hover:translate-x-1 transition-all font-semibold cursor-pointer"
                 >
                   <ChevronRight className="w-3.5 h-3.5 text-purple" />
                   <span>Lokasi dan Informasi</span>
@@ -94,8 +113,19 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <button
-                  onClick={onNavigateToMeramu}
-                  className="inline-flex items-center gap-1.5 text-purple font-bold hover:translate-x-1 transition-all"
+                  type="button"
+                  onClick={() => handleNav('profil')}
+                  className="inline-flex items-center gap-1.5 text-purple/80 hover:text-purple hover:translate-x-1 transition-all font-semibold cursor-pointer"
+                >
+                  <ChevronRight className="w-3.5 h-3.5 text-purple" />
+                  <span>Profil Wilayah</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => handleNav('meramu')}
+                  className="inline-flex items-center gap-1.5 text-purple font-bold hover:translate-x-1 transition-all cursor-pointer"
                 >
                   <ChevronRight className="w-3.5 h-3.5 text-purple" />
                   <span>Halaman Khusus Tim MeRAMU UAD</span>

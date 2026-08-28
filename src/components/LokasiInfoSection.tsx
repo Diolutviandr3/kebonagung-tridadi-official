@@ -104,7 +104,7 @@ export const LokasiInfoSection: React.FC = () => {
   ];
 
   return (
-    <section id="lokasi" className="py-20 md:py-28 bg-cream relative border-t border-purple/15">
+    <section id="lokasi" className="pt-28 sm:pt-32 pb-20 md:pb-28 bg-cream relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

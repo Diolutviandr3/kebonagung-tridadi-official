@@ -2,7 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, ArrowRight, Compass, ShieldCheck, MapPin, Users, TreePine, Award } from 'lucide-react';
 
-export const Hero: React.FC = () => {
+interface HeroProps {
+  onNavigate?: (page: 'beranda' | 'umkm' | 'kegiatan' | 'lokasi' | 'profil' | 'meramu') => void;
+}
+
+export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   return (
     <section
       id="beranda"
@@ -63,21 +67,23 @@ export const Hero: React.FC = () => {
               transition={{ duration: 0.7, delay: 0.3, ease: 'easeOut' }}
               className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2"
             >
-              <a
-                href="#potensi"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl text-base font-bold bg-purple text-cream hover:bg-purple-800 active:scale-[0.98] transition-all duration-200 shadow-purple-md hover:shadow-purple-lg group"
+              <button
+                type="button"
+                onClick={() => onNavigate ? onNavigate('umkm') : undefined}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl text-base font-bold bg-purple text-cream hover:bg-purple-800 active:scale-[0.98] transition-all duration-200 shadow-purple-md hover:shadow-purple-lg group cursor-pointer"
               >
-                <span>Jelajahi Potensi Desa</span>
+                <span>Jelajahi Produk UMKM</span>
                 <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-              </a>
+              </button>
 
-              <a
-                href="#profil"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base font-bold bg-cream-50/80 text-purple border-2 border-purple hover:bg-purple/10 active:scale-[0.98] transition-all duration-200 shadow-sm"
+              <button
+                type="button"
+                onClick={() => onNavigate ? onNavigate('profil') : undefined}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl text-base font-bold bg-cream-50/80 text-purple border-2 border-purple hover:bg-purple/10 active:scale-[0.98] transition-all duration-200 shadow-sm cursor-pointer"
               >
                 <Compass className="w-5 h-5 text-purple" />
                 <span>Profil Padukuhan</span>
-              </a>
+              </button>
             </motion.div>
 
             {/* Micro Highlights Badges */}

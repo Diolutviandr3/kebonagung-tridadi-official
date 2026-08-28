@@ -11,7 +11,7 @@ export const AboutSection: React.FC = () => {
   ];
 
   return (
-    <section id="profil" className="py-20 bg-cream-100/80 border-t border-b border-purple/10 relative overflow-hidden">
+    <section id="profil" className="pt-28 sm:pt-32 pb-20 bg-cream-100/80 border-b border-purple/10 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">

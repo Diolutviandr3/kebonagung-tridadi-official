@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar } from './components/Navbar';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Navbar, type PageType } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { UmkmSection } from './components/UmkmSection';
 import { KegiatanSection } from './components/KegiatanSection';
@@ -10,96 +11,93 @@ import { Footer } from './components/Footer';
 import { MeramuPage } from './components/MeramuPage';
 
 export const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<'landing' | 'meramu'>('landing');
+  const [currentPage, setCurrentPage] = useState<PageType>('beranda');
 
-  // Listen to hash changes for direct URL access (e.g. #meramu)
+  // Synchronize initial page and hash changes for direct URL access & browser back/forward
   useEffect(() => {
-    const handleHashChange = () => {
-      if (window.location.hash === '#meramu') {
-        setCurrentView('meramu');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (currentView === 'meramu' && window.location.hash !== '#meramu') {
-        setCurrentView('landing');
-      }
+    const validPages: PageType[] = ['beranda', 'umkm', 'kegiatan', 'lokasi', 'profil', 'meramu'];
+
+    const getPageFromHash = (): PageType => {
+      const cleanHash = window.location.hash.replace(/^#\/?/, '') as PageType;
+      return validPages.includes(cleanHash) ? cleanHash : 'beranda';
     };
 
-    if (window.location.hash === '#meramu') {
-      setCurrentView('meramu');
-    }
+    // Set initial page based on URL hash
+    setCurrentPage(getPageFromHash());
+
+    const handleHashChange = () => {
+      const newPage = getPageFromHash();
+      setCurrentPage(newPage);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, [currentView]);
+  }, []);
 
-  const navigateToMeramu = () => {
-    setCurrentView('meramu');
-    window.location.hash = 'meramu';
+  const navigateTo = (page: PageType) => {
+    setCurrentPage(page);
+    window.location.hash = page;
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const navigateToLanding = (sectionId?: string) => {
-    setCurrentView('landing');
-    if (sectionId) {
-      window.location.hash = sectionId;
-      setTimeout(() => {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          const navHeight = 75;
-          const elementPosition = el.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - navHeight;
-          window.scrollTo({
-            top: offsetPosition >= 0 ? offsetPosition : 0,
-            behavior: 'smooth',
-          });
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      }, 70);
-    } else {
-      window.location.hash = '';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
   };
 
   return (
     <div className="min-h-screen bg-cream text-purple font-sans flex flex-col selection:bg-purple selection:text-cream">
-      {/* Top Fixed / Sticky Navigation Bar */}
+      {/* 1. Top Fixed Navigation Bar */}
       <Navbar
-        currentView={currentView}
-        onNavigateToMeramu={navigateToMeramu}
-        onNavigateToLanding={navigateToLanding}
+        currentPage={currentPage}
+        onNavigate={navigateTo}
       />
 
-      {/* View Switcher: Landing Page vs Dedicated Tim MeRAMU Page */}
-      {currentView === 'landing' ? (
-        <main className="flex-grow">
-          {/* 1. Hero Section */}
-          <Hero />
+      {/* 2. Main Body Content: Display ONLY the selected page */}
+      <main className="flex-grow">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentPage}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
+            className="w-full"
+          >
+            {/* Halaman: Beranda (Hero Section) */}
+            {currentPage === 'beranda' && (
+              <Hero onNavigate={navigateTo} />
+            )}
 
-          {/* 2. Seksi Produk UMKM Masyarakat */}
-          <UmkmSection />
+            {/* Halaman: Produk UMKM */}
+            {currentPage === 'umkm' && (
+              <UmkmSection onNavigate={navigateTo} />
+            )}
 
-          {/* 3. Seksi Kegiatan Padukuhan */}
-          <KegiatanSection />
+            {/* Halaman: Kegiatan Padukuhan (dengan Modal / Pop-up Galeri Bukti Foto) */}
+            {currentPage === 'kegiatan' && (
+              <KegiatanSection />
+            )}
 
-          {/* 4. Seksi Lokasi dan Informasi (Google Maps Embed & Social Media Links) */}
-          <LokasiInfoSection />
+            {/* Halaman: Lokasi & Info (Peta Google Maps Akurat & Kontak Media Sosial) */}
+            {currentPage === 'lokasi' && (
+              <LokasiInfoSection />
+            )}
 
-          {/* 5. Seksi Profil Wilayah Padukuhan Kebonagung */}
-          <AboutSection />
+            {/* Halaman: Profil Wilayah Padukuhan Kebonagung */}
+            {currentPage === 'profil' && (
+              <>
+                <AboutSection />
+                <Features />
+              </>
+            )}
 
-          {/* 6. Seksi Pilar Keunggulan & Potensi */}
-          <Features />
-        </main>
-      ) : (
-        <main className="flex-grow">
-          {/* Dedicated Full Page for Tim MeRAMU HMTP UAD 2026 */}
-          <MeramuPage onBackToHome={() => navigateToLanding('beranda')} />
-        </main>
-      )}
+            {/* Halaman: Khusus Tim MeRAMU HMTP UAD 2026 */}
+            {currentPage === 'meramu' && (
+              <MeramuPage onBackToHome={() => navigateTo('beranda')} />
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </main>
 
-      {/* Bottom Footer Section */}
-      <Footer onNavigateToMeramu={navigateToMeramu} onNavigateToLanding={navigateToLanding} />
+      {/* 3. Bottom Footer Section (Always at the bottom) */}
+      <Footer onNavigate={navigateTo} />
     </div>
   );
 };

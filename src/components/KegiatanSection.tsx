@@ -379,7 +379,7 @@ export const KegiatanSection: React.FC = () => {
   };
 
   return (
-    <section id="kegiatan" className="py-20 md:py-28 bg-cream-100/80 relative border-t border-purple/15">
+    <section id="kegiatan" className="pt-28 sm:pt-32 pb-20 md:pb-28 bg-cream-100/80 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

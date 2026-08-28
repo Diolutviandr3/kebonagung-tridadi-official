@@ -83,9 +83,13 @@ const products: UmkmProduct[] = [
   },
 ];
 
-export const UmkmSection: React.FC = () => {
+interface UmkmSectionProps {
+  onNavigate?: (page: 'beranda' | 'umkm' | 'kegiatan' | 'lokasi' | 'profil' | 'meramu') => void;
+}
+
+export const UmkmSection: React.FC<UmkmSectionProps> = ({ onNavigate }) => {
   return (
-    <section id="umkm" className="py-20 md:py-28 bg-cream relative border-t border-purple/15">
+    <section id="umkm" className="pt-28 sm:pt-32 pb-20 md:pb-28 bg-cream relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -128,14 +132,15 @@ export const UmkmSection: React.FC = () => {
             viewport={{ once: true }}
             className="flex items-center gap-3 shrink-0"
           >
-            <a
-              href="#lokasi"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-purple text-cream font-bold text-sm hover:bg-purple-800 active:scale-95 transition-all shadow-purple-sm hover:shadow-purple-md group"
+            <button
+              type="button"
+              onClick={() => onNavigate ? onNavigate('lokasi') : undefined}
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-purple text-cream font-bold text-sm hover:bg-purple-800 active:scale-95 transition-all shadow-purple-sm hover:shadow-purple-md group cursor-pointer"
             >
               <ShoppingBag className="w-4 h-4" />
               <span>Hubungi Sentra UMKM</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </a>
+            </button>
           </motion.div>
         </div>
 
@@ -215,8 +220,10 @@ export const UmkmSection: React.FC = () => {
                   </div>
 
                   <a
-                    href="#lokasi"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-purple text-cream hover:bg-purple-800 active:scale-95 transition-all shadow-sm group-hover:shadow-md"
+                    href={`https://wa.me/6288216186389?text=${encodeURIComponent(`Halo Pengurus UMKM Kebonagung, saya tertarik ingin memesan / menanyakan produk: ${product.name}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-purple text-cream hover:bg-purple-800 active:scale-95 transition-all shadow-sm group-hover:shadow-md cursor-pointer"
                   >
                     <span>Pesan / Tanya</span>
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -239,12 +246,13 @@ export const UmkmSection: React.FC = () => {
               <p className="text-xs text-purple/75">Daftarkan produk UMKM keluarga Anda melalui pengurus padukuhan atau tim pendamping MeRAMU UAD secara gratis.</p>
             </div>
           </div>
-          <a
-            href="#lokasi"
-            className="px-5 py-2.5 rounded-xl text-xs font-bold border-2 border-purple text-purple hover:bg-purple hover:text-cream transition-all shrink-0"
+          <button
+            type="button"
+            onClick={() => onNavigate ? onNavigate('lokasi') : undefined}
+            className="px-5 py-2.5 rounded-xl text-xs font-bold border-2 border-purple text-purple hover:bg-purple hover:text-cream transition-all shrink-0 cursor-pointer"
           >
             Daftar Sekarang
-          </a>
+          </button>
         </div>
 
       </div>
