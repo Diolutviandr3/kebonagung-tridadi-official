@@ -112,16 +112,6 @@ const docPhotos: MeramuDocPhoto[] = [
   },
   {
     id: 'meramu-2',
-    title: 'Focus Group Discussion (FGD) bersama Karang Taruna Kebonagung',
-    category: 'Kemitraan',
-    date: 'Agustus 2026',
-    location: 'Balai Cabai Padukuhan Kebonagung',
-    caption: 'Fiksasi rencana kerja program pengabdian di Padukuhan Kebonagung.',
-    colorScheme: 'from-cream-200 via-purple-100 to-cream-300',
-    iconSymbol: '🗣️',
-  },
-  {
-    id: 'meramu-3',
     title: 'Sosialisasi dan Penerjunan Tim MeRAMU HMTP UAD',
     category: 'Sosial',
     date: '15 Agustus 2026',
@@ -132,7 +122,7 @@ const docPhotos: MeramuDocPhoto[] = [
     images: [penerjunan1, penerjunan2, penerjunan3, penerjunan4],
   },
   {
-    id: 'meramu-4',
+    id: 'meramu-3',
     title: 'Sosialisasi TALASTIKA dan VESTA: Diversifikasi Produk Olahan Talas',
     category: 'Pelatihan',
     date: '21 Agustus 2026',
@@ -143,7 +133,7 @@ const docPhotos: MeramuDocPhoto[] = [
     images: [sosialisasitalastika1, sosialisasitalastika2, sosialisasitalastika3, sosialisasitalastika4],
   },
   {
-    id: 'meramu-5',
+    id: 'meramu-4',
     title: 'Pelatihan TALASTIKA: Diversifikasi Produk Tepung Talas',
     category: 'Pelatihan',
     date: '29 Agustus 2026',
@@ -153,7 +143,7 @@ const docPhotos: MeramuDocPhoto[] = [
     iconSymbol: '🥣',
   },
   {
-    id: 'meramu-6',
+    id: 'meramu-5',
     title: 'Pelatihan VESTA: Pengolahan Produk Turunan Tepung Talas Berupa Nugget dan Beras Analog',
     category: 'Pelatihan',
     date: '29 Agustus 2026',
@@ -163,7 +153,7 @@ const docPhotos: MeramuDocPhoto[] = [
     iconSymbol: '🥣',
   },
   {
-    id: 'meramu-7',
+    id: 'meramu-6',
     title: 'Workshop PRIME: Pendampingan Desain Kemasan & Identitas Merek (Branding)',
     category: 'Pelatihan',
     date: '31 Agustus 2026',
@@ -173,7 +163,7 @@ const docPhotos: MeramuDocPhoto[] = [
     iconSymbol: '🧼',
   },
   {
-    id: 'meramu-8',
+    id: 'meramu-7',
     title: 'Sosialisasi Legalitas Produk Usaha',
     category: 'Pelatihan',
     date: '31 Agustus 2026',
@@ -183,7 +173,7 @@ const docPhotos: MeramuDocPhoto[] = [
     iconSymbol: '📦',
   },
   {
-    id: 'meramu-9',
+    id: 'meramu-8',
     title: 'Pengenalan dan Uji Coba Website Resmi Padukuhan Kebonagung',
     category: 'Digitalisasi',
     date: '31 Agustus 2026',
@@ -193,7 +183,7 @@ const docPhotos: MeramuDocPhoto[] = [
     iconSymbol: '💻',
   },
   {
-    id: 'meramu-11',
+    id: 'meramu-9',
     title: 'Pelatihan Pengelolaan Konten Digital untuk Pemuda Karang Taruna',
     category: 'Digitalisasi',
     date: 'April 2026',
@@ -203,7 +193,7 @@ const docPhotos: MeramuDocPhoto[] = [
     iconSymbol: '📱',
   },
   {
-    id: 'meramu-12',
+    id: 'meramu-10',
     title: 'Silaturrahmi Bersama Kepala Dukuh dan RT/RW Kebonagung',
     category: 'Sosial',
     date: '11 Agustus 2026',
@@ -213,7 +203,7 @@ const docPhotos: MeramuDocPhoto[] = [
     iconSymbol: '👶',
   },
   {
-    id: 'meramu-13',
+    id: 'meramu-11',
     title: 'Silaturrahmi Bersama Pimpinan Cabang Muhammadiyah Sleman dan Pimpinan Ranting Muhammadiyah Tridadi',
     category: 'Sosial',
     date: '11 Agustus 2026',
@@ -224,7 +214,7 @@ const docPhotos: MeramuDocPhoto[] = [
     images: [silaturrahimpcm1, silaturrahimpcm2, silaturrahimpcm3, silaturrahimpcm4],
   },
   {
-    id: 'meramu-14',
+    id: 'meramu-12',
     title: 'Serah Terima Peninggalan Fisik & Penutupan Program Pengabdian',
     category: 'Kemitraan',
     date: 'September 2026',
@@ -234,7 +224,7 @@ const docPhotos: MeramuDocPhoto[] = [
     iconSymbol: '🎓',
   },
   {
-    id: 'meramu-15',
+    id: 'meramu-13',
     title: 'Mengajar TPA (Taman Pendidikan Al- Quran)',
     category: 'Sosial',
     date: '14, 15, 21, 22, 28, 29 Agustus dan 4,5 September 2026',
@@ -245,7 +235,7 @@ const docPhotos: MeramuDocPhoto[] = [
     images: [tpa1, tpa2, tpa3, tpa4, tpa5, tpa6, tpa7],
   },
   {
-    id: 'meramu-16',
+    id: 'meramu-14',
     title: 'Kajian Malam Jumat',
     category: 'Sosial',
     date: '13, 20, 27 Agustus dan 3, 10 September 2026',
@@ -256,7 +246,7 @@ const docPhotos: MeramuDocPhoto[] = [
     images: [kajian1, kajian2, kajian3, kajian4],
   },
   {
-    id: 'meramu-17',
+    id: 'meramu-15',
     title: 'Malam Tirakatan Peringatan HUT RI ke-81',
     category: 'Sosial',
     date: '16 Agustus 2026',
@@ -277,7 +267,7 @@ const docPhotos: MeramuDocPhoto[] = [
     ],
   },
   {
-    id: 'meramu-18',
+    id: 'meramu-16',
     title: 'Hari Sehat Bersama Masyarakat',
     category: 'Sosial',
     date: '17 dan 23 Agustus 2026',
@@ -288,7 +278,7 @@ const docPhotos: MeramuDocPhoto[] = [
     images: [harisehat1, harisehat2, harisehat3, harisehat5],
   },
   {
-    id: 'meramu-19',
+    id: 'meramu-17',
     title: 'Kegiatan Memperingati Hari Kemerdekaan',
     category: 'Sosial',
     date: 'Agustus 2026',
@@ -315,12 +305,12 @@ const docPhotos: MeramuDocPhoto[] = [
     ],
   },
   {
-    id: 'meramu-20',
-    title: 'Silaturrahmi Bersama Karang Taruna dan Kelompok Wanita Tani',
-    category: 'Sosial',
+    id: 'meramu-18',
+    title: 'Focus Group Discussion (FGD) bersama Karang Taruna dan Kelompok Wanita Tani Kebonagung',
+    category: 'Kemitraan',
     date: 'Agustus 2026',
     location: 'Kebonagung',
-    caption: 'Sesi silaturrahmi, diskusi sinergi, dan perumusan program bersama Karang Taruna serta Kelompok Wanita Tani (KWT) Kebonagung.',
+    caption: 'Sesi silaturrahmi, diskusi sinergi, dan koordinasi program bersama Karang Taruna serta Kelompok Wanita Tani (KWT) Kebonagung.',
     colorScheme: 'from-purple-200 via-cream-200 to-purple-100',
     iconSymbol: '🤝',
     images: [
