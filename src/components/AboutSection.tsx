@@ -5,7 +5,7 @@ import { HeartHandshake, Sprout, Building2, CheckCircle2 } from 'lucide-react';
 export const AboutSection: React.FC = () => {
   const highlights = [
     "Kawasan agraris dan permukiman yang seimbang serta ramah lingkungan",
-    "Kegiatan kemasyarakatan aktif: PKK, Karang Taruna, Posyandu, dan Pengajian",
+    "Kegiatan kemasyarakatan aktif: KWT, Karang Taruna, dan PKK",
     "Potensi UMKM kuliner, kerajinan, dan produk olahan hasil tani",
     "Didukung kolaborasi program pemberdayaan Tim MeRAMU HMTP UAD 2026",
   ];
