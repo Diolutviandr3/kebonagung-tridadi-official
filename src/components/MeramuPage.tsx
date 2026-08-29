@@ -677,6 +677,8 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
                         <img
                           src={photo.images[0]}
                           alt={photo.title}
+                          loading="lazy"
+                          decoding="async"
                           className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-purple-950/80 via-purple-950/20 to-purple-950/40 pointer-events-none" />
@@ -776,6 +778,7 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
                     <img
                       src={selectedPhoto.images[currentImageIndex]}
                       alt={`${selectedPhoto.title} - Foto ${currentImageIndex + 1}`}
+                      decoding="async"
                       className="absolute inset-0 w-full h-full object-contain sm:object-cover bg-purple-950"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-purple-950/80 via-transparent to-purple-950/50 pointer-events-none" />
@@ -878,7 +881,7 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
                           : 'border-purple/20 opacity-60 hover:opacity-100'
                       }`}
                     >
-                      <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />
+                      <img src={img} alt={`Thumbnail ${idx + 1}`} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                       <span className="absolute bottom-0.5 right-1 text-[9px] font-bold text-cream bg-purple/80 px-1 rounded">
                         Foto #{idx + 1}
                       </span>
