@@ -14,8 +14,15 @@ import {
   Maximize2,
   Calendar,
   MapPin,
-  Heart
+  Heart,
+  ChevronLeft,
+  ChevronRight,
+  Camera
 } from 'lucide-react';
+import penerjunan1 from '../assets/penerjunan1.JPG';
+import penerjunan2 from '../assets/penerjunan2.JPG';
+import penerjunan3 from '../assets/penerjunan3.JPG';
+import penerjunan4 from '../assets/penerjunan4.JPG';
 
 interface MeramuDocPhoto {
   id: string;
@@ -26,6 +33,7 @@ interface MeramuDocPhoto {
   caption: string;
   colorScheme: string;
   iconSymbol: string;
+  images?: string[];
 }
 
 const docPhotos: MeramuDocPhoto[] = [
@@ -35,62 +43,83 @@ const docPhotos: MeramuDocPhoto[] = [
     category: 'Kemitraan',
     date: 'Januari 2026',
     location: 'Lahan Pertanian Kebonagung',
-    caption: 'Tim MeRAMU HMTP UAD melakukan observasi komoditas pangan utama dan diskusi bersama ketua kelompok tani Kebonagung.',
+    caption: 'Tim MeRAMU HMTP UAD melakukan observasi komoditas pangan utama dan diskusi bersama Lurah Tridadi beserta PCM Sleman',
     colorScheme: 'from-purple-200 via-cream-200 to-purple-100',
     iconSymbol: '🌾',
   },
   {
     id: 'meramu-2',
-    title: 'Focus Group Discussion (FGD) bersama Perangkat Dukuh & RT/RW',
+    title: 'Focus Group Discussion (FGD) bersama Karang Taruna Kebonagung',
     category: 'Kemitraan',
-    date: 'Februari 2026',
-    location: 'Balai Padukuhan Kebonagung',
-    caption: 'Penyusunan rencana kerja program pengabdian serta penyerapan aspirasi kebutuhan warga Padukuhan Kebonagung.',
+    date: 'Agustus 2026',
+    location: 'Balai Cabai Padukuhan Kebonagung',
+    caption: 'Fiksasi rencana kerja program pengabdian di Padukuhan Kebonagung.',
     colorScheme: 'from-cream-200 via-purple-100 to-cream-300',
     iconSymbol: '🗣️',
   },
   {
     id: 'meramu-3',
-    title: 'Pelatihan Diversifikasi Produk Olahan Singkong & Umbi',
+    title: 'Sosialisasi dan Penerjunan Tim MeRAMU HMTP UAD',
+    category: 'Sosial',
+    date: '15 Agustus 2026',
+    location: 'Aula Kalurahan Tridadi',
+    caption: 'Melakukan penerjunan Tim MeRAMU HMTP UAD secara resmi oleh pihak universitas, kalurahan, dan mitra terkait.',
+    colorScheme: 'from-purple-100 via-cream-100 to-purple-200',
+    iconSymbol: '🤝',
+    images: [penerjunan1, penerjunan2, penerjunan3, penerjunan4],
+  },
+  {
+    id: 'meramu-4',
+    title: 'Sosialisasi TALASTIKA dan VESTA: Diversifikasi Produk Olahan Talas',
     category: 'Pelatihan',
-    date: 'Februari 2026',
-    location: 'Dapur Komunal Kebonagung',
-    caption: 'Praktik langsung pengolahan tepung mocaf dan inovasi camilan sehat bernilai jual tinggi bersama ibu-ibu PKK.',
+    date: '21 Agustus 2026',
+    location: 'Masjid Al-Huda Kebonagung',
+    caption: 'Sosialisasi pengolahan tepung talas dan inovasi camilan sehat bernilai jual tinggi bersama ibu-ibu KWT.',
     colorScheme: 'from-purple-100 via-cream-100 to-purple-200',
     iconSymbol: '🥣',
   },
   {
-    id: 'meramu-4',
-    title: 'Workshop Higiene, Sanitasi & Standar GMP Pangan Olahan',
+    id: 'meramu-5',
+    title: 'Pelatihan TALASTIKA dan VESTA: Diversifikasi Produk Olahan Talas',
     category: 'Pelatihan',
-    date: 'Maret 2026',
-    location: 'Aula Balai Dusun',
-    caption: 'Edukasi keamanan pangan, pencegahan kontaminasi silang, dan standar kebersihan bagi para pelaku UMKM kuliner dusun.',
+    date: '29 Agustus 2026',
+    location: 'Balai Lelang Cabai Kebonagung',
+    caption: 'Praktik langsung pengolahan tepung talas dan inovasi nugget serta beras analog berbasis tepung talas bersama ibu-ibu KWT.',
+    colorScheme: 'from-purple-100 via-cream-100 to-purple-200',
+    iconSymbol: '🥣',
+  },
+  {
+    id: 'meramu-6',
+    title: 'Workshop PRIME: Pendampingan Desain Kemasan & Identitas Merek (Branding)',
+    category: 'Pelatihan',
+    date: '31 Agustus 2026',
+    location: 'Masjid Al-Huda Kebonagung',
+    caption: 'Edukasi pembuatan identitas visual produk, label kemasan informatif sesuai regulasi (komposisi, tanggal kedaluwarsa, nilai gizi), serta pemilihan bahan kemasan tahan udara.',
     colorScheme: 'from-cream-300 via-purple-200 to-cream-200',
     iconSymbol: '🧼',
   },
   {
-    id: 'meramu-5',
-    title: 'Pendampingan Redesain Kemasan & Label Nutrisi UMKM',
+    id: 'meramu-7',
+    title: 'Sosialisasi Legalitas Produk Usaha',
     category: 'Pelatihan',
-    date: 'Maret 2026',
-    location: 'Sekretariat Tim MeRAMU',
-    caption: 'Pembuatan label identitas merek modern, pencantuman tanggal kedaluwarsa, dan teknik pengemasan kedap udara (vacuum seal).',
+    date: '31 Agustus 2026',
+    location: 'Masjid Al-Huda Kebonagung',
+    caption: 'Sinergi bersama pelaku UMKM desa dalam memberikan pemahaman dan pendampingan pengurusan izin dasar (NIB) serta sertifikasi produk (P-IRT/Halal) guna meningkatkan nilai jual komoditas lokal seperti olahan talas agar siap bersaing di pasar yang lebih luas.',
     colorScheme: 'from-purple-200 via-cream-100 to-purple-100',
     iconSymbol: '📦',
   },
   {
-    id: 'meramu-6',
-    title: 'Pengembangan & Uji Coba Website Resmi Padukuhan Kebonagung',
+    id: 'meramu-8',
+    title: 'Pengenalan dan Uji Coba Website Resmi Padukuhan Kebonagung',
     category: 'Digitalisasi',
-    date: 'April 2026',
-    location: 'Lab Komputasi & Dusun',
-    caption: 'Perancangan kerangka web responsif menggunakan React & Tailwind CSS untuk mempublikasikan profil dan produk UMKM dusun.',
+    date: '31 Agustus 2026',
+    location: 'Masjid Al-Huda Kebonagung',
+    caption: 'Pengenalan dan uji coba website resmi padukuhan untuk mempublikasikan profil dan produk UMKM dusun.',
     colorScheme: 'from-cream-200 via-purple-200 to-cream-100',
     iconSymbol: '💻',
   },
   {
-    id: 'meramu-7',
+    id: 'meramu-9',
     title: 'Pelatihan Pengelolaan Konten Digital untuk Pemuda Karang Taruna',
     category: 'Digitalisasi',
     date: 'April 2026',
@@ -100,17 +129,37 @@ const docPhotos: MeramuDocPhoto[] = [
     iconSymbol: '📱',
   },
   {
-    id: 'meramu-8',
-    title: 'Edukasi Gizi Balita & Pemberian Makanan Tambahan (PMT)',
+    id: 'meramu-10',
+    title: 'Silaturrahmi Bersama Kepala Dukuh dan RT/RW Kebonagung',
     category: 'Sosial',
-    date: 'Mei 2026',
-    location: 'Posyandu Cempaka Kebonagung',
-    caption: 'Penyuluhan gizi seimbang untuk pencegahan stunting serta pembagian formula makanan pendamping ASI kaya protein nabati.',
+    date: '11 Agustus 2026',
+    location: 'Kebonagung',
+    caption: 'Melakukan silaturrahmi dan diskusi santai bersama Kepala Dukuh dan RT/RW untuk mendengar aspirasi dan masukan terkait program pengabdian Tim Meramu HMTP.',
+    colorScheme: 'from-cream-100 via-purple-100 to-cream-300',
+    iconSymbol: '👶',
+  },
+   {
+    id: 'meramu-11',
+    title: 'Silaturrahmi Bersama Pimpinan Cabang Muhammadiyah Sleman dan Pimpinan Ranting Muhammadiyah Tridadi',
+    category: 'Sosial',
+    date: '11 Agustus 2026',
+    location: 'Kebonagung',
+    caption: 'Melakukan silaturrahmi dan diskusi santai bersama Pimpinan Cabang Muhammadiyah Sleman dan Pimpinan Ranting Muhammadiyah Tridadi untuk mendengar aspirasi dan masukan terkait program pengabdian Tim Meramu HMTP.',
     colorScheme: 'from-cream-100 via-purple-100 to-cream-300',
     iconSymbol: '👶',
   },
   {
-    id: 'meramu-9',
+    id: 'meramu-12',
+    title: 'Serah Terima Peninggalan Fisik & Penutupan Program Pengabdian',
+    category: 'Kemitraan',
+    date: 'Juni 2026',
+    location: 'Balai Padukuhan Kebonagung',
+    caption: 'Penyerahan plakat penghargaan, dokumen sistem informasi padukuhan, dan foto bersama Kepala Dukuh serta seluruh perwakilan warga.',
+    colorScheme: 'from-purple-200 via-cream-200 to-purple-100',
+    iconSymbol: '🎓',
+  },
+    {
+    id: 'meramu-13',
     title: 'Serah Terima Platform Digital & Penutupan Program Pengabdian',
     category: 'Kemitraan',
     date: 'Juni 2026',
@@ -127,6 +176,7 @@ interface MeramuPageProps {
 
 export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
   const [selectedPhoto, setSelectedPhoto] = useState<MeramuDocPhoto | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [activeFilter, setActiveFilter] = useState<string>('Semua');
 
   const categories = ['Semua', 'Pelatihan', 'Digitalisasi', 'Kemitraan', 'Sosial'];
@@ -439,28 +489,51 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.05 }}
                 whileHover={{ y: -6 }}
-                onClick={() => setSelectedPhoto(photo)}
+                onClick={() => {
+                  setSelectedPhoto(photo);
+                  setCurrentImageIndex(0);
+                }}
                 className="group cursor-pointer rounded-3xl bg-cream-50 border-2 border-purple hover:border-purple shadow-purple-sm hover:shadow-purple-md transition-all overflow-hidden flex flex-col justify-between"
               >
                 <div>
                   {/* Photo Visual Box */}
-                  <div className={`h-52 bg-gradient-to-br ${photo.colorScheme} p-4 flex flex-col justify-between relative overflow-hidden`}>
-                    <div className="absolute inset-0 bg-dots-pattern opacity-40 group-hover:scale-105 transition-transform duration-300 pointer-events-none" />
+                  <div className={`h-52 ${photo.images && photo.images.length > 0 ? 'bg-purple-950' : `bg-gradient-to-br ${photo.colorScheme}`} p-4 flex flex-col justify-between relative overflow-hidden`}>
+                    {photo.images && photo.images.length > 0 ? (
+                      <>
+                        <img
+                          src={photo.images[0]}
+                          alt={photo.title}
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-purple-950/80 via-purple-950/20 to-purple-950/40 pointer-events-none" />
+                      </>
+                    ) : (
+                      <>
+                        <div className="absolute inset-0 bg-dots-pattern opacity-40 group-hover:scale-105 transition-transform duration-300 pointer-events-none" />
+                        <div className="my-auto text-center text-4xl group-hover:scale-110 transition-transform">
+                          {photo.iconSymbol}
+                        </div>
+                      </>
+                    )}
 
                     <div className="flex items-center justify-between z-10">
                       <span className="px-3 py-1 rounded-full text-xs font-bold bg-cream text-purple border border-purple/20 shadow-sm">
                         {photo.category}
                       </span>
-                      <span className="p-2 rounded-xl bg-purple text-cream opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all shadow-sm">
-                        <Maximize2 className="w-3.5 h-3.5" />
-                      </span>
+                      <div className="flex items-center gap-1.5">
+                        {photo.images && photo.images.length > 1 && (
+                          <span className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-purple/90 text-cream backdrop-blur-sm border border-cream/20 shadow-sm">
+                            <Camera className="w-3 h-3" />
+                            <span>{photo.images.length} Foto</span>
+                          </span>
+                        )}
+                        <span className="p-2 rounded-xl bg-purple text-cream opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all shadow-sm">
+                          <Maximize2 className="w-3.5 h-3.5" />
+                        </span>
+                      </div>
                     </div>
 
-                    <div className="my-auto text-center text-4xl group-hover:scale-110 transition-transform">
-                      {photo.iconSymbol}
-                    </div>
-
-                    <div className="flex items-center justify-between text-[11px] font-semibold text-purple/80 bg-cream/85 px-3 py-1 rounded-lg backdrop-blur-sm border border-purple/10 z-10">
+                    <div className="flex items-center justify-between text-[11px] font-semibold text-purple/80 bg-cream/90 px-3 py-1 rounded-lg backdrop-blur-sm border border-purple/10 z-10">
                       <span>{photo.date}</span>
                       <span>{photo.location}</span>
                     </div>
@@ -512,7 +585,7 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
       <AnimatePresence>
         {selectedPhoto && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-purple-950/80 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-purple-950/85 backdrop-blur-sm"
             onClick={() => setSelectedPhoto(null)}
           >
             <motion.div
@@ -520,26 +593,93 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-2xl w-full bg-cream rounded-3xl border-2 border-purple shadow-2xl overflow-hidden"
+              className="relative max-w-3xl w-full bg-cream rounded-3xl border-2 border-purple shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
             >
-              <div className={`h-64 sm:h-80 bg-gradient-to-br ${selectedPhoto.colorScheme} p-6 flex flex-col justify-between relative`}>
+              {/* Visual Box / Photo Preview */}
+              <div className={`relative ${selectedPhoto.images && selectedPhoto.images.length > 0 ? 'h-72 sm:h-96 md:h-[420px] bg-purple-950' : `h-64 sm:h-80 bg-gradient-to-br ${selectedPhoto.colorScheme}`} p-4 sm:p-6 flex flex-col justify-between overflow-hidden shrink-0`}>
+                {selectedPhoto.images && selectedPhoto.images.length > 0 ? (
+                  <>
+                    <img
+                      src={selectedPhoto.images[currentImageIndex]}
+                      alt={`${selectedPhoto.title} - Foto ${currentImageIndex + 1}`}
+                      className="absolute inset-0 w-full h-full object-contain sm:object-cover bg-purple-950"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-purple-950/80 via-transparent to-purple-950/50 pointer-events-none" />
+
+                    {/* Navigation Buttons for Multi-photo */}
+                    {selectedPhoto.images.length > 1 && (
+                      <>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCurrentImageIndex((prev) => (prev === 0 ? selectedPhoto.images!.length - 1 : prev - 1));
+                          }}
+                          aria-label="Foto Sebelumnya"
+                          className="absolute left-3 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-purple-900/80 hover:bg-purple text-cream shadow-lg transition-all hover:scale-110 border border-cream/20"
+                        >
+                          <ChevronLeft className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCurrentImageIndex((prev) => (prev === selectedPhoto.images!.length - 1 ? 0 : prev + 1));
+                          }}
+                          aria-label="Foto Selanjutnya"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-purple-900/80 hover:bg-purple text-cream shadow-lg transition-all hover:scale-110 border border-cream/20"
+                        >
+                          <ChevronRight className="w-5 h-5" />
+                        </button>
+
+                        {/* Dot indicator */}
+                        <div className="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-purple-950/70 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-cream/20 shadow-md">
+                          {selectedPhoto.images.map((_, idx) => (
+                            <button
+                              key={idx}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setCurrentImageIndex(idx);
+                              }}
+                              aria-label={`Lihat Foto ${idx + 1}`}
+                              className={`h-2 rounded-full transition-all ${
+                                currentImageIndex === idx
+                                  ? 'bg-cream w-6'
+                                  : 'bg-cream/40 w-2 hover:bg-cream/70'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <div className="my-auto text-center text-6xl">
+                    {selectedPhoto.iconSymbol}
+                  </div>
+                )}
+
+                {/* Top header overlay inside modal visual box */}
                 <div className="flex items-center justify-between z-10">
-                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-cream text-purple border border-purple">
-                    {selectedPhoto.category}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-cream text-purple border border-purple shadow-sm">
+                      {selectedPhoto.category}
+                    </span>
+                    {selectedPhoto.images && selectedPhoto.images.length > 1 && (
+                      <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-purple/90 text-cream backdrop-blur-sm border border-cream/20 shadow-sm">
+                        {currentImageIndex + 1} / {selectedPhoto.images.length}
+                      </span>
+                    )}
+                  </div>
                   <button
                     onClick={() => setSelectedPhoto(null)}
-                    className="p-2 rounded-xl bg-cream border border-purple text-purple hover:bg-purple hover:text-cream transition-colors"
+                    className="p-2 rounded-xl bg-cream border border-purple text-purple hover:bg-purple hover:text-cream transition-colors shadow-sm"
+                    aria-label="Tutup modal"
                   >
                     <X className="w-5 h-5" />
                   </button>
                 </div>
 
-                <div className="my-auto text-center text-6xl">
-                  {selectedPhoto.iconSymbol}
-                </div>
-
-                <div className="flex items-center justify-between text-xs font-bold text-purple bg-cream/90 px-4 py-1.5 rounded-xl border border-purple/20">
+                {/* Bottom header overlay inside modal visual box */}
+                <div className="flex items-center justify-between text-xs font-bold text-purple bg-cream/95 px-4 py-1.5 rounded-xl border border-purple/20 z-10 backdrop-blur-sm shadow-sm">
                   <span className="flex items-center gap-1.5">
                     <Calendar className="w-3.5 h-3.5 text-purple" />
                     {selectedPhoto.date}
@@ -551,7 +691,30 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
                 </div>
               </div>
 
-              <div className="p-6 sm:p-8 space-y-3 bg-cream">
+              {/* Thumbnails strip (if multi-photo) */}
+              {selectedPhoto.images && selectedPhoto.images.length > 1 && (
+                <div className="px-6 pt-3 pb-2 flex gap-3 overflow-x-auto bg-cream-50 border-b border-purple/10">
+                  {selectedPhoto.images.map((img, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentImageIndex(idx)}
+                      className={`relative rounded-xl overflow-hidden border-2 w-20 h-14 shrink-0 transition-all ${
+                        currentImageIndex === idx
+                          ? 'border-purple ring-2 ring-purple/30 scale-105 shadow-sm'
+                          : 'border-purple/20 opacity-60 hover:opacity-100'
+                      }`}
+                    >
+                      <img src={img} alt={`Thumbnail ${idx + 1}`} className="w-full h-full object-cover" />
+                      <span className="absolute bottom-0.5 right-1 text-[9px] font-bold text-cream bg-purple/80 px-1 rounded">
+                        Foto #{idx + 1}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Details & Caption */}
+              <div className="p-6 sm:p-8 space-y-3 bg-cream overflow-y-auto">
                 <h3 className="font-extrabold text-xl text-purple">
                   {selectedPhoto.title}
                 </h3>
@@ -559,10 +722,15 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
                   {selectedPhoto.caption}
                 </p>
                 
-                <div className="pt-4 border-t border-purple/15 flex justify-end">
+                <div className="pt-4 border-t border-purple/15 flex items-center justify-between">
+                  <div className="text-xs text-purple/70">
+                    {selectedPhoto.images && selectedPhoto.images.length > 0 && (
+                      <span>Dokumentasi Resmi Kegiatan Tim MeRAMU UAD</span>
+                    )}
+                  </div>
                   <button
                     onClick={() => setSelectedPhoto(null)}
-                    className="px-6 py-2 rounded-xl font-bold bg-purple text-cream text-xs hover:bg-purple-800 transition-all"
+                    className="px-6 py-2 rounded-xl font-bold bg-purple text-cream text-xs hover:bg-purple-800 transition-all shadow-purple-sm"
                   >
                     Tutup Tampilan
                   </button>
