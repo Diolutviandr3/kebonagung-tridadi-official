@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   GraduationCap, 
@@ -23,6 +23,69 @@ import penerjunan1 from '../assets/penerjunan1.JPG';
 import penerjunan2 from '../assets/penerjunan2.JPG';
 import penerjunan3 from '../assets/penerjunan3.JPG';
 import penerjunan4 from '../assets/penerjunan4.JPG';
+
+import sosialisasitalastika1 from '../assets/sosialisasitalastika1.jpg';
+import sosialisasitalastika2 from '../assets/sosialisasitalastika2.jpg';
+import sosialisasitalastika3 from '../assets/sosialisasitalastika3.jpg';
+import sosialisasitalastika4 from '../assets/sosialisasitalastika4.jpg';
+
+import silaturrahimpcm1 from '../assets/silaturrahimpcm1.jpg';
+import silaturrahimpcm2 from '../assets/silaturrahimpcm2.JPG';
+import silaturrahimpcm3 from '../assets/silaturrahimpcm3.JPG';
+import silaturrahimpcm4 from '../assets/silaturrahimpcm4.JPG';
+
+import tpa1 from '../assets/tpa1.JPG';
+import tpa2 from '../assets/tpa2.JPG';
+import tpa3 from '../assets/tpa3.JPG';
+import tpa4 from '../assets/tpa4.JPG';
+import tpa5 from '../assets/tpa5.JPG';
+import tpa6 from '../assets/tpa6.JPG';
+import tpa7 from '../assets/tpa7.JPG';
+
+import kajian1 from '../assets/kajian1.jpg';
+import kajian2 from '../assets/kajian2.jpg';
+import kajian3 from '../assets/kajian3.jpg';
+import kajian4 from '../assets/kajian4.jpg';
+
+import tirakatan1 from '../assets/tirakatan1.jpg';
+import tirakatan2 from '../assets/tirakatan2.jpg';
+import tirakatan3 from '../assets/tirakatan3.JPG';
+import tirakatan4 from '../assets/tirakatan4.JPG';
+import tirakatan5 from '../assets/tirakatan5.JPG';
+import tirakatan6 from '../assets/tirakatan6.JPG';
+import tirakatan7 from '../assets/tirakatan7.JPG';
+import tirakatan8 from '../assets/tirakatan8.JPG';
+import tirakatan9 from '../assets/tirakatan9.JPG';
+
+import harisehat1 from '../assets/harisehat1.jpg';
+import harisehat2 from '../assets/harisehat2.jpg';
+import harisehat3 from '../assets/harisehat3.jpg';
+import harisehat5 from '../assets/harisehat5.jpg';
+
+import harikemerdekaan1 from '../assets/harikemerdekaan1.jpg';
+import harikemerdekaan2 from '../assets/harikemerdekaan2.jpg';
+import harikemerdekaan3 from '../assets/harikemerdekaan3.jpg';
+import harikemerdekaan4 from '../assets/harikemerdekaan4.jpg';
+import harikemerdekaan6 from '../assets/harikemerdekaan6.jpg';
+import harikemerdekaan7 from '../assets/harikemerdekaan7.jpg';
+import harikemerdekaan8 from '../assets/harikemerdekaan8.jpg';
+import harikemerdekaan9 from '../assets/harikemerdekaan9.jpg';
+import harikemerdekaan10 from '../assets/harikemerdekaan10.jpg';
+import harikemerdekaan11 from '../assets/harikemerdekaan11.JPG';
+import harikemerdekaan13 from '../assets/harikemerdekaan13.jpg';
+import harikemerdekaan14 from '../assets/harikemerdekaan14.jpg';
+import harikemerdekaan15 from '../assets/harikemerdekaan15.jpg';
+import harikemerdekaan16 from '../assets/harikemerdekaan16.jpg';
+import harikemerdekaan17 from '../assets/harikemerdekaan17.jpg';
+
+import karangtaruna1 from '../assets/karangtaruna1.jpg';
+import karangtaruna2 from '../assets/karangtaruna2.jpg';
+import karangtaruna3 from '../assets/karangtaruna3.jpg';
+import karangtaruna4 from '../assets/karangtaruna4.jpg';
+import karangtaruna5 from '../assets/karangtaruna5.jpg';
+import karangtaruna6 from '../assets/karangtaruna6.jpg';
+import karangtaruna7 from '../assets/karangtaruna7.jpg';
+import karangtaruna8 from '../assets/karangtaruna8.jpg';
 
 interface MeramuDocPhoto {
   id: string;
@@ -77,6 +140,7 @@ const docPhotos: MeramuDocPhoto[] = [
     caption: 'Sosialisasi pengolahan tepung talas dan inovasi camilan sehat bernilai jual tinggi bersama ibu-ibu KWT.',
     colorScheme: 'from-purple-100 via-cream-100 to-purple-200',
     iconSymbol: '🥣',
+    images: [sosialisasitalastika1, sosialisasitalastika2, sosialisasitalastika3, sosialisasitalastika4],
   },
   {
     id: 'meramu-5',
@@ -156,7 +220,8 @@ const docPhotos: MeramuDocPhoto[] = [
     location: 'Kebonagung',
     caption: 'Melakukan silaturrahmi dan diskusi santai bersama Pimpinan Cabang Muhammadiyah Sleman dan Pimpinan Ranting Muhammadiyah Tridadi untuk mendengar aspirasi dan masukan terkait program pengabdian Tim Meramu HMTP.',
     colorScheme: 'from-cream-100 via-purple-100 to-cream-300',
-    iconSymbol: '👶',
+    iconSymbol: '🤝',
+    images: [silaturrahimpcm1, silaturrahimpcm2, silaturrahimpcm3, silaturrahimpcm4],
   },
   {
     id: 'meramu-14',
@@ -176,7 +241,8 @@ const docPhotos: MeramuDocPhoto[] = [
     location: 'Masjid Al-Huda Kebonagung',
     caption: 'Tim MeRAMU HMTP UAD mengisi kegiatan belajar mengajar TPA (Taman Pendidikan Al-Quran) untuk anak-anak usia dini di Padukuhan Kebonagung.',
     colorScheme: 'from-purple-200 via-cream-200 to-purple-100',
-    iconSymbol: '🎓',
+    iconSymbol: '🕌',
+    images: [tpa1, tpa2, tpa3, tpa4, tpa5, tpa6, tpa7],
   },
   {
     id: 'meramu-16',
@@ -186,7 +252,8 @@ const docPhotos: MeramuDocPhoto[] = [
     location: 'Masjid Al-Huda Kebonagung',
     caption: 'Tim MeRAMU HMTP UAD mengisi kegiatan kajian rutin Malam Jumat di Masjid Al-Huda Kebonagung dengan tema penguatan karakter dan motivasi belajar bagi generasi Islam.',
     colorScheme: 'from-purple-200 via-cream-200 to-purple-100',
-    iconSymbol: '🎓',
+    iconSymbol: '📖',
+    images: [kajian1, kajian2, kajian3, kajian4],
   },
   {
     id: 'meramu-17',
@@ -196,7 +263,18 @@ const docPhotos: MeramuDocPhoto[] = [
     location: 'Kebonagung',
     caption: 'Tim MeRAMU HMTP UAD turut berpartisipasi dalam kegiatan Malam Tirakatan Peringatan HUT RI ke-81 di Padukuhan Kebonagung.',
     colorScheme: 'from-purple-200 via-cream-200 to-purple-100',
-    iconSymbol: '🎓',
+    iconSymbol: '🕯️',
+    images: [
+      tirakatan1,
+      tirakatan2,
+      tirakatan3,
+      tirakatan4,
+      tirakatan5,
+      tirakatan6,
+      tirakatan7,
+      tirakatan8,
+      tirakatan9
+    ],
   },
   {
     id: 'meramu-18',
@@ -206,27 +284,55 @@ const docPhotos: MeramuDocPhoto[] = [
     location: 'Kebonagung',
     caption: 'Tim MeRAMU HMTP UAD turut berpartisipasi dalam kegiatan Hari Sehat Bersama Masyarakat di Padukuhan Kebonagung.',
     colorScheme: 'from-purple-200 via-cream-200 to-purple-100',
-    iconSymbol: '🎓',
+    iconSymbol: '🏃',
+    images: [harisehat1, harisehat2, harisehat3, harisehat5],
   },
   {
     id: 'meramu-19',
-    title: 'Kegiatan Memperingati Hari Kemardekaan ',
+    title: 'Kegiatan Memperingati Hari Kemerdekaan',
     category: 'Sosial',
     date: 'Agustus 2026',
     location: 'Kebonagung',
-    caption: 'Tim MeRAMU HMTP UAD turut berpartisipasi dalam kegiatan memperingati Hari Kemerdekaan di Padukuhan Kebonagung.',
+    caption: 'Tim MeRAMU HMTP UAD turut berpartisipasi aktif dalam memeriahkan dan menyukseskan rangkaian perlombaan peringatan Hari Kemerdekaan RI bersama warga Padukuhan Kebonagung.',
     colorScheme: 'from-purple-200 via-cream-200 to-purple-100',
-    iconSymbol: '🎓',
+    iconSymbol: '🇮🇩',
+    images: [
+      harikemerdekaan1,
+      harikemerdekaan2,
+      harikemerdekaan3,
+      harikemerdekaan4,
+      harikemerdekaan6,
+      harikemerdekaan7,
+      harikemerdekaan8,
+      harikemerdekaan9,
+      harikemerdekaan10,
+      harikemerdekaan11,
+      harikemerdekaan13,
+      harikemerdekaan14,
+      harikemerdekaan15,
+      harikemerdekaan16,
+      harikemerdekaan17
+    ],
   },
   {
-    id: 'meramu-19',
+    id: 'meramu-20',
     title: 'Silaturrahmi Bersama Karang Taruna dan Kelompok Wanita Tani',
     category: 'Sosial',
     date: 'Agustus 2026',
     location: 'Kebonagung',
-    caption: '',
+    caption: 'Sesi silaturrahmi, diskusi sinergi, dan perumusan program bersama Karang Taruna serta Kelompok Wanita Tani (KWT) Kebonagung.',
     colorScheme: 'from-purple-200 via-cream-200 to-purple-100',
-    iconSymbol: '🎓',
+    iconSymbol: '🤝',
+    images: [
+      karangtaruna1,
+      karangtaruna2,
+      karangtaruna3,
+      karangtaruna4,
+      karangtaruna5,
+      karangtaruna6,
+      karangtaruna7,
+      karangtaruna8
+    ],
   },
 ];
 
@@ -238,6 +344,24 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
   const [selectedPhoto, setSelectedPhoto] = useState<MeramuDocPhoto | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [activeFilter, setActiveFilter] = useState<string>('Semua');
+
+  // Keyboard navigation for photo modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!selectedPhoto) return;
+      if (e.key === 'Escape') {
+        setSelectedPhoto(null);
+      } else if (selectedPhoto.images && selectedPhoto.images.length > 1) {
+        if (e.key === 'ArrowLeft') {
+          setCurrentImageIndex((prev) => (prev === 0 ? selectedPhoto.images!.length - 1 : prev - 1));
+        } else if (e.key === 'ArrowRight') {
+          setCurrentImageIndex((prev) => (prev === selectedPhoto.images!.length - 1 ? 0 : prev + 1));
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedPhoto]);
 
   const categories = ['Semua', 'Pelatihan', 'Digitalisasi', 'Kemitraan', 'Sosial'];
 
@@ -691,7 +815,7 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
                         </button>
 
                         {/* Dot indicator */}
-                        <div className="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-purple-950/70 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-cream/20 shadow-md">
+                        <div className="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 bg-purple-950/70 backdrop-blur-md px-3 py-1.5 rounded-full border border-cream/20 shadow-md max-w-[85%] overflow-x-auto">
                           {selectedPhoto.images.map((_, idx) => (
                             <button
                               key={idx}
@@ -700,10 +824,10 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
                                 setCurrentImageIndex(idx);
                               }}
                               aria-label={`Lihat Foto ${idx + 1}`}
-                              className={`h-2 rounded-full transition-all ${
+                              className={`h-1.5 rounded-full transition-all shrink-0 ${
                                 currentImageIndex === idx
-                                  ? 'bg-cream w-6'
-                                  : 'bg-cream/40 w-2 hover:bg-cream/70'
+                                  ? 'bg-cream w-5'
+                                  : 'bg-cream/40 w-1.5 hover:bg-cream/70'
                               }`}
                             />
                           ))}
