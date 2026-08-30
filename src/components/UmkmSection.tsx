@@ -1,23 +1,33 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Store, ShoppingBag, ArrowRight, Sparkles, ExternalLink, Tag, Search, X } from 'lucide-react';
-import { products } from '../data/umkmData';
+import { Store, ShoppingBag, ArrowRight, Sparkles, ExternalLink, Tag, Search, X, Camera } from 'lucide-react';
+import { getStoredProducts, type UmkmProduct } from '../data/umkmData';
+import type { PageType } from './Navbar';
 
 interface UmkmSectionProps {
-  onNavigate?: (page: 'beranda' | 'umkm' | 'kegiatan' | 'lokasi' | 'profil' | 'meramu') => void;
+  onNavigate?: (page: PageType) => void;
 }
 
 export const UmkmSection: React.FC<UmkmSectionProps> = ({ onNavigate }) => {
+  const [productsList, setProductsList] = useState<UmkmProduct[]>(() => getStoredProducts());
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Semua');
 
-  const categories = useMemo(() => {
-    const cats = ['Semua', ...Array.from(new Set(products.map(p => p.category)))];
-    return cats;
+  useEffect(() => {
+    const handleUpdate = () => {
+      setProductsList(getStoredProducts());
+    };
+    window.addEventListener('umkm_updated', handleUpdate);
+    return () => window.removeEventListener('umkm_updated', handleUpdate);
   }, []);
 
+  const categories = useMemo(() => {
+    const cats = ['Semua', ...Array.from(new Set(productsList.map(p => p.category)))];
+    return cats;
+  }, [productsList]);
+
   const filteredProducts = useMemo(() => {
-    return products.filter(p => {
+    return productsList.filter(p => {
       const matchCategory = selectedCategory === 'Semua' || p.category === selectedCategory;
       const query = searchQuery.toLowerCase().trim();
       const matchQuery = !query || 
@@ -28,7 +38,7 @@ export const UmkmSection: React.FC<UmkmSectionProps> = ({ onNavigate }) => {
         p.badge.toLowerCase().includes(query);
       return matchCategory && matchQuery;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [productsList, searchQuery, selectedCategory]);
 
   return (
     <section id="umkm" className="pt-28 sm:pt-32 pb-20 md:pb-28 bg-cream relative">
@@ -113,7 +123,7 @@ export const UmkmSection: React.FC<UmkmSectionProps> = ({ onNavigate }) => {
 
             {/* Result Count Badge */}
             <div className="text-xs font-bold text-purple/75 self-end sm:self-center bg-purple/10 px-3.5 py-2 rounded-xl border border-purple/15">
-              Menampilkan <span className="text-purple font-extrabold">{filteredProducts.length}</span> dari {products.length} Produk
+              Menampilkan <span className="text-purple font-extrabold">{filteredProducts.length}</span> dari {productsList.length} Produk
             </div>
           </div>
 
@@ -150,14 +160,29 @@ export const UmkmSection: React.FC<UmkmSectionProps> = ({ onNavigate }) => {
               className="group rounded-3xl bg-cream-50/90 border-2 border-purple/20 hover:border-purple shadow-purple-sm hover:shadow-purple-md transition-all duration-300 flex flex-col justify-between overflow-hidden"
             >
               <div>
-                {/* Product Image Placeholder Box */}
-                <div className={`relative h-48 bg-gradient-to-br ${product.imageBg} border-b-2 border-purple/15 flex flex-col items-center justify-center p-4 overflow-hidden group-hover:scale-[1.02] transition-transform duration-300`}>
-                  {/* Subtle decorative pattern inside placeholder */}
-                  <div className="absolute inset-0 bg-dots-pattern opacity-40" />
-                  
+                {/* Product Photo Container */}
+                <div className="relative h-52 bg-purple-950/20 border-b-2 border-purple/15 overflow-hidden">
+                  {product.imageUrl ? (
+                    <>
+                      <img
+                        src={product.imageUrl}
+                        alt={product.name}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-purple-950/80 via-transparent to-purple-950/30 pointer-events-none" />
+                    </>
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center bg-purple-900/10 text-purple/40 space-y-1">
+                      <Camera className="w-8 h-8" />
+                      <span className="text-[11px] font-bold">Foto Produk UMKM</span>
+                    </div>
+                  )}
+
                   {/* Category & Badge */}
                   <div className="absolute top-3 left-3 z-10">
-                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-cream/90 text-purple border border-purple/20 shadow-sm backdrop-blur-sm">
+                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-cream text-purple border border-purple/20 shadow-sm backdrop-blur-sm">
                       {product.category}
                     </span>
                   </div>
@@ -169,18 +194,8 @@ export const UmkmSection: React.FC<UmkmSectionProps> = ({ onNavigate }) => {
                     </span>
                   </div>
 
-                  {/* Placeholder Art / Icon */}
-                  <div className="relative z-10 flex flex-col items-center justify-center text-center space-y-2">
-                    <div className="w-16 h-16 rounded-2xl bg-cream border-2 border-purple/20 shadow-sm flex items-center justify-center text-3xl group-hover:rotate-6 transition-transform">
-                      {product.iconName}
-                    </div>
-                    <span className="text-xs font-bold text-purple/80 uppercase tracking-wider">
-                      Foto Produk UMKM
-                    </span>
-                  </div>
-
                   {/* Seller label */}
-                  <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between text-[11px] font-semibold text-purple/75 bg-cream/80 px-3 py-1 rounded-lg backdrop-blur-sm border border-purple/10">
+                  <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between text-[11px] font-semibold text-purple bg-cream/90 px-3 py-1 rounded-lg backdrop-blur-sm border border-purple/15 z-10">
                     <span className="truncate">Penjual: {product.seller}</span>
                     <span className="text-purple font-bold">Kebonagung</span>
                   </div>
@@ -261,10 +276,10 @@ export const UmkmSection: React.FC<UmkmSectionProps> = ({ onNavigate }) => {
           </div>
           <button
             type="button"
-            onClick={() => onNavigate ? onNavigate('lokasi') : undefined}
+            onClick={() => onNavigate ? onNavigate('admin-umkm') : undefined}
             className="px-5 py-2.5 rounded-xl text-xs font-bold border-2 border-purple text-purple hover:bg-purple hover:text-cream transition-all shrink-0 cursor-pointer"
           >
-            Daftar Sekarang
+            Daftar Sekarang (Admin Portal)
           </button>
         </div>
 

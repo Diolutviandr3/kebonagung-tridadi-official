@@ -9,6 +9,7 @@ import { AboutSection } from './components/AboutSection';
 import { Features } from './components/Features';
 import { Footer } from './components/Footer';
 import { MeramuPage } from './components/MeramuPage';
+import { AdminUmkmPage } from './components/AdminUmkmPage';
 import { ScrollToTop } from './components/ScrollToTop';
 
 export const App: React.FC = () => {
@@ -16,7 +17,7 @@ export const App: React.FC = () => {
 
   // Synchronize initial page and hash changes for direct URL access & browser back/forward
   useEffect(() => {
-    const validPages: PageType[] = ['beranda', 'umkm', 'kegiatan', 'lokasi', 'profil', 'meramu'];
+    const validPages: PageType[] = ['beranda', 'umkm', 'kegiatan', 'lokasi', 'profil', 'meramu', 'admin-umkm'];
 
     const getPageFromHash = (): PageType => {
       const cleanHash = window.location.hash.replace(/^#\/?/, '') as PageType;
@@ -92,6 +93,11 @@ export const App: React.FC = () => {
             {/* Halaman: Khusus Tim MeRAMU HMTP UAD 2026 */}
             {currentPage === 'meramu' && (
               <MeramuPage onBackToHome={() => navigateTo('beranda')} />
+            )}
+
+            {/* Halaman: Khusus Admin Pengurus UMKM (Login & CRUD Manajemen Produk) */}
+            {currentPage === 'admin-umkm' && (
+              <AdminUmkmPage onNavigate={navigateTo} />
             )}
           </motion.div>
         </AnimatePresence>

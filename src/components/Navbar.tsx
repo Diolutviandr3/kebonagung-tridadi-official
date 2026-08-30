@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Landmark, ChevronRight, GraduationCap } from 'lucide-react';
 
-export type PageType = 'beranda' | 'umkm' | 'kegiatan' | 'lokasi' | 'profil' | 'meramu';
+export type PageType = 'beranda' | 'umkm' | 'kegiatan' | 'lokasi' | 'profil' | 'meramu' | 'admin-umkm';
 
 interface NavItem {
   id: PageType;

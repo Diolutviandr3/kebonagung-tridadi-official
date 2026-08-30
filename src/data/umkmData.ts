@@ -5,12 +5,11 @@
   description: string;
   price: string;
   seller: string;
-  imageBg: string;
-  iconName: string;
+  imageUrl?: string;
   badge: string;
 }
 
-export const products: UmkmProduct[] = [
+export const defaultProducts: UmkmProduct[] = [
   {
     id: 'prod-1',
     name: 'Beras Organik Kebonagung Wangi',
@@ -18,8 +17,7 @@ export const products: UmkmProduct[] = [
     description: 'Beras pulen hasil panen langsung dari persawahan asri Kebonagung, ditanam tanpa pestisida kimia berlebih.',
     price: 'Rp 68.000 / 5kg',
     seller: 'Kelompok Tani Makmur',
-    imageBg: 'from-purple-100 to-cream-200',
-    iconName: '🌾',
+    imageUrl: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80',
     badge: 'Produk Unggulan',
   },
   {
@@ -29,8 +27,7 @@ export const products: UmkmProduct[] = [
     description: 'Keripik renyah gurih dengan bumbu rempah pilihan racikan ibu-ibu warga Kebonagung. Bebas bahan pengawet.',
     price: 'Rp 15.000 / bks',
     seller: 'Dapur Bu Sugeng (RT 02)',
-    imageBg: 'from-cream-200 to-purple-100',
-    iconName: '🥔',
+    imageUrl: 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=600&q=80',
     badge: 'Paling Laris',
   },
   {
@@ -40,8 +37,7 @@ export const products: UmkmProduct[] = [
     description: 'Sambal belut pedas gurih dengan cita rasa khas Sleman, diolah higienis dan siap santap bersama nasi hangat.',
     price: 'Rp 28.000 / toples',
     seller: 'Warung Bu Sri',
-    imageBg: 'from-purple-100 to-cream-300',
-    iconName: '🌶️',
+    imageUrl: 'https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=600&q=80',
     badge: 'Khas Dusun',
   },
   {
@@ -51,8 +47,7 @@ export const products: UmkmProduct[] = [
     description: 'Besek, tempat buah, dan hiasan rumah estetik berbahan dasar bambu lokal karya perajin terampil Kebonagung.',
     price: 'Mulai Rp 20.000',
     seller: 'Kriya Bambu Lestari',
-    imageBg: 'from-cream-300 to-purple-200',
-    iconName: '🧺',
+    imageUrl: 'https://images.unsplash.com/photo-1615865417491-9941019fbc00?auto=format&fit=crop&w=600&q=80',
     badge: 'Handmade',
   },
   {
@@ -62,8 +57,7 @@ export const products: UmkmProduct[] = [
     description: 'Minuman herbal alami penghangat tubuh dari paduan jahe merah, serai, kayu manis, dan cengkeh segar.',
     price: 'Rp 22.000 / pack',
     seller: 'Herbal Berkah Sehat (RT 04)',
-    imageBg: 'from-purple-200 to-cream-200',
-    iconName: '🍵',
+    imageUrl: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80',
     badge: 'Sehat Alami',
   },
   {
@@ -73,8 +67,76 @@ export const products: UmkmProduct[] = [
     description: 'Aneka kue lemper, klepon, nagasari, dan lapis legit legit yang cocok untuk konsumsi harian dan pesanan hajatan.',
     price: 'Mulai Rp 2.500 / pcs',
     seller: 'Pawon Guyub Kebonagung',
-    imageBg: 'from-cream-100 to-purple-100',
-    iconName: '🥟',
+    imageUrl: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80',
     badge: 'Segar Tiap Hari',
   },
 ];
+
+export const products = defaultProducts;
+
+const STORAGE_KEY = 'kebonagung_umkm_products';
+
+export const getStoredProducts = (): UmkmProduct[] => {
+  if (typeof window === 'undefined') return defaultProducts;
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        // Upgrade legacy items if any had iconName
+        return parsed.map((item, idx) => {
+          if (!item.imageUrl && defaultProducts[idx]) {
+            return { ...item, imageUrl: defaultProducts[idx].imageUrl };
+          }
+          return item;
+        });
+      }
+    }
+  } catch (err) {
+    console.error('Failed to load stored UMKM products:', err);
+  }
+  return defaultProducts;
+};
+
+export const saveStoredProducts = (items: UmkmProduct[]): void => {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    window.dispatchEvent(new Event('umkm_updated'));
+  } catch (err) {
+    console.error('Failed to save UMKM products:', err);
+  }
+};
+
+export const addStoredProduct = (newProduct: Omit<UmkmProduct, 'id'>): UmkmProduct => {
+  const current = getStoredProducts();
+  const productWithId: UmkmProduct = {
+    ...newProduct,
+    id: `prod-${Date.now()}`,
+  };
+  const updated = [productWithId, ...current];
+  saveStoredProducts(updated);
+  return productWithId;
+};
+
+export const updateStoredProduct = (updatedProduct: UmkmProduct): void => {
+  const current = getStoredProducts();
+  const updated = current.map(p => (p.id === updatedProduct.id ? updatedProduct : p));
+  saveStoredProducts(updated);
+};
+
+export const deleteStoredProduct = (id: string): void => {
+  const current = getStoredProducts();
+  const updated = current.filter(p => p.id !== id);
+  saveStoredProducts(updated);
+};
+
+export const resetStoredProducts = (): void => {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+    window.dispatchEvent(new Event('umkm_updated'));
+  } catch (err) {
+    console.error('Failed to reset UMKM products:', err);
+  }
+};
