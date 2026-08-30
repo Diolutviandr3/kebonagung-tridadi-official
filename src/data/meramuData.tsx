@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Cpu, Sparkles, Award, Layers, Heart } from 'lucide-react';
 
 import penerjunan1 from '../assets/penerjunan1.JPG';
@@ -10,6 +10,24 @@ import sosialisasitalastika1 from '../assets/sosialisasitalastika1.jpg';
 import sosialisasitalastika2 from '../assets/sosialisasitalastika2.jpg';
 import sosialisasitalastika3 from '../assets/sosialisasitalastika3.jpg';
 import sosialisasitalastika4 from '../assets/sosialisasitalastika4.jpg';
+
+import talastika1 from '../assets/talastika1.jpg';
+import talastika2 from '../assets/talastika2.jpg';
+import talastika3 from '../assets/talastika3.JPG';
+import talastika4 from '../assets/talastika4.JPG';
+import talastika5 from '../assets/talastika5.JPG';
+import talastika6 from '../assets/talastika6.JPG';
+
+import vesta1 from '../assets/vesta1.jpg';
+import vesta2 from '../assets/vesta2.jpg';
+import vesta3 from '../assets/vesta3.JPG';
+import vesta4 from '../assets/vesta4.JPG';
+import vesta5 from '../assets/vesta5.JPG';
+import vesta6 from '../assets/vesta6.JPG';
+import vesta7 from '../assets/vesta7.JPG';
+import vesta8 from '../assets/vesta8.JPG';
+import vesta9 from '../assets/vesta9.JPG';
+import vesta10 from '../assets/vesta10.JPG';
 
 import silaturrahimpcm1 from '../assets/silaturrahimpcm1.jpg';
 import silaturrahimpcm2 from '../assets/silaturrahimpcm2.JPG';
@@ -144,6 +162,7 @@ export const docPhotos: MeramuDocPhoto[] = [
     caption: 'Praktik langsung proses pembuatan tepung talas bersama ibu-ibu KWT.',
     colorScheme: 'from-purple-100 via-cream-100 to-purple-200',
     iconSymbol: '🥣',
+    images: [talastika1, talastika2, talastika3, talastika4, talastika5, talastika6],
   },
   {
     id: 'meramu-6',
@@ -154,6 +173,7 @@ export const docPhotos: MeramuDocPhoto[] = [
     caption: 'Praktik langsung pengolahan inovasi nugget serta beras analog berbasis tepung talas bersama ibu-ibu KWT.',
     colorScheme: 'from-purple-100 via-cream-100 to-purple-200',
     iconSymbol: '🥣',
+    images: [vesta1, vesta2, vesta3, vesta4, vesta5, vesta6, vesta7, vesta8, vesta9, vesta10],
   },
   {
     id: 'meramu-7',
