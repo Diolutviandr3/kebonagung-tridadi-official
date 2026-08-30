@@ -9,6 +9,7 @@ import { AboutSection } from './components/AboutSection';
 import { Features } from './components/Features';
 import { Footer } from './components/Footer';
 import { MeramuPage } from './components/MeramuPage';
+import { ScrollToTop } from './components/ScrollToTop';
 
 export const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<PageType>('beranda');
@@ -98,6 +99,9 @@ export const App: React.FC = () => {
 
       {/* 3. Bottom Footer Section (Always at the bottom) */}
       <Footer onNavigate={navigateTo} />
+
+      {/* 4. Floating Scroll to Top Button */}
+      <ScrollToTop />
     </div>
   );
 };

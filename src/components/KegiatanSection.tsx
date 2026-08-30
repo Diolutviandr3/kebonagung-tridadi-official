@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Calendar, 
@@ -11,7 +11,8 @@ import {
   Camera, 
   Grid, 
   Layers, 
-  Info 
+  Info,
+  Search
 } from 'lucide-react';
 import { activities, type ActivityItem } from '../data/kegiatanData';
 
@@ -20,6 +21,27 @@ export const KegiatanSection: React.FC = () => {
   const [selectedActivity, setSelectedActivity] = useState<ActivityItem | null>(null);
   const [activePhotoIdx, setActivePhotoIdx] = useState<number>(0);
   const [viewMode, setViewMode] = useState<'carousel' | 'grid'>('carousel');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('Semua');
+
+  const categories = useMemo(() => {
+    return ['Semua', ...Array.from(new Set(activities.map(a => a.category)))];
+  }, []);
+
+  const filteredActivities = useMemo(() => {
+    return activities.filter(a => {
+      const matchCat = selectedCategory === 'Semua' || a.category === selectedCategory;
+      const query = searchQuery.toLowerCase().trim();
+      const matchQuery = !query ||
+        a.title.toLowerCase().includes(query) ||
+        a.description.toLowerCase().includes(query) ||
+        a.location.toLowerCase().includes(query) ||
+        a.schedule.toLowerCase().includes(query) ||
+        a.organizer.toLowerCase().includes(query) ||
+        a.category.toLowerCase().includes(query);
+      return matchCat && matchQuery;
+    });
+  }, [searchQuery, selectedCategory]);
 
   // Handle escape key to close modal
   useEffect(() => {
@@ -69,7 +91,7 @@ export const KegiatanSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
+        <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -101,16 +123,67 @@ export const KegiatanSection: React.FC = () => {
           </motion.p>
         </div>
 
+        {/* Search & Category Filter Bar */}
+        <div className="mb-10 space-y-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 justify-between">
+            {/* Search Input Box */}
+            <div className="relative w-full sm:max-w-md">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-purple/60" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Cari kegiatan, lokasi, jadwal, atau topik..."
+                className="w-full pl-11 pr-10 py-3 rounded-2xl bg-cream border-2 border-purple/20 focus:border-purple focus:ring-2 focus:ring-purple/20 text-purple placeholder:text-purple/40 text-sm font-medium transition-all outline-none"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 rounded-full text-purple/60 hover:text-purple hover:bg-purple/10 transition-colors cursor-pointer"
+                  aria-label="Hapus pencarian"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+
+            {/* Result Count Badge */}
+            <div className="text-xs font-bold text-purple/75 self-end sm:self-center bg-purple/10 px-3.5 py-2 rounded-xl border border-purple/15">
+              Menampilkan <span className="text-purple font-extrabold">{filteredActivities.length}</span> dari {activities.length} Kegiatan
+            </div>
+          </div>
+
+          {/* Category Chips */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                  selectedCategory === cat
+                    ? 'bg-purple text-cream shadow-sm'
+                    : 'bg-cream text-purple/80 border border-purple/20 hover:border-purple/50 hover:bg-purple/5'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Clickable Activity Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {activities.map((activity, idx) => (
-            <motion.div
-              key={activity.id}
-              onClick={() => openActivityModal(activity)}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.08, duration: 0.5 }}
+        {filteredActivities.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredActivities.map((activity, idx) => (
+              <motion.div
+                key={activity.id}
+                onClick={() => openActivityModal(activity)}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.06, duration: 0.4 }}
               whileHover={{ y: -8, transition: { duration: 0.25 } }}
               className="group cursor-pointer rounded-3xl bg-cream border-2 border-purple/20 hover:border-purple shadow-purple-sm hover:shadow-purple-lg transition-all duration-300 flex flex-col justify-between overflow-hidden relative"
               role="button"
@@ -194,6 +267,26 @@ export const KegiatanSection: React.FC = () => {
             </motion.div>
           ))}
         </div>
+        ) : (
+          <div className="text-center py-16 px-4 rounded-3xl bg-cream border-2 border-dashed border-purple/25 space-y-4">
+            <div className="w-14 h-14 mx-auto rounded-2xl bg-purple/10 flex items-center justify-center text-2xl">
+              🔍
+            </div>
+            <div className="space-y-1 max-w-md mx-auto">
+              <h3 className="font-bold text-base text-purple">Kegiatan Tidak Ditemukan</h3>
+              <p className="text-xs text-purple/75 leading-relaxed">
+                Tidak ada agenda kegiatan yang sesuai dengan kata kunci "{searchQuery}". Silakan coba kata kunci lain atau reset filter.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => { setSearchQuery(''); setSelectedCategory('Semua'); }}
+              className="px-5 py-2.5 rounded-xl text-xs font-bold bg-purple text-cream hover:bg-purple-800 transition-all shadow-sm cursor-pointer"
+            >
+              Reset Pencarian
+            </button>
+          </div>
+        )}
 
         {/* Modal Dialog Pop-up for Activity & Photo Gallery */}
         <AnimatePresence>

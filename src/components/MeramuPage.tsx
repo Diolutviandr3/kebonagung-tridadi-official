@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   GraduationCap, 
@@ -12,7 +12,8 @@ import {
   MapPin,
   ChevronLeft,
   ChevronRight,
-  Camera
+  Camera,
+  Search
 } from 'lucide-react';
 import { 
   docPhotos, 
@@ -29,6 +30,7 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
   const [selectedPhoto, setSelectedPhoto] = useState<MeramuDocPhoto | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [activeFilter, setActiveFilter] = useState<string>('Semua');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   // Keyboard navigation for photo modal
   useEffect(() => {
@@ -50,9 +52,19 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
 
   const categories = meramuCategories;
 
-  const filteredPhotos = activeFilter === 'Semua'
-    ? docPhotos
-    : docPhotos.filter(p => p.category === activeFilter);
+  const filteredPhotos = useMemo(() => {
+    return docPhotos.filter(photo => {
+      const matchCategory = activeFilter === 'Semua' || photo.category === activeFilter;
+      const query = searchQuery.toLowerCase().trim();
+      const matchQuery = !query ||
+        photo.title.toLowerCase().includes(query) ||
+        photo.caption.toLowerCase().includes(query) ||
+        photo.location.toLowerCase().includes(query) ||
+        photo.date.toLowerCase().includes(query) ||
+        photo.category.toLowerCase().includes(query);
+      return matchCategory && matchQuery;
+    });
+  }, [activeFilter, searchQuery]);
 
   return (
     <div className="min-h-screen bg-cream text-purple pt-24 pb-20 selection:bg-purple selection:text-cream">
@@ -269,17 +281,49 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
                 Kumpulan bukti foto pelaksanaan kegiatan, bimbingan teknis, workshop, dan interaksi hangat bersama masyarakat Kebonagung.
               </p>
             </div>
+          </div>
+
+          {/* Search & Category Filter Controls */}
+          <div className="space-y-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 justify-between">
+              {/* Search Input Box */}
+              <div className="relative w-full sm:max-w-md">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-purple/60" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Cari dokumentasi foto kegiatan..."
+                  className="w-full pl-11 pr-10 py-3 rounded-2xl bg-cream-50 border-2 border-purple/20 focus:border-purple focus:ring-2 focus:ring-purple/20 text-purple placeholder:text-purple/40 text-sm font-medium transition-all outline-none"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 rounded-full text-purple/60 hover:text-purple hover:bg-purple/10 transition-colors cursor-pointer"
+                    aria-label="Hapus pencarian"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+
+              {/* Result Count Badge */}
+              <div className="text-xs font-bold text-purple/75 self-end sm:self-center bg-purple/10 px-3.5 py-2 rounded-xl border border-purple/15">
+                Menampilkan <span className="text-purple font-extrabold">{filteredPhotos.length}</span> dari {docPhotos.length} Dokumentasi
+              </div>
+            </div>
 
             {/* Category Filter Pills */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveFilter(cat)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                  className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                     activeFilter === cat
                       ? 'bg-purple text-cream shadow-purple-sm'
-                      : 'bg-cream-50 border border-purple/20 text-purple hover:bg-purple/10'
+                      : 'bg-cream-50/80 border border-purple/20 text-purple hover:bg-purple/10'
                   }`}
                 >
                   {cat}
@@ -289,87 +333,108 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
           </div>
 
           {/* Photo Gallery Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredPhotos.map((photo, idx) => (
-              <motion.div
-                key={photo.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.05 }}
-                whileHover={{ y: -6 }}
-                onClick={() => {
-                  setSelectedPhoto(photo);
-                  setCurrentImageIndex(0);
-                }}
-                className="group cursor-pointer rounded-3xl bg-cream-50 border-2 border-purple hover:border-purple shadow-purple-sm hover:shadow-purple-md transition-all overflow-hidden flex flex-col justify-between"
-              >
-                <div>
-                  {/* Photo Visual Box */}
-                  <div className={`h-52 ${photo.images && photo.images.length > 0 ? 'bg-purple-950' : `bg-gradient-to-br ${photo.colorScheme}`} p-4 flex flex-col justify-between relative overflow-hidden`}>
-                    {photo.images && photo.images.length > 0 ? (
-                      <>
-                        <img
-                          src={photo.images[0]}
-                          alt={photo.title}
-                          loading="lazy"
-                          decoding="async"
-                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-purple-950/80 via-purple-950/20 to-purple-950/40 pointer-events-none" />
-                      </>
-                    ) : (
-                      <>
-                        <div className="absolute inset-0 bg-dots-pattern opacity-40 group-hover:scale-105 transition-transform duration-300 pointer-events-none" />
-                        <div className="my-auto text-center text-4xl group-hover:scale-110 transition-transform">
-                          {photo.iconSymbol}
-                        </div>
-                      </>
-                    )}
+          {filteredPhotos.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredPhotos.map((photo, idx) => (
+                <motion.div
+                  key={photo.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.04 }}
+                  whileHover={{ y: -6 }}
+                  onClick={() => {
+                    setSelectedPhoto(photo);
+                    setCurrentImageIndex(0);
+                  }}
+                  className="group cursor-pointer rounded-3xl bg-cream-50 border-2 border-purple hover:border-purple shadow-purple-sm hover:shadow-purple-md transition-all overflow-hidden flex flex-col justify-between"
+                >
+                  <div>
+                    {/* Photo Visual Box */}
+                    <div className={`h-52 ${photo.images && photo.images.length > 0 ? 'bg-purple-950' : `bg-gradient-to-br ${photo.colorScheme}`} p-4 flex flex-col justify-between relative overflow-hidden`}>
+                      {photo.images && photo.images.length > 0 ? (
+                        <>
+                          <img
+                            src={photo.images[0]}
+                            alt={photo.title}
+                            loading="lazy"
+                            decoding="async"
+                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-purple-950/80 via-purple-950/20 to-purple-950/40 pointer-events-none" />
+                        </>
+                      ) : (
+                        <>
+                          <div className="absolute inset-0 bg-dots-pattern opacity-40 group-hover:scale-105 transition-transform duration-300 pointer-events-none" />
+                          <div className="my-auto text-center text-4xl group-hover:scale-110 transition-transform">
+                            {photo.iconSymbol}
+                          </div>
+                        </>
+                      )}
 
-                    <div className="flex items-center justify-between z-10">
-                      <span className="px-3 py-1 rounded-full text-xs font-bold bg-cream text-purple border border-purple/20 shadow-sm">
-                        {photo.category}
-                      </span>
-                      <div className="flex items-center gap-1.5">
-                        {photo.images && photo.images.length > 1 && (
-                          <span className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-purple/90 text-cream backdrop-blur-sm border border-cream/20 shadow-sm">
-                            <Camera className="w-3 h-3" />
-                            <span>{photo.images.length} Foto</span>
-                          </span>
-                        )}
-                        <span className="p-2 rounded-xl bg-purple text-cream opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all shadow-sm">
-                          <Maximize2 className="w-3.5 h-3.5" />
+                      <div className="flex items-center justify-between z-10">
+                        <span className="px-3 py-1 rounded-full text-xs font-bold bg-cream text-purple border border-purple/20 shadow-sm">
+                          {photo.category}
                         </span>
+                        <div className="flex items-center gap-1.5">
+                          {photo.images && photo.images.length > 1 && (
+                            <span className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-purple/90 text-cream backdrop-blur-sm border border-cream/20 shadow-sm">
+                              <Camera className="w-3 h-3" />
+                              <span>{photo.images.length} Foto</span>
+                            </span>
+                          )}
+                          <span className="p-2 rounded-xl bg-purple text-cream opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all shadow-sm">
+                            <Maximize2 className="w-3.5 h-3.5" />
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between text-[11px] font-semibold text-purple/80 bg-cream/90 px-3 py-1 rounded-lg backdrop-blur-sm border border-purple/10 z-10">
+                        <span>{photo.date}</span>
+                        <span>{photo.location}</span>
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between text-[11px] font-semibold text-purple/80 bg-cream/90 px-3 py-1 rounded-lg backdrop-blur-sm border border-purple/10 z-10">
-                      <span>{photo.date}</span>
-                      <span>{photo.location}</span>
+                    {/* Photo Content */}
+                    <div className="p-5 space-y-2">
+                      <h3 className="font-bold text-base text-purple group-hover:text-purple-800 transition-colors leading-snug">
+                        {photo.title}
+                      </h3>
+                      <p className="text-xs text-purple/80 leading-relaxed line-clamp-3 text-justify">
+                        {photo.caption}
+                      </p>
                     </div>
                   </div>
 
-                  {/* Photo Content */}
-                  <div className="p-5 space-y-2">
-                    <h3 className="font-bold text-base text-purple group-hover:text-purple-800 transition-colors leading-snug">
-                      {photo.title}
-                    </h3>
-                    <p className="text-xs text-purple/80 leading-relaxed line-clamp-3 text-justify">
-                      {photo.caption}
-                    </p>
+                  <div className="p-5 pt-0">
+                    <div className="pt-3 border-t border-purple/15 flex items-center justify-between text-xs font-bold text-purple">
+                      <span>Lihat Dokumentasi</span>
+                      <span className="group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
                   </div>
-                </div>
-
-                <div className="p-5 pt-0">
-                  <div className="pt-3 border-t border-purple/15 flex items-center justify-between text-xs font-bold text-purple">
-                    <span>Lihat Dokumentasi</span>
-                    <span className="group-hover:translate-x-1 transition-transform">→</span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16 px-4 rounded-3xl bg-cream-50 border-2 border-dashed border-purple/25 space-y-4">
+              <div className="w-14 h-14 mx-auto rounded-2xl bg-purple/10 flex items-center justify-center text-2xl">
+                🔍
+              </div>
+              <div className="space-y-1 max-w-md mx-auto">
+                <h3 className="font-bold text-base text-purple">Dokumentasi Tidak Ditemukan</h3>
+                <p className="text-xs text-purple/75 leading-relaxed">
+                  Tidak ada dokumentasi kegiatan yang sesuai dengan kata kunci "{searchQuery}". Silakan coba kata kunci lain atau reset filter.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => { setSearchQuery(''); setActiveFilter('Semua'); }}
+                className="px-5 py-2.5 rounded-xl text-xs font-bold bg-purple text-cream hover:bg-purple-800 transition-all shadow-sm cursor-pointer"
+              >
+                Reset Pencarian
+              </button>
+            </div>
+          )}
 
         </section>
 

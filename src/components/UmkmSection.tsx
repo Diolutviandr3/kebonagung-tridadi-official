@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Store, ShoppingBag, ArrowRight, Sparkles, ExternalLink, Tag } from 'lucide-react';
+import { Store, ShoppingBag, ArrowRight, Sparkles, ExternalLink, Tag, Search, X } from 'lucide-react';
 import { products } from '../data/umkmData';
 
 interface UmkmSectionProps {
@@ -8,12 +8,34 @@ interface UmkmSectionProps {
 }
 
 export const UmkmSection: React.FC<UmkmSectionProps> = ({ onNavigate }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('Semua');
+
+  const categories = useMemo(() => {
+    const cats = ['Semua', ...Array.from(new Set(products.map(p => p.category)))];
+    return cats;
+  }, []);
+
+  const filteredProducts = useMemo(() => {
+    return products.filter(p => {
+      const matchCategory = selectedCategory === 'Semua' || p.category === selectedCategory;
+      const query = searchQuery.toLowerCase().trim();
+      const matchQuery = !query || 
+        p.name.toLowerCase().includes(query) ||
+        p.description.toLowerCase().includes(query) ||
+        p.seller.toLowerCase().includes(query) ||
+        p.category.toLowerCase().includes(query) ||
+        p.badge.toLowerCase().includes(query);
+      return matchCategory && matchQuery;
+    });
+  }, [searchQuery, selectedCategory]);
+
   return (
     <section id="umkm" className="pt-28 sm:pt-32 pb-20 md:pb-28 bg-cream relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div className="max-w-2xl space-y-4">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -64,15 +86,66 @@ export const UmkmSection: React.FC<UmkmSectionProps> = ({ onNavigate }) => {
           </motion.div>
         </div>
 
+        {/* Search & Category Filter Controls */}
+        <div className="mb-10 space-y-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 justify-between">
+            {/* Search Input Box */}
+            <div className="relative w-full sm:max-w-md">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-purple/60" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Cari nama produk, penjual, kategori..."
+                className="w-full pl-11 pr-10 py-3 rounded-2xl bg-cream-50/90 border-2 border-purple/20 focus:border-purple focus:ring-2 focus:ring-purple/20 text-purple placeholder:text-purple/40 text-sm font-medium transition-all outline-none"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 rounded-full text-purple/60 hover:text-purple hover:bg-purple/10 transition-colors cursor-pointer"
+                  aria-label="Hapus pencarian"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+
+            {/* Result Count Badge */}
+            <div className="text-xs font-bold text-purple/75 self-end sm:self-center bg-purple/10 px-3.5 py-2 rounded-xl border border-purple/15">
+              Menampilkan <span className="text-purple font-extrabold">{filteredProducts.length}</span> dari {products.length} Produk
+            </div>
+          </div>
+
+          {/* Category Chips */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                  selectedCategory === cat
+                    ? 'bg-purple text-cream shadow-sm'
+                    : 'bg-cream-50/80 text-purple/80 border border-purple/20 hover:border-purple/50 hover:bg-purple/5'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Responsive Grid of Product Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product, idx) => (
-            <motion.div
-              key={product.id}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.08, duration: 0.5 }}
+        {filteredProducts.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProducts.map((product, idx) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.06, duration: 0.4 }}
               whileHover={{ y: -8, transition: { duration: 0.25 } }}
               className="group rounded-3xl bg-cream-50/90 border-2 border-purple/20 hover:border-purple shadow-purple-sm hover:shadow-purple-md transition-all duration-300 flex flex-col justify-between overflow-hidden"
             >
@@ -154,6 +227,26 @@ export const UmkmSection: React.FC<UmkmSectionProps> = ({ onNavigate }) => {
             </motion.div>
           ))}
         </div>
+        ) : (
+          <div className="text-center py-16 px-4 rounded-3xl bg-cream-50/90 border-2 border-dashed border-purple/25 space-y-4">
+            <div className="w-14 h-14 mx-auto rounded-2xl bg-purple/10 flex items-center justify-center text-2xl">
+              🔍
+            </div>
+            <div className="space-y-1 max-w-md mx-auto">
+              <h3 className="font-bold text-base text-purple">Produk Tidak Ditemukan</h3>
+              <p className="text-xs text-purple/75 leading-relaxed">
+                Tidak ada produk UMKM yang sesuai dengan kata kunci "{searchQuery}". Silakan coba kata kunci lain atau reset filter.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => { setSearchQuery(''); setSelectedCategory('Semua'); }}
+              className="px-5 py-2.5 rounded-xl text-xs font-bold bg-purple text-cream hover:bg-purple-800 transition-all shadow-sm cursor-pointer"
+            >
+              Reset Pencarian
+            </button>
+          </div>
+        )}
 
         {/* Bottom Notice / Collaboration info */}
         <div className="mt-12 p-6 rounded-2xl bg-cream-muted/70 border border-purple/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
