@@ -182,7 +182,7 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
               </h2>
 
               <p className="text-sm sm:text-base text-purple/85 leading-relaxed text-justify">
-                <strong>Tim MeRAMU</strong> (<em>Media Ruang Aksi Mahasiswa untuk Umat</em>) merupakan inisiatif mahasiswa dari <strong>Himpunan Mahasiswa Teknik Pangan (HMTP) Universitas Ahmad Dahlan</strong>. Program pengabdian ini dibentuk sebagai bentuk perwujudan Catur Dharma Perguruan Tinggi dalam mendedikasikan keilmuan teknologi pangan dan rekayasa proses secara nyata di tengah masyarakat.
+                <strong>Tim MeRAMU</strong> (<em>Media Ruang Aksi Mahasiswa untuk Umat</em>) merupakan inisiatif mahasiswa dari <strong>Himpunan Mahasiswa Teknologi Pangan (HMTP) Universitas Ahmad Dahlan</strong>. Program pengabdian ini dibentuk sebagai bentuk perwujudan Catur Dharma Perguruan Tinggi dalam mendedikasikan keilmuan teknologi pangan dan rekayasa proses secara nyata di tengah masyarakat.
               </p>
 
               <p className="text-sm sm:text-base text-purple/85 leading-relaxed text-justify">
