@@ -1,0 +1,33 @@
+﻿{
+  "name": "Padukuhan Kebonagung - Tridadi, Sleman",
+  "short_name": "Kebonagung",
+  "description": "Website & Aplikasi Resmi Padukuhan Kebonagung, Kalurahan Tridadi, Sleman, D.I. Yogyakarta",
+  "start_url": "/",
+  "id": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FAF3D6",
+  "theme_color": "#453368",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["government", "news", "shopping", "utilities"],
+  "lang": "id"
+}

@@ -11,6 +11,7 @@ import { Footer } from './components/Footer';
 import { MeramuPage } from './components/MeramuPage';
 import { AdminUmkmPage } from './components/AdminUmkmPage';
 import { ScrollToTop } from './components/ScrollToTop';
+import { PwaInstallPrompt } from './components/PwaInstallPrompt';
 
 export const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<PageType>('beranda');
@@ -108,6 +109,9 @@ export const App: React.FC = () => {
 
       {/* 4. Floating Scroll to Top Button */}
       <ScrollToTop />
+
+      {/* 5. PWA Install Prompt Banner for Mobile Devices */}
+      <PwaInstallPrompt />
     </div>
   );
 };
