@@ -197,8 +197,19 @@ export const KegiatanSection: React.FC = () => {
             >
               <div>
                 {/* Visual Header / Banner */}
-                <div className={`h-36 bg-gradient-to-br ${activity.iconBg} border-b-2 border-purple/15 p-5 flex items-start justify-between relative overflow-hidden`}>
-                  <div className="absolute inset-0 bg-dots-pattern opacity-30 pointer-events-none" />
+                <div className={`h-40 ${activity.gallery[0]?.imageUrl ? 'bg-purple-950' : `bg-gradient-to-br ${activity.iconBg}`} border-b-2 border-purple/15 p-5 flex items-start justify-between relative overflow-hidden`}>
+                  {activity.gallery[0]?.imageUrl ? (
+                    <>
+                      <img 
+                        src={activity.gallery[0].imageUrl} 
+                        alt={activity.title} 
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-purple-950/90 via-purple-950/40 to-purple-950/60 pointer-events-none" />
+                    </>
+                  ) : (
+                    <div className="absolute inset-0 bg-dots-pattern opacity-30 pointer-events-none" />
+                  )}
 
                   {/* Icon Emblem */}
                   <div className="w-12 h-12 rounded-2xl bg-cream border-2 border-purple/20 shadow-sm flex items-center justify-center group-hover:scale-110 group-hover:bg-purple group-hover:text-cream transition-all z-10 [&>svg]:group-hover:text-cream">
@@ -371,8 +382,29 @@ export const KegiatanSection: React.FC = () => {
                     <div className="space-y-4">
                       {/* Main Featured Photo Box */}
                       <div className="relative rounded-3xl overflow-hidden border-2 border-purple bg-cream-50 shadow-purple-md">
-                        <div className={`h-64 sm:h-80 md:h-96 w-full bg-gradient-to-br ${selectedActivity.gallery[activePhotoIdx].colorScheme} p-6 flex flex-col justify-between relative overflow-hidden`}>
-                          <div className="absolute inset-0 bg-dots-pattern opacity-40 pointer-events-none" />
+                        <div className={`h-72 sm:h-96 md:h-[420px] w-full ${selectedActivity.gallery[activePhotoIdx].imageUrl ? 'bg-purple-950' : `bg-gradient-to-br ${selectedActivity.gallery[activePhotoIdx].colorScheme}`} p-6 flex flex-col justify-between relative overflow-hidden`}>
+                          {selectedActivity.gallery[activePhotoIdx].imageUrl ? (
+                            <>
+                              <img
+                                src={selectedActivity.gallery[activePhotoIdx].imageUrl}
+                                alt={selectedActivity.gallery[activePhotoIdx].title}
+                                className="absolute inset-0 w-full h-full object-contain sm:object-cover bg-purple-950"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-purple-950/90 via-transparent to-purple-950/40 pointer-events-none" />
+                            </>
+                          ) : (
+                            <>
+                              <div className="absolute inset-0 bg-dots-pattern opacity-40 pointer-events-none" />
+                              <div className="relative z-10 my-auto text-center space-y-2">
+                                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-cream border-2 border-purple shadow-purple-sm mx-auto flex items-center justify-center text-4xl sm:text-5xl">
+                                  {selectedActivity.gallery[activePhotoIdx].iconSymbol}
+                                </div>
+                                <span className="text-xs font-extrabold text-purple uppercase tracking-wider block">
+                                  Dokumentasi Resmi Padukuhan Kebonagung
+                                </span>
+                              </div>
+                            </>
+                          )}
 
                           {/* Top bar inside photo view */}
                           <div className="flex items-center justify-between z-10">
@@ -381,16 +413,6 @@ export const KegiatanSection: React.FC = () => {
                             </span>
                             <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-purple text-cream shadow-sm">
                               Foto {activePhotoIdx + 1} dari {selectedActivity.gallery.length}
-                            </span>
-                          </div>
-
-                          {/* Center Graphic Representation */}
-                          <div className="relative z-10 my-auto text-center space-y-2">
-                            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-cream border-2 border-purple shadow-purple-sm mx-auto flex items-center justify-center text-4xl sm:text-5xl">
-                              {selectedActivity.gallery[activePhotoIdx].iconSymbol}
-                            </div>
-                            <span className="text-xs font-extrabold text-purple uppercase tracking-wider block">
-                              Dokumentasi Resmi Padukuhan Kebonagung
                             </span>
                           </div>
 
@@ -406,8 +428,9 @@ export const KegiatanSection: React.FC = () => {
 
                           {/* Left Navigation Arrow */}
                           <button
+                            type="button"
                             onClick={prevPhoto}
-                            className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-2xl bg-cream/90 border-2 border-purple text-purple hover:bg-purple hover:text-cream flex items-center justify-center shadow-md transition-all active:scale-95"
+                            className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-2xl bg-cream/95 border-2 border-purple text-purple hover:bg-purple hover:text-cream flex items-center justify-center shadow-lg transition-all active:scale-95 cursor-pointer"
                             aria-label="Foto Sebelumnya"
                           >
                             <ChevronLeft className="w-6 h-6" />
@@ -415,8 +438,9 @@ export const KegiatanSection: React.FC = () => {
 
                           {/* Right Navigation Arrow */}
                           <button
+                            type="button"
                             onClick={nextPhoto}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-2xl bg-cream/90 border-2 border-purple text-purple hover:bg-purple hover:text-cream flex items-center justify-center shadow-md transition-all active:scale-95"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-2xl bg-cream/95 border-2 border-purple text-purple hover:bg-purple hover:text-cream flex items-center justify-center shadow-lg transition-all active:scale-95 cursor-pointer"
                             aria-label="Foto Berikutnya"
                           >
                             <ChevronRight className="w-6 h-6" />
@@ -429,22 +453,27 @@ export const KegiatanSection: React.FC = () => {
                         {selectedActivity.gallery.map((photo, pIdx) => (
                           <button
                             key={photo.id}
+                            type="button"
                             onClick={() => setActivePhotoIdx(pIdx)}
-                            className={`p-3 rounded-2xl text-left border-2 transition-all flex flex-col justify-between gap-2 ${
+                            className={`p-2.5 rounded-2xl text-left border-2 transition-all flex items-center gap-3 cursor-pointer ${
                               activePhotoIdx === pIdx
                                 ? 'bg-purple text-cream border-purple shadow-purple-sm scale-[1.02]'
                                 : 'bg-cream-50 text-purple border-purple/20 hover:border-purple/60'
                             }`}
                           >
-                            <div className="flex items-center justify-between w-full">
-                              <span className="text-lg">{photo.iconSymbol}</span>
-                              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${activePhotoIdx === pIdx ? 'bg-cream text-purple' : 'bg-purple/10 text-purple'}`}>
+                            {photo.imageUrl ? (
+                              <img src={photo.imageUrl} alt={photo.title} className="w-12 h-12 rounded-xl object-cover shrink-0 border border-purple/20" />
+                            ) : (
+                              <span className="text-xl shrink-0">{photo.iconSymbol}</span>
+                            )}
+                            <div className="min-w-0 flex-1">
+                              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md block w-fit mb-0.5 ${activePhotoIdx === pIdx ? 'bg-cream text-purple' : 'bg-purple/10 text-purple'}`}>
                                 #{pIdx + 1}
                               </span>
+                              <span className="text-[11px] font-bold line-clamp-1 leading-tight">
+                                {photo.title}
+                              </span>
                             </div>
-                            <span className="text-[11px] font-bold line-clamp-1 leading-snug">
-                              {photo.title}
-                            </span>
                           </button>
                         ))}
                       </div>
@@ -459,17 +488,25 @@ export const KegiatanSection: React.FC = () => {
                           key={photo.id}
                           className="rounded-3xl border-2 border-purple bg-cream-50 overflow-hidden flex flex-col justify-between shadow-purple-sm"
                         >
-                          <div className={`h-40 bg-gradient-to-br ${photo.colorScheme} p-4 flex flex-col justify-between relative`}>
-                            <div className="flex items-center justify-between">
-                              <span className="px-3 py-0.5 rounded-full text-[11px] font-bold bg-cream text-purple border border-purple/20">
+                          <div className={`h-48 ${photo.imageUrl ? 'bg-purple-950' : `bg-gradient-to-br ${photo.colorScheme}`} p-4 flex flex-col justify-between relative overflow-hidden`}>
+                            {photo.imageUrl ? (
+                              <>
+                                <img src={photo.imageUrl} alt={photo.title} className="absolute inset-0 w-full h-full object-cover" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-purple-950/80 via-transparent to-purple-950/40 pointer-events-none" />
+                              </>
+                            ) : (
+                              <div className="my-auto text-center text-3xl">
+                                {photo.iconSymbol}
+                              </div>
+                            )}
+
+                            <div className="flex items-center justify-between z-10">
+                              <span className="px-3 py-0.5 rounded-full text-[11px] font-bold bg-cream text-purple border border-purple/20 shadow-xs">
                                 {photo.tag}
                               </span>
-                              <span className="text-xs font-bold text-purple bg-cream/80 px-2 py-0.5 rounded-md">
+                              <span className="text-xs font-bold text-purple bg-cream/90 px-2 py-0.5 rounded-md shadow-xs">
                                 Bukti #{pIdx + 1}
                               </span>
-                            </div>
-                            <div className="my-auto text-center text-3xl">
-                              {photo.iconSymbol}
                             </div>
                           </div>
 
