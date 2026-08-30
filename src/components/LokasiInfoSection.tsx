@@ -276,8 +276,8 @@ export const LokasiInfoSection: React.FC = () => {
             </p>
           </div>
 
-          {/* Social media cards with border purple (#453368) and icon purple (#453368) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Social media cards with border purple (#453368) and icon purple (#453368) - 2 Columns on Mobile, 4 Columns on Desktop */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {socialLinks.map((social, idx) => (
               <motion.a
                 key={social.name}
@@ -287,38 +287,38 @@ export const LokasiInfoSection: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
+                transition={{ delay: idx * 0.05 }}
                 whileHover={{ y: -6 }}
-                className="group p-6 rounded-3xl bg-cream-50/90 border-2 border-purple hover:bg-cream shadow-purple-sm hover:shadow-purple-md transition-all duration-300 flex flex-col justify-between"
+                className="group p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl bg-cream-50/90 border-2 border-purple hover:bg-cream shadow-purple-sm hover:shadow-purple-md transition-all duration-300 flex flex-col justify-between"
               >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
+                <div className="space-y-2.5 sm:space-y-4">
+                  <div className="flex items-center justify-between gap-1.5">
                     {/* Social icon container with purple (#453368) border and purple icon */}
-                    <div className="w-14 h-14 rounded-2xl bg-cream border-2 border-purple shadow-sm flex items-center justify-center group-hover:scale-110 group-hover:bg-purple transition-all duration-300">
+                    <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-cream border-2 border-purple shadow-xs sm:shadow-sm flex items-center justify-center group-hover:scale-110 group-hover:bg-purple transition-all duration-300 [&>svg]:w-5 [&>svg]:h-5 sm:[&>svg]:w-6 sm:[&>svg]:h-6">
                       {social.icon}
                     </div>
 
-                    <span className="text-xs font-bold px-3 py-1 rounded-full bg-purple/10 text-purple border border-purple/20">
+                    <span className="text-[9px] sm:text-xs font-bold px-2 py-0.5 sm:px-3 sm:py-1 rounded-full bg-purple/10 text-purple border border-purple/20 truncate max-w-[55%] sm:max-w-none">
                       {social.badge}
                     </span>
                   </div>
 
                   <div>
-                    <h4 className="font-extrabold text-lg text-purple group-hover:text-purple-800 transition-colors flex items-center gap-1.5">
-                      <span>{social.name}</span>
-                      <ExternalLink className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity text-purple" />
+                    <h4 className="font-extrabold text-xs sm:text-lg text-purple group-hover:text-purple-800 transition-colors flex items-center gap-1">
+                      <span className="line-clamp-1">{social.name}</span>
+                      <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 opacity-70 group-hover:opacity-100 transition-opacity text-purple shrink-0" />
                     </h4>
-                    <span className="text-xs font-bold text-purple/70 block mt-0.5">
+                    <span className="text-[10px] sm:text-xs font-bold text-purple/70 block mt-0.5 truncate">
                       {social.handle}
                     </span>
-                    <p className="text-xs text-purple/80 leading-relaxed mt-2">
+                    <p className="text-[11px] sm:text-xs text-purple/80 leading-relaxed mt-1.5 line-clamp-2 sm:line-clamp-none">
                       {social.desc}
                     </p>
                   </div>
                 </div>
 
-                <div className="pt-4 mt-4 border-t-2 border-purple/20 flex items-center justify-between text-xs font-bold text-purple">
-                  <span>Kunjungi {social.name}</span>
+                <div className="pt-2.5 sm:pt-4 mt-2.5 sm:mt-4 border-t-2 border-purple/20 flex items-center justify-between text-[10px] sm:text-xs font-bold text-purple">
+                  <span className="truncate">Kunjungi Akun</span>
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </div>
               </motion.a>

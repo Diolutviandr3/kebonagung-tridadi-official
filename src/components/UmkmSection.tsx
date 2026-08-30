@@ -146,121 +146,122 @@ export const UmkmSection: React.FC<UmkmSectionProps> = ({ onNavigate }) => {
           </div>
         </div>
 
-        {/* Responsive Grid of Product Cards */}
+        {/* Responsive Grid of Product Cards - 2 Columns on Mobile, 3 Columns on Desktop */}
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
             {filteredProducts.map((product, idx) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 25 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.06, duration: 0.4 }}
-              whileHover={{ y: -8, transition: { duration: 0.25 } }}
-              className="group rounded-3xl bg-cream-50/90 border-2 border-purple/20 hover:border-purple shadow-purple-sm hover:shadow-purple-md transition-all duration-300 flex flex-col justify-between overflow-hidden"
-            >
-              <div>
-                {/* Product Photo Container */}
-                <div className="relative h-52 bg-purple-950/20 border-b-2 border-purple/15 overflow-hidden">
-                  {product.imageUrl ? (
-                    <>
-                      <img
-                        src={product.imageUrl}
-                        alt={product.name}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-purple-950/80 via-transparent to-purple-950/30 pointer-events-none" />
-                    </>
-                  ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center bg-purple-900/10 text-purple/40 space-y-1">
-                      <Camera className="w-8 h-8" />
-                      <span className="text-[11px] font-bold">Foto Produk UMKM</span>
+                transition={{ delay: idx * 0.05, duration: 0.4 }}
+                whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                className="group rounded-2xl sm:rounded-3xl bg-cream-50/90 border-2 border-purple/20 hover:border-purple shadow-purple-sm hover:shadow-purple-md transition-all duration-300 flex flex-col justify-between overflow-hidden"
+              >
+                <div>
+                  {/* Product Photo Container */}
+                  <div className="relative h-32 sm:h-52 bg-purple-950/20 border-b-2 border-purple/15 overflow-hidden">
+                    {product.imageUrl ? (
+                      <>
+                        <img
+                          src={product.imageUrl}
+                          alt={product.name}
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-purple-950/80 via-transparent to-purple-950/30 pointer-events-none" />
+                      </>
+                    ) : (
+                      <div className="w-full h-full flex flex-col items-center justify-center bg-purple-900/10 text-purple/40 space-y-1">
+                        <Camera className="w-6 h-6 sm:w-8 sm:h-8" />
+                        <span className="text-[10px] sm:text-[11px] font-bold">Foto Produk UMKM</span>
+                      </div>
+                    )}
+
+                    {/* Category & Badge */}
+                    <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10">
+                      <span className="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[9px] sm:text-xs font-bold bg-cream text-purple border border-purple/20 shadow-xs backdrop-blur-sm">
+                        {product.category}
+                      </span>
                     </div>
-                  )}
 
-                  {/* Category & Badge */}
-                  <div className="absolute top-3 left-3 z-10">
-                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-cream text-purple border border-purple/20 shadow-sm backdrop-blur-sm">
-                      {product.category}
-                    </span>
+                    <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-10">
+                      <span className="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[9px] sm:text-xs font-bold bg-purple text-cream shadow-xs flex items-center gap-1">
+                        <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-cream" />
+                        <span>{product.badge}</span>
+                      </span>
+                    </div>
+
+                    {/* Seller label */}
+                    <div className="absolute bottom-1.5 left-2 right-2 sm:bottom-2 sm:left-3 sm:right-3 flex items-center justify-between text-[9px] sm:text-[11px] font-semibold text-purple bg-cream/95 px-2 py-0.5 sm:px-3 sm:py-1 rounded-md sm:rounded-lg backdrop-blur-sm border border-purple/15 z-10">
+                      <span className="truncate">Penjual: {product.seller}</span>
+                      <span className="text-purple font-bold hidden sm:inline">Kebonagung</span>
+                    </div>
                   </div>
 
-                  <div className="absolute top-3 right-3 z-10">
-                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-purple text-cream shadow-sm flex items-center gap-1">
-                      <Sparkles className="w-3 h-3 text-cream" />
-                      <span>{product.badge}</span>
-                    </span>
-                  </div>
+                  {/* Product Information */}
+                  <div className="p-3 sm:p-6 space-y-1.5 sm:space-y-3">
+                    <div className="flex items-start justify-between gap-1 sm:gap-2">
+                      <h3 className="font-bold text-xs sm:text-lg text-purple group-hover:text-purple-800 transition-colors leading-snug line-clamp-2">
+                        {product.name}
+                      </h3>
+                    </div>
 
-                  {/* Seller label */}
-                  <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between text-[11px] font-semibold text-purple bg-cream/90 px-3 py-1 rounded-lg backdrop-blur-sm border border-purple/15 z-10">
-                    <span className="truncate">Penjual: {product.seller}</span>
-                    <span className="text-purple font-bold">Kebonagung</span>
+                    {/* Description - Desktop view */}
+                    <p className="text-xs sm:text-sm text-purple/80 leading-relaxed line-clamp-2 text-justify hidden sm:block">
+                      {product.description}
+                    </p>
                   </div>
                 </div>
 
-                {/* Product Information */}
-                <div className="p-6 space-y-3">
-                  <div className="flex items-start justify-between gap-2">
-                    <h3 className="font-bold text-lg text-purple group-hover:text-purple-800 transition-colors leading-snug">
-                      {product.name}
-                    </h3>
-                  </div>
+                {/* Bottom Card Footer with Price and Action Buttons */}
+                <div className="px-3 pb-3 sm:px-6 sm:pb-6 pt-1 sm:pt-2">
+                  <div className="pt-2.5 sm:pt-4 border-t border-purple/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3">
+                    <div>
+                      <span className="block text-[8px] sm:text-[10px] font-bold text-purple/60 uppercase tracking-wider">
+                        Estimasi Harga
+                      </span>
+                      <span className="text-xs sm:text-base font-extrabold text-purple leading-tight block">
+                        {product.price}
+                      </span>
+                    </div>
 
-                  <p className="text-xs sm:text-sm text-purple/80 leading-relaxed line-clamp-3 text-justify">
-                    {product.description}
-                  </p>
-                </div>
-              </div>
-
-              {/* Bottom Card Footer with Price and Action Buttons */}
-              <div className="px-6 pb-6 pt-2">
-                <div className="pt-4 border-t border-purple/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                  <div>
-                    <span className="block text-[10px] font-bold text-purple/60 uppercase tracking-wider">
-                      Estimasi Harga
-                    </span>
-                    <span className="text-base font-extrabold text-purple">
-                      {product.price}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2 w-full sm:w-auto">
-                    {/* Direct WhatsApp to Seller/Admin */}
-                    <a
-                      href={formatWhatsAppLink(product.whatsappNumber, product.name, product.price, product.seller)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title={`Pesan langsung via WhatsApp ke ${product.whatsappNumber ? product.seller : 'Pengurus Padukuhan'}`}
-                      className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-[#25D366] hover:bg-[#20ba5a] text-purple-950 active:scale-95 transition-all shadow-xs flex-1 sm:flex-initial cursor-pointer"
-                    >
-                      <MessageCircle className="w-3.5 h-3.5 text-purple-950 fill-current" />
-                      <span>WhatsApp</span>
-                    </a>
-
-                    {/* Direct E-Commerce Link */}
-                    {product.ecommerceUrl && (
+                    <div className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2 w-full sm:w-auto">
+                      {/* Direct WhatsApp to Seller/Admin */}
                       <a
-                        href={product.ecommerceUrl}
+                        href={formatWhatsAppLink(product.whatsappNumber, product.name, product.price, product.seller)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        title={`Buka etalase produk di ${product.ecommercePlatform || 'Toko Online'}`}
-                        className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-purple text-cream hover:bg-purple-800 active:scale-95 transition-all shadow-xs flex-1 sm:flex-initial cursor-pointer"
+                        title={`Pesan langsung via WhatsApp ke ${product.whatsappNumber ? product.seller : 'Pengurus Padukuhan'}`}
+                        className="inline-flex items-center justify-center gap-1 px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-bold bg-[#25D366] hover:bg-[#20ba5a] text-purple-950 active:scale-95 transition-all shadow-xs w-full sm:w-auto cursor-pointer"
                       >
-                        <ShoppingBag className="w-3.5 h-3.5" />
-                        <span>{product.ecommercePlatform || 'Online Store'}</span>
-                        <ExternalLink className="w-3 h-3 text-cream/70" />
+                        <MessageCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-purple-950 fill-current shrink-0" />
+                        <span>WhatsApp</span>
                       </a>
-                    )}
+
+                      {/* Direct E-Commerce Link */}
+                      {product.ecommerceUrl && (
+                        <a
+                          href={product.ecommerceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title={`Buka etalase produk di ${product.ecommercePlatform || 'Toko Online'}`}
+                          className="inline-flex items-center justify-center gap-1 px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-bold bg-purple text-cream hover:bg-purple-800 active:scale-95 transition-all shadow-xs w-full sm:w-auto cursor-pointer"
+                        >
+                          <ShoppingBag className="w-3 h-3 sm:w-3.5 sm:h-3.5 shrink-0" />
+                          <span className="truncate max-w-[70px] sm:max-w-none">{product.ecommercePlatform || 'Toko'}</span>
+                          <ExternalLink className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-cream/70 shrink-0" />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-            </motion.div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </div>
         ) : (
           <div className="text-center py-16 px-4 rounded-3xl bg-cream-50/90 border-2 border-dashed border-purple/25 space-y-4">
             <div className="w-14 h-14 mx-auto rounded-2xl bg-purple/10 flex items-center justify-center text-2xl">

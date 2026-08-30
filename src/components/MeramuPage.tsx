@@ -258,41 +258,41 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
             {programs.map((prog, idx) => (
               <motion.div
                 key={prog.num}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
+                transition={{ delay: idx * 0.05 }}
                 whileHover={{ y: -6 }}
-                className="p-8 rounded-3xl bg-cream-50 border-2 border-purple hover:bg-cream shadow-purple-sm hover:shadow-purple-md transition-all flex flex-col justify-between"
+                className="p-3.5 sm:p-8 rounded-2xl sm:rounded-3xl bg-cream-50 border-2 border-purple hover:bg-cream shadow-purple-sm hover:shadow-purple-md transition-all flex flex-col justify-between"
               >
-                <div className="space-y-4">
+                <div className="space-y-2.5 sm:space-y-4">
                   <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-2xl bg-purple text-cream flex items-center justify-center font-bold">
+                    <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-purple text-cream flex items-center justify-center font-bold [&>svg]:w-4 [&>svg]:h-4 sm:[&>svg]:w-6 sm:[&>svg]:h-6">
                       {prog.icon}
                     </div>
-                    <span className="font-serif font-black text-2xl text-purple/40">
+                    <span className="font-serif font-black text-base sm:text-2xl text-purple/40">
                       {prog.num}
                     </span>
                   </div>
 
                   <div>
-                    <span className="text-[11px] font-bold text-purple/70 uppercase tracking-wider block">
+                    <span className="text-[9px] sm:text-[11px] font-bold text-purple/70 uppercase tracking-wider block truncate">
                       {prog.subtitle}
                     </span>
-                    <h3 className="font-bold text-lg text-purple leading-snug mt-1">
+                    <h3 className="font-bold text-xs sm:text-lg text-purple leading-snug mt-0.5 sm:mt-1 line-clamp-2">
                       {prog.title}
                     </h3>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-purple/80 leading-relaxed text-justify">
+                  <p className="text-[11px] sm:text-sm text-purple/80 leading-relaxed text-justify line-clamp-2 sm:line-clamp-none">
                     {prog.desc}
                   </p>
 
-                  <div className="pt-3 border-t border-purple/15 space-y-2">
+                  <div className="pt-2 sm:pt-3 border-t border-purple/15 space-y-1 sm:space-y-2 hidden sm:block">
                     <span className="text-[11px] font-bold text-purple uppercase tracking-wider block">
                       Luaran / Hasil Kegiatan:
                     </span>
@@ -374,26 +374,26 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
             </div>
           </div>
 
-          {/* Photo Gallery Grid */}
+          {/* Photo Gallery Grid - 2 Columns on Mobile, 3 Columns on Desktop */}
           {filteredPhotos.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               {filteredPhotos.map((photo, idx) => (
                 <motion.div
                   key={photo.id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.04 }}
+                  transition={{ delay: idx * 0.03 }}
                   whileHover={{ y: -6 }}
                   onClick={() => {
                     setSelectedPhoto(photo);
                     setCurrentImageIndex(0);
                   }}
-                  className="group cursor-pointer rounded-3xl bg-cream-50 border-2 border-purple hover:border-purple shadow-purple-sm hover:shadow-purple-md transition-all overflow-hidden flex flex-col justify-between"
+                  className="group cursor-pointer rounded-2xl sm:rounded-3xl bg-cream-50 border-2 border-purple hover:border-purple shadow-purple-sm hover:shadow-purple-md transition-all overflow-hidden flex flex-col justify-between"
                 >
                   <div>
                     {/* Photo Visual Box */}
-                    <div className={`h-52 ${photo.images && photo.images.length > 0 ? 'bg-purple-950' : `bg-gradient-to-br ${photo.colorScheme}`} p-4 flex flex-col justify-between relative overflow-hidden`}>
+                    <div className={`h-32 sm:h-52 ${photo.images && photo.images.length > 0 ? 'bg-purple-950' : `bg-gradient-to-br ${photo.colorScheme}`} p-2.5 sm:p-4 flex flex-col justify-between relative overflow-hidden`}>
                       {photo.images && photo.images.length > 0 ? (
                         <>
                           <img
@@ -408,49 +408,49 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
                       ) : (
                         <>
                           <div className="absolute inset-0 bg-dots-pattern opacity-40 group-hover:scale-105 transition-transform duration-300 pointer-events-none" />
-                          <div className="my-auto text-center text-4xl group-hover:scale-110 transition-transform">
+                          <div className="my-auto text-center text-3xl sm:text-4xl group-hover:scale-110 transition-transform">
                             {photo.iconSymbol}
                           </div>
                         </>
                       )}
 
                       <div className="flex items-center justify-between z-10">
-                        <span className="px-3 py-1 rounded-full text-xs font-bold bg-cream text-purple border border-purple/20 shadow-sm">
+                        <span className="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[9px] sm:text-xs font-bold bg-cream text-purple border border-purple/20 shadow-xs">
                           {photo.category}
                         </span>
-                        <div className="flex items-center gap-1.5">
+                        <div className="flex items-center gap-1 sm:gap-1.5">
                           {photo.images && photo.images.length > 1 && (
-                            <span className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-purple/90 text-cream backdrop-blur-sm border border-cream/20 shadow-sm">
-                              <Camera className="w-3 h-3" />
+                            <span className="flex items-center gap-1 px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-bold bg-purple/90 text-cream backdrop-blur-sm border border-cream/20 shadow-xs">
+                              <Camera className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                               <span>{photo.images.length} Foto</span>
                             </span>
                           )}
-                          <span className="p-2 rounded-xl bg-purple text-cream opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all shadow-sm">
-                            <Maximize2 className="w-3.5 h-3.5" />
+                          <span className="p-1 sm:p-2 rounded-lg sm:rounded-xl bg-purple text-cream opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all shadow-xs">
+                            <Maximize2 className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5" />
                           </span>
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between text-[11px] font-semibold text-purple/80 bg-cream/90 px-3 py-1 rounded-lg backdrop-blur-sm border border-purple/10 z-10">
-                        <span>{photo.date}</span>
-                        <span>{photo.location}</span>
+                      <div className="flex items-center justify-between text-[8px] sm:text-[11px] font-semibold text-purple/80 bg-cream/95 px-2 py-0.5 sm:px-3 sm:py-1 rounded-md sm:rounded-lg backdrop-blur-sm border border-purple/10 z-10">
+                        <span className="truncate">{photo.date}</span>
+                        <span className="truncate hidden sm:inline">{photo.location}</span>
                       </div>
                     </div>
 
                     {/* Photo Content */}
-                    <div className="p-5 space-y-2">
-                      <h3 className="font-bold text-base text-purple group-hover:text-purple-800 transition-colors leading-snug">
+                    <div className="p-3 sm:p-5 space-y-1 sm:space-y-2">
+                      <h3 className="font-bold text-xs sm:text-base text-purple group-hover:text-purple-800 transition-colors leading-snug line-clamp-2">
                         {photo.title}
                       </h3>
-                      <p className="text-xs text-purple/80 leading-relaxed line-clamp-3 text-justify">
+                      <p className="text-xs text-purple/80 leading-relaxed line-clamp-2 text-justify hidden sm:block">
                         {photo.caption}
                       </p>
                     </div>
                   </div>
 
-                  <div className="p-5 pt-0">
-                    <div className="pt-3 border-t border-purple/15 flex items-center justify-between text-xs font-bold text-purple">
-                      <span>Lihat Dokumentasi</span>
+                  <div className="p-3 pt-0 sm:p-5 sm:pt-0">
+                    <div className="pt-2 sm:pt-3 border-t border-purple/15 flex items-center justify-between text-[10px] sm:text-xs font-bold text-purple">
+                      <span>Buka Foto</span>
                       <span className="group-hover:translate-x-1 transition-transform">→</span>
                     </div>
                   </div>

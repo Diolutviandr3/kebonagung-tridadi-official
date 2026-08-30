@@ -173,9 +173,9 @@ export const KegiatanSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Clickable Activity Cards Grid */}
+        {/* Clickable Activity Cards Grid - 2 Columns on Mobile, 3 Columns on Desktop */}
         {filteredActivities.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
             {filteredActivities.map((activity, idx) => (
               <motion.div
                 key={activity.id}
@@ -183,101 +183,104 @@ export const KegiatanSection: React.FC = () => {
                 initial={{ opacity: 0, y: 25 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.06, duration: 0.4 }}
-              whileHover={{ y: -8, transition: { duration: 0.25 } }}
-              className="group cursor-pointer rounded-3xl bg-cream border-2 border-purple/20 hover:border-purple shadow-purple-sm hover:shadow-purple-lg transition-all duration-300 flex flex-col justify-between overflow-hidden relative"
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  openActivityModal(activity);
-                }
-              }}
-            >
-              <div>
-                {/* Visual Header / Banner */}
-                <div className={`h-40 ${activity.gallery[0]?.imageUrl ? 'bg-purple-950' : `bg-gradient-to-br ${activity.iconBg}`} border-b-2 border-purple/15 p-5 flex items-start justify-between relative overflow-hidden`}>
-                  {activity.gallery[0]?.imageUrl ? (
-                    <>
-                      <img 
-                        src={activity.gallery[0].imageUrl} 
-                        alt={activity.title} 
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-purple-950/90 via-purple-950/40 to-purple-950/60 pointer-events-none" />
-                    </>
-                  ) : (
-                    <div className="absolute inset-0 bg-dots-pattern opacity-30 pointer-events-none" />
-                  )}
+                transition={{ delay: idx * 0.05, duration: 0.4 }}
+                whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                className="group cursor-pointer rounded-2xl sm:rounded-3xl bg-cream border-2 border-purple/20 hover:border-purple shadow-purple-sm hover:shadow-purple-lg transition-all duration-300 flex flex-col justify-between overflow-hidden relative"
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openActivityModal(activity);
+                  }
+                }}
+              >
+                <div>
+                  {/* Visual Header / Banner */}
+                  <div className={`h-28 sm:h-40 ${activity.gallery[0]?.imageUrl ? 'bg-purple-950' : `bg-gradient-to-br ${activity.iconBg}`} border-b-2 border-purple/15 p-2.5 sm:p-5 flex items-start justify-between relative overflow-hidden`}>
+                    {activity.gallery[0]?.imageUrl ? (
+                      <>
+                        <img 
+                          src={activity.gallery[0].imageUrl} 
+                          alt={activity.title} 
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-purple-950/90 via-purple-950/40 to-purple-950/60 pointer-events-none" />
+                      </>
+                    ) : (
+                      <div className="absolute inset-0 bg-dots-pattern opacity-30 pointer-events-none" />
+                    )}
 
-                  {/* Icon Emblem */}
-                  <div className="w-12 h-12 rounded-2xl bg-cream border-2 border-purple/20 shadow-sm flex items-center justify-center group-hover:scale-110 group-hover:bg-purple group-hover:text-cream transition-all z-10 [&>svg]:group-hover:text-cream">
-                    {activity.icon}
+                    {/* Icon Emblem */}
+                    <div className="w-7 h-7 sm:w-12 sm:h-12 rounded-lg sm:rounded-2xl bg-cream border border-purple/20 sm:border-2 shadow-xs sm:shadow-sm flex items-center justify-center group-hover:scale-110 group-hover:bg-purple group-hover:text-cream transition-all z-10 [&>svg]:w-3.5 [&>svg]:h-3.5 sm:[&>svg]:w-6 sm:[&>svg]:h-6 [&>svg]:group-hover:text-cream">
+                      {activity.icon}
+                    </div>
+
+                    {/* Badges */}
+                    <div className="flex flex-col items-end gap-1 z-10 max-w-[65%] sm:max-w-none">
+                      <span className="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[9px] sm:text-xs font-bold bg-purple text-cream shadow-sm flex items-center gap-1 truncate">
+                        <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-cream shrink-0" />
+                        <span className="truncate">{activity.badge}</span>
+                      </span>
+                      <span className="px-1.5 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full text-[8px] sm:text-[11px] font-bold bg-cream/95 text-purple border border-purple/20 shadow-xs flex items-center gap-1">
+                        <Camera className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-purple shrink-0" />
+                        <span>{activity.gallery.length} Foto</span>
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Badges */}
-                  <div className="flex flex-col items-end gap-1.5 z-10">
-                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-purple text-cream shadow-sm flex items-center gap-1">
-                      <Sparkles className="w-3 h-3 text-cream" />
-                      <span>{activity.badge}</span>
+                  {/* Card Body */}
+                  <div className="p-3 sm:p-6 space-y-2 sm:space-y-4">
+                    <div className="space-y-0.5 sm:space-y-1">
+                      <span className="text-[9px] sm:text-[11px] font-bold text-purple/70 uppercase tracking-wider block truncate">
+                        {activity.category}
+                      </span>
+                      <h3 className="font-bold text-xs sm:text-lg text-purple group-hover:text-purple-800 transition-colors leading-snug line-clamp-2">
+                        {activity.title}
+                      </h3>
+                    </div>
+
+                    {/* Description - Desktop only for clean mobile cards */}
+                    <p className="text-xs sm:text-sm text-purple/80 leading-relaxed line-clamp-2 text-justify hidden sm:block">
+                      {activity.description}
+                    </p>
+
+                    {/* Schedule & Metadata Details */}
+                    <div className="pt-2 sm:pt-3 border-t border-purple/10 space-y-1 sm:space-y-2 text-[10px] sm:text-xs text-purple/85">
+                      <div className="flex items-center gap-1.5 sm:gap-2 font-medium">
+                        <Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-purple shrink-0" />
+                        <span className="truncate">{activity.schedule}</span>
+                      </div>
+
+                      <div className="flex items-center gap-1.5 sm:gap-2 font-medium hidden sm:flex">
+                        <Clock className="w-3.5 h-3.5 text-purple shrink-0" />
+                        <span className="truncate">{activity.time}</span>
+                      </div>
+
+                      <div className="flex items-center gap-1.5 sm:gap-2 font-medium">
+                        <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-purple shrink-0" />
+                        <span className="truncate">{activity.location}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Card Footer */}
+                <div className="px-3 pb-3 sm:px-6 sm:pb-6 pt-1 sm:pt-2">
+                  <div className="pt-2 sm:pt-3 border-t-2 border-purple/15 flex items-center justify-between text-[10px] sm:text-xs font-semibold text-purple">
+                    <span className="text-purple/70 text-[11px] hidden sm:inline truncate max-w-[60%]">
+                      {activity.organizer}
                     </span>
-                    <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-cream/90 text-purple border border-purple/20 shadow-xs flex items-center gap-1">
-                      <Camera className="w-3 h-3 text-purple" />
-                      <span>{activity.gallery.length} Foto Bukti</span>
+                    <span className="inline-flex items-center gap-1 font-bold text-purple group-hover:translate-x-1 transition-transform w-full sm:w-auto justify-end">
+                      <span>Lihat Galeri</span>
+                      <span>→</span>
                     </span>
                   </div>
                 </div>
 
-                {/* Card Body */}
-                <div className="p-6 space-y-4">
-                  <div className="space-y-1">
-                    <span className="text-[11px] font-bold text-purple/70 uppercase tracking-wider block">
-                      {activity.category}
-                    </span>
-                    <h3 className="font-bold text-lg text-purple group-hover:text-purple-800 transition-colors leading-snug">
-                      {activity.title}
-                    </h3>
-                  </div>
-
-                  <p className="text-xs sm:text-sm text-purple/80 leading-relaxed line-clamp-3 text-justify">
-                    {activity.description}
-                  </p>
-
-                  {/* Schedule & Metadata Details */}
-                  <div className="pt-3 border-t border-purple/10 space-y-2 text-xs text-purple/85">
-                    <div className="flex items-center gap-2 font-medium">
-                      <Calendar className="w-3.5 h-3.5 text-purple shrink-0" />
-                      <span>{activity.schedule}</span>
-                    </div>
-
-                    <div className="flex items-center gap-2 font-medium">
-                      <Clock className="w-3.5 h-3.5 text-purple shrink-0" />
-                      <span>{activity.time}</span>
-                    </div>
-
-                    <div className="flex items-center gap-2 font-medium">
-                      <MapPin className="w-3.5 h-3.5 text-purple shrink-0" />
-                      <span>{activity.location}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card Footer */}
-              <div className="px-6 pb-6 pt-2">
-                <div className="pt-3 border-t-2 border-purple/15 flex items-center justify-between text-xs font-semibold text-purple">
-                  <span className="text-purple/70 text-[11px]">Penyelenggara: {activity.organizer}</span>
-                  <span className="inline-flex items-center gap-1 font-bold text-purple group-hover:translate-x-1 transition-transform">
-                    <span>Lihat Galeri</span>
-                    <span>→</span>
-                  </span>
-                </div>
-              </div>
-
-            </motion.div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </div>
         ) : (
           <div className="text-center py-16 px-4 rounded-3xl bg-cream border-2 border-dashed border-purple/25 space-y-4">
             <div className="w-14 h-14 mx-auto rounded-2xl bg-purple/10 flex items-center justify-center text-2xl">

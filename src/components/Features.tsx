@@ -85,39 +85,39 @@ export const Features: React.FC = () => {
           </motion.p>
         </div>
 
-        {/* Feature Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Feature Cards Grid - 2 Columns on Mobile, 3 Columns on Desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.08, duration: 0.5 }}
-              whileHover={{ y: -8, transition: { duration: 0.2 } }}
-              className="group p-8 rounded-3xl bg-cream-50/70 border-2 border-purple/15 hover:border-purple hover:shadow-purple-md transition-all duration-300 flex flex-col justify-between"
+              transition={{ delay: index * 0.05, duration: 0.4 }}
+              whileHover={{ y: -6, transition: { duration: 0.2 } }}
+              className="group p-3.5 sm:p-8 rounded-2xl sm:rounded-3xl bg-cream-50/70 border-2 border-purple/15 hover:border-purple hover:shadow-purple-md transition-all duration-300 flex flex-col justify-between"
             >
               <div>
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-14 h-14 rounded-2xl bg-purple text-cream flex items-center justify-center shadow-md shadow-purple/15 group-hover:scale-110 group-hover:bg-purple-800 transition-all duration-300">
+                <div className="flex items-center justify-between mb-3 sm:mb-6 gap-1.5">
+                  <div className="w-9 h-9 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-purple text-cream flex items-center justify-center shadow-xs sm:shadow-md shadow-purple/15 group-hover:scale-110 group-hover:bg-purple-800 transition-all duration-300 [&>svg]:w-4.5 [&>svg]:h-4.5 sm:[&>svg]:w-6 sm:[&>svg]:h-6">
                     {feature.icon}
                   </div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-purple/60 px-3 py-1 rounded-full bg-purple/5 border border-purple/10">
+                  <span className="text-[9px] sm:text-xs font-bold uppercase tracking-wider text-purple/60 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full bg-purple/5 border border-purple/10 truncate max-w-[55%] sm:max-w-none">
                     {feature.category}
                   </span>
                 </div>
 
-                <h3 className="text-xl font-bold text-purple mb-3 group-hover:text-purple-800 transition-colors">
+                <h3 className="text-xs sm:text-xl font-bold text-purple mb-1.5 sm:mb-3 group-hover:text-purple-800 transition-colors leading-snug line-clamp-2">
                   {feature.title}
                 </h3>
 
-                <p className="text-sm text-purple/80 leading-relaxed text-justify">
+                <p className="text-[11px] sm:text-sm text-purple/80 leading-relaxed text-justify line-clamp-3 sm:line-clamp-none">
                   {feature.description}
                 </p>
               </div>
 
-              <div className="pt-6 mt-6 border-t border-purple/10 flex items-center gap-2 text-xs font-bold text-purple group-hover:translate-x-1 transition-transform">
-                <span>Pelajari lebih lanjut</span>
+              <div className="pt-2.5 sm:pt-6 mt-2.5 sm:mt-6 border-t border-purple/10 flex items-center justify-between text-[10px] sm:text-xs font-bold text-purple group-hover:translate-x-1 transition-transform">
+                <span className="truncate">Pelajari lebih lanjut</span>
                 <span>→</span>
               </div>
             </motion.div>

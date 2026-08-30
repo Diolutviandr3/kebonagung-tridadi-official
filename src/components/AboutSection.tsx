@@ -16,57 +16,57 @@ export const AboutSection: React.FC = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* Left Visual Info Cards */}
+          {/* Left Visual Info Cards - 2 Columns on Mobile */}
           <div className="lg:col-span-5 order-2 lg:order-1">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
               <motion.div
                 whileHover={{ y: -5 }}
-                className="p-6 rounded-3xl bg-cream border-2 border-purple/15 shadow-purple-sm space-y-3"
+                className="p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl bg-cream border-2 border-purple/15 shadow-purple-sm space-y-2 sm:space-y-3"
               >
-                <div className="w-12 h-12 rounded-2xl bg-purple text-cream flex items-center justify-center font-bold">
+                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-purple text-cream flex items-center justify-center font-bold [&>svg]:w-4.5 [&>svg]:h-4.5 sm:[&>svg]:w-6 sm:[&>svg]:h-6">
                   <Sprout className="w-6 h-6" />
                 </div>
-                <h3 className="font-extrabold text-2xl text-purple">Asri & Subur</h3>
-                <p className="text-xs text-purple/75 leading-relaxed">
+                <h3 className="font-extrabold text-sm sm:text-2xl text-purple">Asri & Subur</h3>
+                <p className="text-[11px] sm:text-xs text-purple/75 leading-relaxed text-justify">
                   Lahan pertanian hijau yang menyangga ketahanan pangan lokal di Sleman.
                 </p>
               </motion.div>
 
               <motion.div
                 whileHover={{ y: -5 }}
-                className="p-6 rounded-3xl bg-purple text-cream shadow-purple-md space-y-3 mt-4"
+                className="p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl bg-purple text-cream shadow-purple-md space-y-2 sm:space-y-3 sm:mt-4"
               >
-                <div className="w-12 h-12 rounded-2xl bg-cream text-purple flex items-center justify-center font-bold">
+                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-cream text-purple flex items-center justify-center font-bold [&>svg]:w-4.5 [&>svg]:h-4.5 sm:[&>svg]:w-6 sm:[&>svg]:h-6">
                   <HeartHandshake className="w-6 h-6" />
                 </div>
-                <h3 className="font-extrabold text-2xl text-cream">Guyub Rukun</h3>
-                <p className="text-xs text-cream/80 leading-relaxed">
+                <h3 className="font-extrabold text-sm sm:text-2xl text-cream">Guyub Rukun</h3>
+                <p className="text-[11px] sm:text-xs text-cream/80 leading-relaxed text-justify">
                   Semangat gotong royong warga yang terjaga turun-temurun.
                 </p>
               </motion.div>
 
               <motion.div
                 whileHover={{ y: -5 }}
-                className="p-6 rounded-3xl bg-purple text-cream shadow-purple-md space-y-3 -mt-2"
+                className="p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl bg-purple text-cream shadow-purple-md space-y-2 sm:space-y-3 sm:-mt-2"
               >
-                <div className="w-12 h-12 rounded-2xl bg-cream text-purple flex items-center justify-center font-bold">
+                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-cream text-purple flex items-center justify-center font-bold [&>svg]:w-4.5 [&>svg]:h-4.5 sm:[&>svg]:w-6 sm:[&>svg]:h-6">
                   <Building2 className="w-6 h-6" />
                 </div>
-                <h3 className="font-extrabold text-2xl text-cream">Inovatif</h3>
-                <p className="text-xs text-cream/80 leading-relaxed">
+                <h3 className="font-extrabold text-sm sm:text-2xl text-cream">Inovatif</h3>
+                <p className="text-[11px] sm:text-xs text-cream/80 leading-relaxed text-justify">
                   Mendorong digitalisasi desa untuk kemudahan informasi dan promosi UMKM.
                 </p>
               </motion.div>
 
               <motion.div
                 whileHover={{ y: -5 }}
-                className="p-6 rounded-3xl bg-cream border-2 border-purple/15 shadow-purple-sm space-y-3 mt-2"
+                className="p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl bg-cream border-2 border-purple/15 shadow-purple-sm space-y-2 sm:space-y-3 sm:mt-2"
               >
-                <div className="w-12 h-12 rounded-2xl bg-purple text-cream flex items-center justify-center font-bold">
-                  <span className="text-xl">🌿</span>
+                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-purple text-cream flex items-center justify-center font-bold">
+                  <span className="text-base sm:text-xl">🌿</span>
                 </div>
-                <h3 className="font-extrabold text-2xl text-purple">Harmonis</h3>
-                <p className="text-xs text-purple/75 leading-relaxed">
+                <h3 className="font-extrabold text-sm sm:text-2xl text-purple">Harmonis</h3>
+                <p className="text-[11px] sm:text-xs text-purple/75 leading-relaxed text-justify">
                   Kenyamanan hidup bertetangga dengan kearifan adat istiadat Jawa.
                 </p>
               </motion.div>
@@ -83,11 +83,11 @@ export const AboutSection: React.FC = () => {
               Membangun Padukuhan yang Maju, Sejahtera, dan Berkelanjutan
             </h2>
 
-            <p className="text-base text-purple/85 leading-relaxed">
+            <p className="text-sm sm:text-base text-purple/85 leading-relaxed text-justify">
               Padukuhan Kebonagung terletak di wilayah strategis Kalurahan Tridadi, Kapanewon Sleman, Daerah Istimewa Yogyakarta. Dengan lanskap pedesaan yang tenang dan posisi yang dekat dengan pusat pemerintahan kabupaten Sleman, Kebonagung memadukan kenyamanan hunian tradisional dengan kemudahan aksesibilitas modern.
             </p>
 
-            <p className="text-base text-purple/85 leading-relaxed">
+            <p className="text-sm sm:text-base text-purple/85 leading-relaxed text-justify">
               Melalui program sinergi dan inisiatif digital bersama <strong>Tim MeRAMU HMTP Universitas Ahmad Dahlan 2026</strong>, Padukuhan Kebonagung terus bertransformasi mengoptimalkan seluruh potensi sosial, ekonomi, dan budaya masyarakat.
             </p>
 
@@ -96,7 +96,7 @@ export const AboutSection: React.FC = () => {
               {highlights.map((item, idx) => (
                 <div key={idx} className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-purple shrink-0 mt-0.5" />
-                  <span className="text-sm font-medium text-purple/90">{item}</span>
+                  <span className="text-xs sm:text-sm font-medium text-purple/90">{item}</span>
                 </div>
               ))}
             </div>
