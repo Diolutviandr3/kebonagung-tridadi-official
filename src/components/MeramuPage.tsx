@@ -32,24 +32,6 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
   const [activeFilter, setActiveFilter] = useState<string>('Semua');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  // Keyboard navigation for photo modal
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!selectedPhoto) return;
-      if (e.key === 'Escape') {
-        setSelectedPhoto(null);
-      } else if (selectedPhoto.images && selectedPhoto.images.length > 1) {
-        if (e.key === 'ArrowLeft') {
-          setCurrentImageIndex((prev) => (prev === 0 ? selectedPhoto.images!.length - 1 : prev - 1));
-        } else if (e.key === 'ArrowRight') {
-          setCurrentImageIndex((prev) => (prev === selectedPhoto.images!.length - 1 ? 0 : prev + 1));
-        }
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedPhoto]);
-
   const categories = meramuCategories;
 
   const filteredPhotos = useMemo(() => {
@@ -65,6 +47,66 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
       return matchCategory && matchQuery;
     });
   }, [activeFilter, searchQuery]);
+
+  const handlePrevPhoto = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (!selectedPhoto) return;
+    if (selectedPhoto.images && selectedPhoto.images.length > 1) {
+      setCurrentImageIndex((prev) => (prev === 0 ? selectedPhoto.images!.length - 1 : prev - 1));
+    } else {
+      const currentAlbumIdx = filteredPhotos.findIndex(p => p.id === selectedPhoto.id);
+      if (currentAlbumIdx > 0) {
+        setSelectedPhoto(filteredPhotos[currentAlbumIdx - 1]);
+        setCurrentImageIndex(0);
+      } else {
+        setSelectedPhoto(filteredPhotos[filteredPhotos.length - 1]);
+        setCurrentImageIndex(0);
+      }
+    }
+  };
+
+  const handleNextPhoto = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (!selectedPhoto) return;
+    if (selectedPhoto.images && selectedPhoto.images.length > 1) {
+      setCurrentImageIndex((prev) => (prev === selectedPhoto.images!.length - 1 ? 0 : prev + 1));
+    } else {
+      const currentAlbumIdx = filteredPhotos.findIndex(p => p.id === selectedPhoto.id);
+      if (currentAlbumIdx < filteredPhotos.length - 1) {
+        setSelectedPhoto(filteredPhotos[currentAlbumIdx + 1]);
+        setCurrentImageIndex(0);
+      } else {
+        setSelectedPhoto(filteredPhotos[0]);
+        setCurrentImageIndex(0);
+      }
+    }
+  };
+
+  // Keyboard navigation & body scroll lock for photo lightbox modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!selectedPhoto) return;
+      if (e.key === 'Escape') {
+        setSelectedPhoto(null);
+      } else if (e.key === 'ArrowLeft') {
+        handlePrevPhoto();
+      } else if (e.key === 'ArrowRight') {
+        handleNextPhoto();
+      }
+    };
+
+    if (selectedPhoto) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedPhoto, filteredPhotos]);
 
   return (
     <div className="min-h-screen bg-cream text-purple pt-24 pb-20 selection:bg-purple selection:text-cream">
@@ -457,164 +499,141 @@ export const MeramuPage: React.FC<MeramuPageProps> = ({ onBackToHome }) => {
 
       </div>
 
-      {/* Lightbox Modal for Photo Gallery */}
+      {/* Full-Screen Lightbox Modal for Photo Gallery */}
       <AnimatePresence>
         {selectedPhoto && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-purple-950/85 backdrop-blur-sm"
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex flex-col justify-between bg-black/95 backdrop-blur-md text-cream select-none"
             onClick={() => setSelectedPhoto(null)}
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
+            {/* 1. Top Bar Header */}
+            <div 
+              className="px-4 sm:px-8 py-3.5 bg-purple-950/80 border-b border-cream/15 flex items-center justify-between z-30 shrink-0"
               onClick={(e) => e.stopPropagation()}
-              className="relative max-w-3xl w-full bg-cream rounded-3xl border-2 border-purple shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
             >
-              {/* Visual Box / Photo Preview */}
-              <div className={`relative ${selectedPhoto.images && selectedPhoto.images.length > 0 ? 'h-72 sm:h-96 md:h-[420px] bg-purple-950' : `h-64 sm:h-80 bg-gradient-to-br ${selectedPhoto.colorScheme}`} p-4 sm:p-6 flex flex-col justify-between overflow-hidden shrink-0`}>
-                {selectedPhoto.images && selectedPhoto.images.length > 0 ? (
-                  <>
-                    <img
-                      src={selectedPhoto.images[currentImageIndex]}
-                      alt={`${selectedPhoto.title} - Foto ${currentImageIndex + 1}`}
-                      decoding="async"
-                      className="absolute inset-0 w-full h-full object-contain sm:object-cover bg-purple-950"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-purple-950/80 via-transparent to-purple-950/50 pointer-events-none" />
-
-                    {/* Navigation Buttons for Multi-photo */}
-                    {selectedPhoto.images.length > 1 && (
-                      <>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setCurrentImageIndex((prev) => (prev === 0 ? selectedPhoto.images!.length - 1 : prev - 1));
-                          }}
-                          aria-label="Foto Sebelumnya"
-                          className="absolute left-3 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-purple-900/80 hover:bg-purple text-cream shadow-lg transition-all hover:scale-110 border border-cream/20"
-                        >
-                          <ChevronLeft className="w-5 h-5" />
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setCurrentImageIndex((prev) => (prev === selectedPhoto.images!.length - 1 ? 0 : prev + 1));
-                          }}
-                          aria-label="Foto Selanjutnya"
-                          className="absolute right-3 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full bg-purple-900/80 hover:bg-purple text-cream shadow-lg transition-all hover:scale-110 border border-cream/20"
-                        >
-                          <ChevronRight className="w-5 h-5" />
-                        </button>
-
-                        {/* Dot indicator */}
-                        <div className="absolute bottom-14 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 bg-purple-950/70 backdrop-blur-md px-3 py-1.5 rounded-full border border-cream/20 shadow-md max-w-[85%] overflow-x-auto">
-                          {selectedPhoto.images.map((_, idx) => (
-                            <button
-                              key={idx}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setCurrentImageIndex(idx);
-                              }}
-                              aria-label={`Lihat Foto ${idx + 1}`}
-                              className={`h-1.5 rounded-full transition-all shrink-0 ${
-                                currentImageIndex === idx
-                                  ? 'bg-cream w-5'
-                                  : 'bg-cream/40 w-1.5 hover:bg-cream/70'
-                              }`}
-                            />
-                          ))}
-                        </div>
-                      </>
-                    )}
-                  </>
-                ) : (
-                  <div className="my-auto text-center text-6xl">
-                    {selectedPhoto.iconSymbol}
-                  </div>
-                )}
-
-                {/* Top header overlay inside modal visual box */}
-                <div className="flex items-center justify-between z-10">
-                  <div className="flex items-center gap-2">
-                    <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-cream text-purple border border-purple shadow-sm">
-                      {selectedPhoto.category}
+              <div className="flex items-center gap-3 min-w-0">
+                <span className="px-3 py-1 rounded-full text-xs font-bold bg-purple text-cream border border-cream/20 shadow-xs shrink-0">
+                  {selectedPhoto.category}
+                </span>
+                <div className="min-w-0">
+                  <h4 className="text-xs sm:text-sm font-extrabold text-cream truncate">
+                    {selectedPhoto.title}
+                  </h4>
+                  <div className="flex items-center gap-3 text-[11px] text-cream/70">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="w-3 h-3 text-cream/80" />
+                      {selectedPhoto.date}
                     </span>
-                    {selectedPhoto.images && selectedPhoto.images.length > 1 && (
-                      <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-purple/90 text-cream backdrop-blur-sm border border-cream/20 shadow-sm">
-                        {currentImageIndex + 1} / {selectedPhoto.images.length}
-                      </span>
-                    )}
+                    <span>&bull;</span>
+                    <span className="flex items-center gap-1 truncate">
+                      <MapPin className="w-3 h-3 text-cream/80" />
+                      {selectedPhoto.location}
+                    </span>
                   </div>
-                  <button
-                    onClick={() => setSelectedPhoto(null)}
-                    className="p-2 rounded-xl bg-cream border border-purple text-purple hover:bg-purple hover:text-cream transition-colors shadow-sm"
-                    aria-label="Tutup modal"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
-
-                {/* Bottom header overlay inside modal visual box */}
-                <div className="flex items-center justify-between text-xs font-bold text-purple bg-cream/95 px-4 py-1.5 rounded-xl border border-purple/20 z-10 backdrop-blur-sm shadow-sm">
-                  <span className="flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5 text-purple" />
-                    {selectedPhoto.date}
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-purple" />
-                    {selectedPhoto.location}
-                  </span>
                 </div>
               </div>
 
-              {/* Thumbnails strip (if multi-photo) */}
+              <div className="flex items-center gap-2 shrink-0">
+                {selectedPhoto.images && selectedPhoto.images.length > 1 && (
+                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-cream/10 border border-cream/20 text-cream">
+                    {currentImageIndex + 1} / {selectedPhoto.images.length}
+                  </span>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setSelectedPhoto(null)}
+                  className="p-2.5 rounded-2xl bg-cream/10 hover:bg-cream text-cream hover:text-purple border border-cream/20 transition-all cursor-pointer"
+                  aria-label="Tutup pratinjau foto"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* 2. Main Center Stage (Photo & Navigation Buttons) */}
+            <div 
+              className="flex-1 relative flex items-center justify-between px-2 sm:px-8 py-4 overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Prev Button */}
+              <button
+                type="button"
+                onClick={handlePrevPhoto}
+                aria-label="Foto Sebelumnya"
+                className="z-20 p-3 sm:px-4 sm:py-3.5 rounded-2xl bg-purple-950/85 hover:bg-purple text-cream border border-cream/25 shadow-2xl transition-all hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer group"
+              >
+                <ChevronLeft className="w-6 h-6 transition-transform group-hover:-translate-x-0.5" />
+                <span className="hidden sm:inline text-xs font-bold">Sebelumnya</span>
+              </button>
+
+              {/* Center Active Photo */}
+              <div className="flex-1 h-full flex flex-col items-center justify-center px-2 sm:px-6 relative">
+                {selectedPhoto.images && selectedPhoto.images.length > 0 ? (
+                  <motion.img
+                    key={`${selectedPhoto.id}-${currentImageIndex}`}
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    transition={{ duration: 0.22 }}
+                    src={selectedPhoto.images[currentImageIndex]}
+                    alt={`${selectedPhoto.title} - Foto ${currentImageIndex + 1}`}
+                    className="max-h-[60vh] sm:max-h-[68vh] w-auto max-w-full object-contain rounded-2xl shadow-2xl border border-cream/10 select-none"
+                  />
+                ) : (
+                  <div className="text-6xl text-center py-12">
+                    {selectedPhoto.iconSymbol}
+                  </div>
+                )}
+              </div>
+
+              {/* Next Button */}
+              <button
+                type="button"
+                onClick={handleNextPhoto}
+                aria-label="Foto Selanjutnya"
+                className="z-20 p-3 sm:px-4 sm:py-3.5 rounded-2xl bg-purple-950/85 hover:bg-purple text-cream border border-cream/25 shadow-2xl transition-all hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer group"
+              >
+                <span className="hidden sm:inline text-xs font-bold">Selanjutnya</span>
+                <ChevronRight className="w-6 h-6 transition-transform group-hover:translate-x-0.5" />
+              </button>
+            </div>
+
+            {/* 3. Bottom Information & Thumbnails Bar */}
+            <div 
+              className="px-4 sm:px-8 py-4 bg-purple-950/90 border-t border-cream/15 z-30 shrink-0 space-y-3"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Caption text */}
+              <div className="max-w-4xl mx-auto text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-2">
+                <p className="text-xs sm:text-sm text-cream/90 leading-relaxed max-w-3xl line-clamp-2 sm:line-clamp-none">
+                  {selectedPhoto.caption}
+                </p>
+              </div>
+
+              {/* Thumbnails strip */}
               {selectedPhoto.images && selectedPhoto.images.length > 1 && (
-                <div className="px-6 pt-3 pb-2 flex gap-3 overflow-x-auto bg-cream-50 border-b border-purple/10">
+                <div className="flex items-center justify-center gap-2 overflow-x-auto py-1 scrollbar-none max-w-2xl mx-auto">
                   {selectedPhoto.images.map((img, idx) => (
                     <button
                       key={idx}
+                      type="button"
                       onClick={() => setCurrentImageIndex(idx)}
-                      className={`relative rounded-xl overflow-hidden border-2 w-20 h-14 shrink-0 transition-all ${
+                      className={`relative rounded-xl overflow-hidden border-2 w-16 h-12 shrink-0 transition-all cursor-pointer ${
                         currentImageIndex === idx
-                          ? 'border-purple ring-2 ring-purple/30 scale-105 shadow-sm'
-                          : 'border-purple/20 opacity-60 hover:opacity-100'
+                          ? 'border-cream ring-2 ring-cream/40 scale-105 shadow-md opacity-100'
+                          : 'border-cream/20 opacity-50 hover:opacity-90'
                       }`}
                     >
-                      <img src={img} alt={`Thumbnail ${idx + 1}`} loading="lazy" decoding="async" className="w-full h-full object-cover" />
-                      <span className="absolute bottom-0.5 right-1 text-[9px] font-bold text-cream bg-purple/80 px-1 rounded">
-                        Foto #{idx + 1}
-                      </span>
+                      <img src={img} alt={`Thumb ${idx + 1}`} className="w-full h-full object-cover" />
                     </button>
                   ))}
                 </div>
               )}
-
-              {/* Details & Caption */}
-              <div className="p-6 sm:p-8 space-y-3 bg-cream overflow-y-auto">
-                <h3 className="font-extrabold text-xl text-purple">
-                  {selectedPhoto.title}
-                </h3>
-                <p className="text-sm text-purple/85 leading-relaxed text-justify">
-                  {selectedPhoto.caption}
-                </p>
-                
-                <div className="pt-4 border-t border-purple/15 flex items-center justify-between">
-                  <div className="text-xs text-purple/70">
-                    {selectedPhoto.images && selectedPhoto.images.length > 0 && (
-                      <span>Dokumentasi Resmi Kegiatan Tim MeRAMU UAD</span>
-                    )}
-                  </div>
-                  <button
-                    onClick={() => setSelectedPhoto(null)}
-                    className="px-6 py-2 rounded-xl font-bold bg-purple text-cream text-xs hover:bg-purple-800 transition-all shadow-purple-sm"
-                  >
-                    Tutup Tampilan
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
 
