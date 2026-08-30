@@ -21,7 +21,8 @@ import {
   ShoppingBag,
   Camera,
   Upload,
-  Link as LinkIcon
+  Link as LinkIcon,
+  MessageCircle
 } from 'lucide-react';
 import { 
   type UmkmProduct, 
@@ -65,6 +66,16 @@ const PHOTO_PRESETS = [
   { label: 'Jajan Pasar & Kue', url: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80' },
 ];
 
+const PLATFORM_PRESETS = [
+  'Shopee',
+  'Tokopedia',
+  'TikTok Shop',
+  'GoFood',
+  'GrabFood',
+  'Toko Online',
+  'Lainnya',
+];
+
 export const AdminUmkmPage: React.FC<AdminUmkmPageProps> = ({ onNavigate }) => {
   // Authentication State
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
@@ -92,6 +103,9 @@ export const AdminUmkmPage: React.FC<AdminUmkmPageProps> = ({ onNavigate }) => {
   const [formCustomBadge, setFormCustomBadge] = useState('');
   const [formImageUrl, setFormImageUrl] = useState(PHOTO_PRESETS[0].url);
   const [photoInputMode, setPhotoInputMode] = useState<'upload' | 'url' | 'presets'>('upload');
+  const [formWhatsapp, setFormWhatsapp] = useState('');
+  const [formEcommerceUrl, setFormEcommerceUrl] = useState('');
+  const [formEcommercePlatform, setFormEcommercePlatform] = useState('');
 
   // Edit Modal State
   const [editingProduct, setEditingProduct] = useState<UmkmProduct | null>(null);
@@ -159,14 +173,13 @@ export const AdminUmkmPage: React.FC<AdminUmkmPageProps> = ({ onNavigate }) => {
   // Handle Login
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoginError('');
-
     if (username.trim() === 'admin' && password === 'kebonagung2026') {
-      sessionStorage.setItem('kebonagung_admin_auth', 'true');
       setIsAuthenticated(true);
-      showToast('Berhasil masuk ke Panel Admin UMKM!');
+      sessionStorage.setItem('kebonagung_admin_auth', 'true');
+      setLoginError('');
+      showToast('Selamat datang, Admin UMKM Kebonagung!');
     } else {
-      setLoginError('Username atau password tidak sesuai. Silakan periksa kembali.');
+      setLoginError('Username atau kata sandi yang Anda masukkan salah.');
     }
   };
 
@@ -186,6 +199,11 @@ export const AdminUmkmPage: React.FC<AdminUmkmPageProps> = ({ onNavigate }) => {
       return;
     }
 
+    if (formEcommerceUrl.trim() && !formEcommercePlatform.trim()) {
+      showToast('Mohon pilih Platform E-Commerce karena Anda mengisi link produk/toko online.');
+      return;
+    }
+
     const finalCategory = formCategory === 'custom' ? (formCustomCategory || 'Lainnya') : formCategory;
     const finalBadge = formBadge === 'custom' ? (formCustomBadge || 'Produk Warga') : formBadge;
 
@@ -197,6 +215,9 @@ export const AdminUmkmPage: React.FC<AdminUmkmPageProps> = ({ onNavigate }) => {
       description: formDescription.trim(),
       badge: finalBadge,
       imageUrl: formImageUrl || PHOTO_PRESETS[0].url,
+      whatsappNumber: formWhatsapp.trim() || undefined,
+      ecommerceUrl: formEcommerceUrl.trim() || undefined,
+      ecommercePlatform: formEcommerceUrl.trim() ? (formEcommercePlatform.trim() || 'Toko Online') : undefined,
     });
 
     setFormName('');
@@ -205,6 +226,9 @@ export const AdminUmkmPage: React.FC<AdminUmkmPageProps> = ({ onNavigate }) => {
     setFormDescription('');
     setFormCustomCategory('');
     setFormCustomBadge('');
+    setFormWhatsapp('');
+    setFormEcommerceUrl('');
+    setFormEcommercePlatform('');
     showToast(`Produk "${formName}" berhasil ditambahkan!`);
     setActiveTab('list');
   };
@@ -214,7 +238,19 @@ export const AdminUmkmPage: React.FC<AdminUmkmPageProps> = ({ onNavigate }) => {
     e.preventDefault();
     if (!editingProduct) return;
 
-    updateStoredProduct(editingProduct);
+    if (editingProduct.ecommerceUrl?.trim() && !editingProduct.ecommercePlatform?.trim()) {
+      showToast('Mohon pilih Platform E-Commerce karena link produk/toko online diisi.');
+      return;
+    }
+
+    const cleanedProduct: UmkmProduct = {
+      ...editingProduct,
+      ecommercePlatform: editingProduct.ecommerceUrl?.trim() 
+        ? (editingProduct.ecommercePlatform?.trim() || 'Toko Online') 
+        : undefined,
+    };
+
+    updateStoredProduct(cleanedProduct);
     setEditingProduct(null);
     showToast(`Perubahan produk "${editingProduct.name}" berhasil disimpan!`);
   };
@@ -662,6 +698,78 @@ export const AdminUmkmPage: React.FC<AdminUmkmPageProps> = ({ onNavigate }) => {
                         )}
                       </div>
 
+                      {/* WhatsApp & E-Commerce Integration */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-cream border-2 border-purple/20">
+                        <div className="space-y-1 sm:col-span-2">
+                          <span className="block text-xs font-extrabold text-purple uppercase tracking-wider flex items-center gap-1.5">
+                            <MessageCircle className="w-4 h-4 text-green-600" />
+                            <span>Integrasi Pemesanan Langsung (WhatsApp & E-Commerce)</span>
+                          </span>
+                          <p className="text-[11px] text-purple/70">
+                            Hubungkan tombol belanja langsung ke WhatsApp penjual asli atau toko online (Shopee/Tokopedia/Grab/GoFood/dll).
+                          </p>
+                        </div>
+
+                        {/* WhatsApp Number */}
+                        <div className="space-y-1.5">
+                          <label className="block text-xs font-bold text-purple uppercase tracking-wider">
+                            Nomor WhatsApp Penjual
+                          </label>
+                          <input
+                            type="text"
+                            value={formWhatsapp}
+                            onChange={(e) => setFormWhatsapp(e.target.value)}
+                            placeholder="Contoh: 081234567890 (Opsional)"
+                            className="w-full px-4 py-2.5 rounded-xl bg-cream-50 border-2 border-purple/20 focus:border-purple text-xs font-medium text-purple outline-none"
+                          />
+                          <span className="text-[10px] text-purple/60 block">
+                            *Jika kosong, otomatis dialihkan ke WhatsApp padukuhan.
+                          </span>
+                        </div>
+
+                        {/* E-Commerce Platform */}
+                        <div className="space-y-1.5">
+                          <label className="block text-xs font-bold text-purple uppercase tracking-wider flex items-center justify-between">
+                            <span>Platform E-Commerce</span>
+                            {formEcommerceUrl.trim() ? (
+                              <span className="text-[10px] text-red-500 font-bold">*Wajib diisi</span>
+                            ) : (
+                              <span className="text-[10px] text-purple/60 font-normal lowercase">(opsional)</span>
+                            )}
+                          </label>
+                          <select
+                            value={formEcommercePlatform}
+                            onChange={(e) => setFormEcommercePlatform(e.target.value)}
+                            className="w-full px-4 py-2.5 rounded-xl bg-cream-50 border-2 border-purple/20 focus:border-purple text-xs font-medium text-purple outline-none cursor-pointer"
+                          >
+                            <option value="">-- Pilih Platform (Opsional) --</option>
+                            {PLATFORM_PRESETS.map((pl) => (
+                              <option key={pl} value={pl}>{pl}</option>
+                            ))}
+                          </select>
+                        </div>
+
+                        {/* E-Commerce URL */}
+                        <div className="space-y-1.5 sm:col-span-2">
+                          <label className="block text-xs font-bold text-purple uppercase tracking-wider">
+                            Link Produk / Toko Online (URL)
+                          </label>
+                          <div className="relative">
+                            <LinkIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-purple/50" />
+                            <input
+                              type="url"
+                              value={formEcommerceUrl}
+                              onChange={(e) => setFormEcommerceUrl(e.target.value)}
+                              placeholder="Contoh: https://shopee.co.id/toko-kebonagung (Opsional)"
+                              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-cream-50 border-2 border-purple/20 focus:border-purple text-xs font-medium text-purple outline-none"
+                            />
+                          </div>
+                          <span className="text-[10px] text-purple/60 block">
+                            *Pengunjung dapat langsung meng-klik untuk membeli di e-commerce tersebut.
+                          </span>
+                        </div>
+                      </div>
+
                       {/* Description */}
                       <div className="space-y-1.5">
                         <label className="block text-xs font-bold text-purple uppercase tracking-wider">
@@ -749,7 +857,7 @@ export const AdminUmkmPage: React.FC<AdminUmkmPageProps> = ({ onNavigate }) => {
 
                       {/* Footer */}
                       <div className="px-6 pb-6 pt-2">
-                        <div className="pt-4 border-t border-purple/15 flex items-center justify-between">
+                        <div className="pt-4 border-t border-purple/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                           <div>
                             <span className="block text-[10px] font-bold text-purple/60 uppercase tracking-wider">
                               Estimasi Harga
@@ -759,9 +867,19 @@ export const AdminUmkmPage: React.FC<AdminUmkmPageProps> = ({ onNavigate }) => {
                             </span>
                           </div>
 
-                          <div className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-purple text-cream shadow-sm">
-                            <span>Pesan / Tanya</span>
-                            <ExternalLink className="w-3.5 h-3.5" />
+                          <div className="flex items-center gap-2">
+                            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-[#25D366] text-purple-950 shadow-xs">
+                              <MessageCircle className="w-3.5 h-3.5 fill-current" />
+                              <span>WhatsApp</span>
+                            </div>
+
+                            {formEcommerceUrl && (
+                              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-purple text-cream shadow-xs">
+                                <ShoppingBag className="w-3.5 h-3.5" />
+                                <span>{formEcommercePlatform || 'E-Commerce'}</span>
+                                <ExternalLink className="w-3 h-3 text-cream/70" />
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -1022,6 +1140,66 @@ export const AdminUmkmPage: React.FC<AdminUmkmPageProps> = ({ onNavigate }) => {
                         </button>
                       </div>
                     )}
+                  </div>
+                </div>
+
+                {/* Edit WhatsApp & E-Commerce Integration */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-cream border-2 border-purple/20">
+                  <div className="space-y-1 sm:col-span-2">
+                    <span className="block text-xs font-extrabold text-purple uppercase tracking-wider flex items-center gap-1.5">
+                      <MessageCircle className="w-4 h-4 text-green-600" />
+                      <span>Kontak Pemesanan (WhatsApp & Toko Online)</span>
+                    </span>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-purple uppercase tracking-wider">
+                      Nomor WhatsApp Penjual
+                    </label>
+                    <input
+                      type="text"
+                      value={editingProduct.whatsappNumber || ''}
+                      onChange={(e) => setEditingProduct({ ...editingProduct, whatsappNumber: e.target.value })}
+                      placeholder="Contoh: 081234567890 (Opsional)"
+                      className="w-full px-4 py-2.5 rounded-xl bg-cream-50 border-2 border-purple/20 focus:border-purple text-xs font-medium text-purple outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-purple uppercase tracking-wider flex items-center justify-between">
+                      <span>Platform E-Commerce</span>
+                      {editingProduct.ecommerceUrl?.trim() ? (
+                        <span className="text-[10px] text-red-500 font-bold">*Wajib diisi</span>
+                      ) : (
+                        <span className="text-[10px] text-purple/60 font-normal lowercase">(opsional)</span>
+                      )}
+                    </label>
+                    <select
+                      value={editingProduct.ecommercePlatform || ''}
+                      onChange={(e) => setEditingProduct({ ...editingProduct, ecommercePlatform: e.target.value })}
+                      className="w-full px-4 py-2.5 rounded-xl bg-cream-50 border-2 border-purple/20 focus:border-purple text-xs font-medium text-purple outline-none cursor-pointer"
+                    >
+                      <option value="">-- Pilih Platform (Opsional) --</option>
+                      {PLATFORM_PRESETS.map((pl) => (
+                        <option key={pl} value={pl}>{pl}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="space-y-1.5 sm:col-span-2">
+                    <label className="block text-xs font-bold text-purple uppercase tracking-wider">
+                      Link Toko Online / E-Commerce (URL)
+                    </label>
+                    <div className="relative">
+                      <LinkIcon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-purple/50" />
+                      <input
+                        type="url"
+                        value={editingProduct.ecommerceUrl || ''}
+                        onChange={(e) => setEditingProduct({ ...editingProduct, ecommerceUrl: e.target.value })}
+                        placeholder="Contoh: https://shopee.co.id/toko-kebonagung (Opsional)"
+                        className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-cream-50 border-2 border-purple/20 focus:border-purple text-xs font-medium text-purple outline-none"
+                      />
+                    </div>
                   </div>
                 </div>
 

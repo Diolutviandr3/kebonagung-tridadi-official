@@ -7,6 +7,9 @@
   seller: string;
   imageUrl?: string;
   badge: string;
+  whatsappNumber?: string;
+  ecommerceUrl?: string;
+  ecommercePlatform?: string;
 }
 
 export const defaultProducts: UmkmProduct[] = [
@@ -19,6 +22,9 @@ export const defaultProducts: UmkmProduct[] = [
     seller: 'Kelompok Tani Makmur',
     imageUrl: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80',
     badge: 'Produk Unggulan',
+    whatsappNumber: '088216186389',
+    ecommerceUrl: 'https://shopee.co.id',
+    ecommercePlatform: 'Shopee',
   },
   {
     id: 'prod-2',
@@ -29,6 +35,9 @@ export const defaultProducts: UmkmProduct[] = [
     seller: 'Dapur Bu Sugeng (RT 02)',
     imageUrl: 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=600&q=80',
     badge: 'Paling Laris',
+    whatsappNumber: '088216186389',
+    ecommerceUrl: 'https://tokopedia.com',
+    ecommercePlatform: 'Tokopedia',
   },
   {
     id: 'prod-3',
@@ -39,6 +48,9 @@ export const defaultProducts: UmkmProduct[] = [
     seller: 'Warung Bu Sri',
     imageUrl: 'https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=600&q=80',
     badge: 'Khas Dusun',
+    whatsappNumber: '088216186389',
+    ecommerceUrl: 'https://gofood.co.id',
+    ecommercePlatform: 'GoFood',
   },
   {
     id: 'prod-4',
@@ -49,6 +61,9 @@ export const defaultProducts: UmkmProduct[] = [
     seller: 'Kriya Bambu Lestari',
     imageUrl: 'https://images.unsplash.com/photo-1615865417491-9941019fbc00?auto=format&fit=crop&w=600&q=80',
     badge: 'Handmade',
+    whatsappNumber: '088216186389',
+    ecommerceUrl: 'https://shopee.co.id',
+    ecommercePlatform: 'Shopee',
   },
   {
     id: 'prod-5',
@@ -59,6 +74,9 @@ export const defaultProducts: UmkmProduct[] = [
     seller: 'Herbal Berkah Sehat (RT 04)',
     imageUrl: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80',
     badge: 'Sehat Alami',
+    whatsappNumber: '088216186389',
+    ecommerceUrl: 'https://tokopedia.com',
+    ecommercePlatform: 'Tokopedia',
   },
   {
     id: 'prod-6',
@@ -69,12 +87,36 @@ export const defaultProducts: UmkmProduct[] = [
     seller: 'Pawon Guyub Kebonagung',
     imageUrl: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80',
     badge: 'Segar Tiap Hari',
+    whatsappNumber: '088216186389',
+    ecommerceUrl: 'https://grab.com/id/food/',
+    ecommercePlatform: 'GrabFood',
   },
 ];
 
 export const products = defaultProducts;
 
 const STORAGE_KEY = 'kebonagung_umkm_products';
+
+export const formatWhatsAppLink = (
+  phone: string | undefined, 
+  productName: string, 
+  price: string, 
+  seller: string
+): string => {
+  const defaultPhone = '6288216186389';
+  let targetPhone = phone?.trim() || defaultPhone;
+  // Clean phone number: remove non-digits, replace leading 0 with 62
+  targetPhone = targetPhone.replace(/\D/g, '');
+  if (targetPhone.startsWith('0')) {
+    targetPhone = '62' + targetPhone.slice(1);
+  }
+  if (!targetPhone) {
+    targetPhone = defaultPhone;
+  }
+
+  const message = `Halo ${seller ? seller + ', ' : ''}saya tertarik dan ingin memesan produk "${productName}" (${price}) dari etalase Website Resmi Padukuhan Kebonagung. Apakah masih tersedia?`;
+  return `https://wa.me/${targetPhone}?text=${encodeURIComponent(message)}`;
+};
 
 export const getStoredProducts = (): UmkmProduct[] => {
   if (typeof window === 'undefined') return defaultProducts;
@@ -83,12 +125,15 @@ export const getStoredProducts = (): UmkmProduct[] => {
     if (saved) {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        // Upgrade legacy items if any had iconName
         return parsed.map((item, idx) => {
-          if (!item.imageUrl && defaultProducts[idx]) {
-            return { ...item, imageUrl: defaultProducts[idx].imageUrl };
-          }
-          return item;
+          const fallback = defaultProducts[idx];
+          return {
+            ...item,
+            imageUrl: item.imageUrl || fallback?.imageUrl,
+            whatsappNumber: item.whatsappNumber || fallback?.whatsappNumber || '088216186389',
+            ecommerceUrl: item.ecommerceUrl || fallback?.ecommerceUrl,
+            ecommercePlatform: item.ecommercePlatform || fallback?.ecommercePlatform || 'E-Commerce',
+          };
         });
       }
     }

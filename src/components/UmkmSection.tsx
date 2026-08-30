@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Store, ShoppingBag, ArrowRight, Sparkles, ExternalLink, Tag, Search, X, Camera } from 'lucide-react';
-import { getStoredProducts, type UmkmProduct } from '../data/umkmData';
+import { Store, ShoppingBag, ArrowRight, Sparkles, ExternalLink, Tag, Search, X, Camera, MessageCircle } from 'lucide-react';
+import { getStoredProducts, formatWhatsAppLink, type UmkmProduct } from '../data/umkmData';
 import type { PageType } from './Navbar';
 
 interface UmkmSectionProps {
@@ -215,9 +215,9 @@ export const UmkmSection: React.FC<UmkmSectionProps> = ({ onNavigate }) => {
                 </div>
               </div>
 
-              {/* Bottom Card Footer with Price and Action */}
+              {/* Bottom Card Footer with Price and Action Buttons */}
               <div className="px-6 pb-6 pt-2">
-                <div className="pt-4 border-t border-purple/15 flex items-center justify-between">
+                <div className="pt-4 border-t border-purple/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                   <div>
                     <span className="block text-[10px] font-bold text-purple/60 uppercase tracking-wider">
                       Estimasi Harga
@@ -227,15 +227,34 @@ export const UmkmSection: React.FC<UmkmSectionProps> = ({ onNavigate }) => {
                     </span>
                   </div>
 
-                  <a
-                    href={`https://wa.me/6288216186389?text=${encodeURIComponent(`Halo Pengurus UMKM Kebonagung, saya tertarik ingin memesan / menanyakan produk: ${product.name}`)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-purple text-cream hover:bg-purple-800 active:scale-95 transition-all shadow-sm group-hover:shadow-md cursor-pointer"
-                  >
-                    <span>Pesan / Tanya</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
+                  <div className="flex items-center gap-2 w-full sm:w-auto">
+                    {/* Direct WhatsApp to Seller/Admin */}
+                    <a
+                      href={formatWhatsAppLink(product.whatsappNumber, product.name, product.price, product.seller)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={`Pesan langsung via WhatsApp ke ${product.whatsappNumber ? product.seller : 'Pengurus Padukuhan'}`}
+                      className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-[#25D366] hover:bg-[#20ba5a] text-purple-950 active:scale-95 transition-all shadow-xs flex-1 sm:flex-initial cursor-pointer"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5 text-purple-950 fill-current" />
+                      <span>WhatsApp</span>
+                    </a>
+
+                    {/* Direct E-Commerce Link */}
+                    {product.ecommerceUrl && (
+                      <a
+                        href={product.ecommerceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title={`Buka etalase produk di ${product.ecommercePlatform || 'Toko Online'}`}
+                        className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-purple text-cream hover:bg-purple-800 active:scale-95 transition-all shadow-xs flex-1 sm:flex-initial cursor-pointer"
+                      >
+                        <ShoppingBag className="w-3.5 h-3.5" />
+                        <span>{product.ecommercePlatform || 'Online Store'}</span>
+                        <ExternalLink className="w-3 h-3 text-cream/70" />
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
 
