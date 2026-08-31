@@ -1,53 +1,80 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Wheat, Store, UsersRound, Landmark, ShieldAlert, HeartHandshake } from 'lucide-react';
+import type { PageType } from './Navbar';
 
 interface FeatureCard {
   title: string;
   category: string;
   description: string;
   icon: React.ReactNode;
+  targetPage: PageType;
+  actionLabel: string;
 }
 
-export const Features: React.FC = () => {
+interface FeaturesProps {
+  onNavigate?: (page: PageType) => void;
+}
+
+export const Features: React.FC<FeaturesProps> = ({ onNavigate }) => {
   const features: FeatureCard[] = [
     {
       title: 'Pertanian & Ketahanan Pangan',
       category: 'Sektor Agraris',
-      description: 'Lahan sawah dan kebun produktif yang dikelola oleh kelompok tani dengan pendekatan ramah lingkungan dan hasil panen berkualitas.',
+      description: 'Lahan sawah subur dan budidaya talas produktif yang dikelola oleh kelompok tani dengan pendekatan ramah lingkungan dan hasil panen berkualitas.',
       icon: <Wheat className="w-6 h-6" />,
+      targetPage: 'meramu',
+      actionLabel: 'Lihat Inovasi Pangan',
     },
     {
       title: 'Pengembangan UMKM Warga',
       category: 'Ekonomi Kreatif',
       description: 'Dukungan terhadap produk olahan lokal, kerajinan rumahan, dan warung tradisional untuk meningkatkan kemandirian ekonomi keluarga.',
       icon: <Store className="w-6 h-6" />,
+      targetPage: 'umkm',
+      actionLabel: 'Buka Etalase UMKM',
     },
     {
       title: 'Kegiatan Pemuda & Karang Taruna',
       category: 'Generasi Muda',
-      description: 'Wadah kreativitas anak muda Kebonagung dalam bidang olahraga, kebudayaan, inovasi teknologi, dan kepedulian sosial.',
+      description: 'Wadah kreativitas anak muda Kebonagung dalam bidang olahraga, kebudayaan, inovasi teknologi, dan kepedulian sosial lingkungan.',
       icon: <UsersRound className="w-6 h-6" />,
+      targetPage: 'kegiatan',
+      actionLabel: 'Lihat Kegiatan Pemuda',
     },
     {
       title: 'Pelestarian Budaya & Tradisi',
       category: 'Kearifan Lokal',
-      description: 'Menjaga tradisi Jawa seperti Merti Dusun, kenduri, seni karawitan, dan kegiatan keagamaan yang mempererat tali silaturahmi.',
+      description: 'Menjaga tradisi Jawa seperti Merti Dusun, kenduri, seni karawitan, dan kegiatan keagamaan yang mempererat tali silaturahmi warga.',
       icon: <Landmark className="w-6 h-6" />,
+      targetPage: 'kegiatan',
+      actionLabel: 'Lihat Tradisi & Budaya',
     },
     {
       title: 'Posyandu & Kesehatan Warga',
       category: 'Layanan Sosial',
       description: 'Pelayanan kesehatan berkala bagi balita dan lansia guna menjamin kesejahteraan dan kualitas hidup seluruh warga padukuhan.',
       icon: <HeartHandshake className="w-6 h-6" />,
+      targetPage: 'lokasi',
+      actionLabel: 'Informasi & Layanan',
     },
     {
       title: 'Keamanan Lingkungan (Siskamling)',
       category: 'Ketertiban Dusun',
       description: 'Sistem keamanan swadaya yang tertib dan pos ronda aktif untuk menjamin ketenangan hidup bermasyarakat sepanjang hari.',
       icon: <ShieldAlert className="w-6 h-6" />,
+      targetPage: 'lokasi',
+      actionLabel: 'Kontak & Pos Keamanan',
     },
   ];
+
+  const handleCardClick = (targetPage: PageType) => {
+    if (onNavigate) {
+      onNavigate(targetPage);
+    } else {
+      window.location.hash = targetPage;
+    }
+  };
 
   return (
     <section id="keunggulan" className="py-24 bg-cream relative">
@@ -95,7 +122,8 @@ export const Features: React.FC = () => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.05, duration: 0.4 }}
               whileHover={{ y: -6, transition: { duration: 0.2 } }}
-              className="group p-3.5 sm:p-8 rounded-2xl sm:rounded-3xl bg-cream-50/70 border-2 border-purple/15 hover:border-purple hover:shadow-purple-md transition-all duration-300 flex flex-col justify-between"
+              onClick={() => handleCardClick(feature.targetPage)}
+              className="group p-3.5 sm:p-8 rounded-2xl sm:rounded-3xl bg-cream-50/70 border-2 border-purple/15 hover:border-purple hover:bg-cream hover:shadow-purple-md transition-all duration-300 flex flex-col justify-between cursor-pointer"
             >
               <div>
                 <div className="flex items-center justify-between mb-3 sm:mb-6 gap-1.5">
@@ -116,9 +144,9 @@ export const Features: React.FC = () => {
                 </p>
               </div>
 
-              <div className="pt-2.5 sm:pt-6 mt-2.5 sm:mt-6 border-t border-purple/10 flex items-center justify-between text-[10px] sm:text-xs font-bold text-purple group-hover:translate-x-1 transition-transform">
-                <span className="truncate">Pelajari lebih lanjut</span>
-                <span>→</span>
+              <div className="pt-2.5 sm:pt-6 mt-2.5 sm:mt-6 border-t border-purple/10 flex items-center justify-between text-[10px] sm:text-xs font-bold text-purple group-hover:text-purple-900">
+                <span className="truncate">{feature.actionLabel}</span>
+                <span className="group-hover:translate-x-1.5 transition-transform">→</span>
               </div>
             </motion.div>
           ))}

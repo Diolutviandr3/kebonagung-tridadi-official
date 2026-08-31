@@ -87,7 +87,7 @@ export const App: React.FC = () => {
             {currentPage === 'profil' && (
               <>
                 <AboutSection />
-                <Features />
+                <Features onNavigate={navigateTo} />
               </>
             )}
 

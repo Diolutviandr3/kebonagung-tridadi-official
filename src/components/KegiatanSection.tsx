@@ -205,7 +205,7 @@ export const KegiatanSection: React.FC = () => {
                           alt={activity.title} 
                           className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-purple-950/90 via-purple-950/40 to-purple-950/60 pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-purple-950/60 via-purple-950/15 to-purple-950/30 pointer-events-none" />
                       </>
                     ) : (
                       <div className="absolute inset-0 bg-dots-pattern opacity-30 pointer-events-none" />
@@ -416,20 +416,20 @@ export const KegiatanSection: React.FC = () => {
 
                               {/* Top bar inside photo view */}
                               <div className="flex items-center justify-between z-10">
-                                <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-cream text-purple border-2 border-purple shadow-sm">
+                                <span className="px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold bg-purple-950/60 text-cream backdrop-blur-md border border-cream/20 shadow-sm">
                                   {selectedActivity.gallery[activePhotoIdx]?.tag}
                                 </span>
-                                <span className="px-3.5 py-1 rounded-full text-xs font-bold bg-purple text-cream shadow-sm">
+                                <span className="px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold bg-purple-950/60 text-cream backdrop-blur-md border border-cream/20 shadow-sm">
                                   Foto {activePhotoIdx + 1} dari {selectedActivity.gallery.length}
                                 </span>
                               </div>
 
-                              {/* Bottom Caption Overlay */}
-                              <div className="relative z-10 bg-cream/95 backdrop-blur-sm p-4 rounded-2xl border-2 border-purple/20 space-y-1">
-                                <h4 className="font-extrabold text-sm sm:text-base text-purple leading-snug">
+                              {/* Bottom Caption Overlay - Transparent Glassmorphic Style */}
+                              <div className="relative z-10 bg-purple-950/40 sm:bg-purple-950/60 backdrop-blur-md p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border border-cream/20 space-y-0.5 sm:space-y-1 shadow-lg">
+                                <h4 className="font-extrabold text-xs sm:text-base text-cream leading-snug drop-shadow-sm">
                                   {selectedActivity.gallery[activePhotoIdx]?.title}
                                 </h4>
-                                <p className="text-xs sm:text-sm text-purple/85 leading-relaxed text-justify">
+                                <p className="text-[10px] sm:text-xs text-cream/90 leading-relaxed text-justify drop-shadow-sm line-clamp-2 sm:line-clamp-none">
                                   {selectedActivity.gallery[activePhotoIdx]?.caption}
                                 </p>
                               </div>
