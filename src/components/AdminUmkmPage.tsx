@@ -27,6 +27,7 @@ import {
 import { 
   type UmkmProduct, 
   getStoredProducts, 
+  fetchProductsFromSupabase,
   addStoredProduct, 
   updateStoredProduct, 
   deleteStoredProduct 
@@ -120,6 +121,11 @@ export const AdminUmkmPage: React.FC<AdminUmkmPageProps> = ({ onNavigate }) => {
 
   useEffect(() => {
     reloadProducts();
+    fetchProductsFromSupabase().then(data => {
+      if (data && data.length > 0) {
+        setProductsList(data);
+      }
+    });
     const handleUpdate = () => reloadProducts();
     window.addEventListener('umkm_updated', handleUpdate);
     return () => window.removeEventListener('umkm_updated', handleUpdate);

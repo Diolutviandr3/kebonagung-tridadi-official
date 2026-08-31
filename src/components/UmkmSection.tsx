@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Store, ShoppingBag, ArrowRight, Sparkles, ExternalLink, Tag, Search, X, Camera, MessageCircle } from 'lucide-react';
-import { getStoredProducts, formatWhatsAppLink, type UmkmProduct } from '../data/umkmData';
+import { getStoredProducts, fetchProductsFromSupabase, formatWhatsAppLink, type UmkmProduct } from '../data/umkmData';
 import type { PageType } from './Navbar';
 
 interface UmkmSectionProps {
@@ -14,6 +14,13 @@ export const UmkmSection: React.FC<UmkmSectionProps> = ({ onNavigate }) => {
   const [selectedCategory, setSelectedCategory] = useState('Semua');
 
   useEffect(() => {
+    // Fetch latest products from Supabase Cloud
+    fetchProductsFromSupabase().then(data => {
+      if (data && data.length > 0) {
+        setProductsList(data);
+      }
+    });
+
     const handleUpdate = () => {
       setProductsList(getStoredProducts());
     };

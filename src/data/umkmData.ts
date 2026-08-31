@@ -1,4 +1,4 @@
-﻿export interface UmkmProduct {
+export interface UmkmProduct {
   id: string;
   name: string;
   category: string;
@@ -93,6 +93,8 @@ export const defaultProducts: UmkmProduct[] = [
   },
 ];
 
+import { supabase } from '../lib/supabase';
+
 export const products = defaultProducts;
 
 const STORAGE_KEY = 'kebonagung_umkm_products';
@@ -117,6 +119,49 @@ export const formatWhatsAppLink = (
   const message = `Halo ${seller ? seller + ', ' : ''}saya tertarik dan ingin memesan produk "${productName}" (${price}) dari etalase Website Resmi Padukuhan Kebonagung. Apakah masih tersedia?`;
   return `https://wa.me/${targetPhone}?text=${encodeURIComponent(message)}`;
 };
+
+export interface SupabaseUmkmRow {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  price: string;
+  seller: string;
+  image_url?: string | null;
+  badge?: string | null;
+  whatsapp_number?: string | null;
+  ecommerce_url?: string | null;
+  ecommerce_platform?: string | null;
+  created_at?: string;
+}
+
+const mapRowToProduct = (row: SupabaseUmkmRow): UmkmProduct => ({
+  id: row.id,
+  name: row.name,
+  category: row.category,
+  description: row.description,
+  price: row.price,
+  seller: row.seller,
+  imageUrl: row.image_url || undefined,
+  badge: row.badge || 'Produk Unggulan',
+  whatsappNumber: row.whatsapp_number || undefined,
+  ecommerceUrl: row.ecommerce_url || undefined,
+  ecommercePlatform: row.ecommerce_platform || undefined,
+});
+
+const mapProductToRow = (product: UmkmProduct): SupabaseUmkmRow => ({
+  id: product.id,
+  name: product.name,
+  category: product.category,
+  description: product.description,
+  price: product.price,
+  seller: product.seller,
+  image_url: product.imageUrl || null,
+  badge: product.badge || 'Produk Unggulan',
+  whatsapp_number: product.whatsappNumber || null,
+  ecommerce_url: product.ecommerceUrl || null,
+  ecommerce_platform: product.ecommercePlatform || null,
+});
 
 export const getStoredProducts = (): UmkmProduct[] => {
   if (typeof window === 'undefined') return defaultProducts;
@@ -153,7 +198,38 @@ export const saveStoredProducts = (items: UmkmProduct[]): void => {
   }
 };
 
-export const addStoredProduct = (newProduct: Omit<UmkmProduct, 'id'>): UmkmProduct => {
+// Fetch from Supabase Cloud with fallback to local
+export const fetchProductsFromSupabase = async (): Promise<UmkmProduct[]> => {
+  try {
+    const { data, error } = await supabase
+      .from('umkm_products')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.warn('Supabase query note:', error.message);
+      return getStoredProducts();
+    }
+
+    if (data && Array.isArray(data)) {
+      if (data.length === 0) {
+        // Seed default products to Supabase if newly created table is empty
+        const rows = defaultProducts.map(mapProductToRow);
+        await supabase.from('umkm_products').upsert(rows);
+        saveStoredProducts(defaultProducts);
+        return defaultProducts;
+      }
+      const mapped = data.map(mapRowToProduct);
+      saveStoredProducts(mapped);
+      return mapped;
+    }
+  } catch (err) {
+    console.error('Supabase fetch error:', err);
+  }
+  return getStoredProducts();
+};
+
+export const addStoredProduct = async (newProduct: Omit<UmkmProduct, 'id'>): Promise<UmkmProduct> => {
   const current = getStoredProducts();
   const productWithId: UmkmProduct = {
     ...newProduct,
@@ -161,19 +237,43 @@ export const addStoredProduct = (newProduct: Omit<UmkmProduct, 'id'>): UmkmProdu
   };
   const updated = [productWithId, ...current];
   saveStoredProducts(updated);
+
+  // Sync to Supabase in background
+  try {
+    const row = mapProductToRow(productWithId);
+    await supabase.from('umkm_products').insert([row]);
+  } catch (err) {
+    console.error('Supabase insert sync error:', err);
+  }
+
   return productWithId;
 };
 
-export const updateStoredProduct = (updatedProduct: UmkmProduct): void => {
+export const updateStoredProduct = async (updatedProduct: UmkmProduct): Promise<void> => {
   const current = getStoredProducts();
   const updated = current.map(p => (p.id === updatedProduct.id ? updatedProduct : p));
   saveStoredProducts(updated);
+
+  // Sync to Supabase in background
+  try {
+    const row = mapProductToRow(updatedProduct);
+    await supabase.from('umkm_products').update(row).eq('id', updatedProduct.id);
+  } catch (err) {
+    console.error('Supabase update sync error:', err);
+  }
 };
 
-export const deleteStoredProduct = (id: string): void => {
+export const deleteStoredProduct = async (id: string): Promise<void> => {
   const current = getStoredProducts();
   const updated = current.filter(p => p.id !== id);
   saveStoredProducts(updated);
+
+  // Sync to Supabase in background
+  try {
+    await supabase.from('umkm_products').delete().eq('id', id);
+  } catch (err) {
+    console.error('Supabase delete sync error:', err);
+  }
 };
 
 export const resetStoredProducts = (): void => {
