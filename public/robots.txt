@@ -1,0 +1,4 @@
+﻿User-agent: *
+Allow: /
+
+Sitemap: https://jelajah-kebonagung.vercel.app/sitemap.xml
